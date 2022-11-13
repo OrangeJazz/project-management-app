@@ -1,2 +1,69 @@
 @import 'antd/dist/antd.min.css';
+@import './fonts.scss';
+@import './colors.scss';
 @import-normalize;
+
+html {
+  font-size: 62.5%;
+}
+
+*,
+* ::before,
+* ::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  color: $primary-dark;
+  font-family: 'Roboto, sans-serif';
+  font-style: normal;
+  font-size: 1.6rem;
+}
+
+h1 {
+  font-size: 4.6rem;
+  font-weight: 700;
+  line-height: 5.6rem;
+}
+
+h2 {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 5rem;
+  letter-spacing: 0.8px;
+}
+
+h3 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.8rem;
+  color: $task-header;
+}
+
+h4 {
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 3rem;
+  letter-spacing: 0.2px;
+}
+
+h5 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.6rem;
+  letter-spacing: 0.8px;
+}
