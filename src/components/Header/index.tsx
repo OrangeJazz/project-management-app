@@ -26,12 +26,15 @@ const Header = () => {
         <NavLink to="/" end className={({ isActive }) => (isActive ? styles.isActive : '')}>
           Home
         </NavLink>
+        <NavLink to="/signup" className={({ isActive }) => (isActive ? styles.isActive : '')}>
+          Signup
+        </NavLink>
         <NavLink to="/signin" className={({ isActive }) => (isActive ? styles.isActive : '')}>
           Signin
         </NavLink>
       </nav>
       <p>{login}</p>
-      <Button onClick={() => dispath(handleLogOut)} type="primary">
+      <Button onClick={() => dispath(handleLogOut())} type="primary">
         Выйти
       </Button>
     </header>

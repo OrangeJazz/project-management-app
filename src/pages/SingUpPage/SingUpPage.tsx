@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from './SingInPage.module.scss';
+import styles from './SingUpPage.module.scss';
 import { Button, Form, Input, Spin } from 'antd';
 import { IFormData } from 'interfaces/interface';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { handleSingIn } from 'store/authSlice';
+import { handleSingUp } from 'store/authSlice';
 import { NavLink } from 'react-router-dom';
 
-const SingInPage = () => {
+const SingUpPage = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.auth.loading);
   const onFinish = (formData: IFormData) => {
-    dispatch(handleSingIn(formData));
+    dispatch(handleSingUp(formData));
     form.resetFields();
   };
 
@@ -39,6 +39,13 @@ const SingInPage = () => {
         autoComplete="off"
       >
         <Form.Item
+          label="Name"
+          name="name"
+          rules={[{ required: true, message: 'Please input your name!' }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
           label="Login"
           name="login"
           rules={[{ required: true, message: 'Please input your username!' }]}
@@ -59,10 +66,10 @@ const SingInPage = () => {
             Submit
           </Button>
         </Form.Item>
-        <NavLink to="/signup">You dont have account</NavLink>
+        <NavLink to="/signin">You already have account</NavLink>
       </Form>
     </div>
   );
 };
 
-export default SingInPage;
+export default SingUpPage;

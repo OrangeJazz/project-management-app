@@ -7,6 +7,7 @@ import {
   RegistrationPage,
   SearchPage,
   SingInPage,
+  SingUpPage,
 } from 'pages';
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -24,6 +25,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/signin" element={<SingInPage />} />
+          <Route path="/signup" element={<SingUpPage />} />
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/boards" element={<BoardsPage />} />
           <Route path="/boards:id" element={<BoardsPage />} />

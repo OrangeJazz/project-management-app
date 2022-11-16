@@ -1,6 +1,6 @@
 export interface IFormData {
-  name: string;
-  username: string;
+  name?: string;
+  login: string;
   password: string;
 }
 export interface IAuthState {
@@ -10,12 +10,19 @@ export interface IAuthState {
   token: string;
   loading: boolean;
 }
-export interface ISignInResp {
+export interface ISignUpResp {
   name: string;
   login: string;
   _id: string;
+  token: string;
 }
 export interface IErrorResp {
   statusCode: number;
   message: string;
+}
+export interface IDecodedToken {
+  exp: number;
+  iat: number;
+  id: string;
+  login: string;
 }
