@@ -1,5 +1,10 @@
 import jwtDecode from 'jwt-decode';
-import { IDecodedToken, IErrorResp, ISignUpResp } from './../interfaces/interface';
+import {
+  IDecodedToken,
+  IErrorResp,
+  ISignUpResp,
+  ILocalStorageData,
+} from './../interfaces/interface';
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IAuthState, IFormData } from 'interfaces/interface';
 import axios, { AxiosError } from 'axios';
@@ -11,6 +16,7 @@ export const initialState: IAuthState = {
   id: '',
   token: '',
   loading: false,
+  isLoggedIn: false,
 };
 export const handleSingIn = createAsyncThunk(
   'auth/handleSingIn',
@@ -18,6 +24,24 @@ export const handleSingIn = createAsyncThunk(
     try {
       const repsSignInData = await axios.post('/auth/signin', query);
       return repsSignInData.data;
+    } catch (err) {
+      const error = err as AxiosError<IErrorResp>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const handleInitialRenderLogIn = createAsyncThunk(
+  'auth/handleInitialRenderLogIn',
+  async (localStorageData: ILocalStorageData, { rejectWithValue }) => {
+    try {
+      const { id, token } = localStorageData;
+      const reps = await axios.get(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return reps.data;
     } catch (err) {
       const error = err as AxiosError<IErrorResp>;
       if (!error.response) {
@@ -64,6 +88,7 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(handleSingUp.fulfilled, (state, action: PayloadAction<ISignUpResp>) => {
+        state.isLoggedIn = true;
         state.login = action.payload.login;
         state.id = action.payload._id;
         state.name = action.payload.name;
@@ -73,6 +98,7 @@ const authSlice = createSlice({
         message.success('acc created');
       })
       .addCase(handleSingUp.rejected, (state) => {
+        state.isLoggedIn = false;
         state.loading = false;
         message.error('already exict');
       })
@@ -81,6 +107,7 @@ const authSlice = createSlice({
       })
       .addCase(handleSingIn.fulfilled, (state, action: PayloadAction<ISignUpResp>) => {
         const decodedData: IDecodedToken = jwtDecode(action.payload.token);
+        state.isLoggedIn = true;
         state.id = decodedData.id;
         state.login = decodedData.login;
         localStorage.setItem('id', decodedData.id);
@@ -89,8 +116,24 @@ const authSlice = createSlice({
         message.success('your logged');
       })
       .addCase(handleSingIn.rejected, (state) => {
+        state.isLoggedIn = false;
         state.loading = false;
         message.error('no such account');
+      })
+      .addCase(handleInitialRenderLogIn.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(handleInitialRenderLogIn.fulfilled, (state, action: PayloadAction<ISignUpResp>) => {
+        state.id = action.payload._id;
+        state.login = action.payload.login;
+        state.loading = false;
+        state.isLoggedIn = true;
+        message.success('intial login');
+      })
+      .addCase(handleInitialRenderLogIn.rejected, (state) => {
+        state.isLoggedIn = false;
+        state.loading = false;
+        message.error('please log in again');
       });
   },
 });

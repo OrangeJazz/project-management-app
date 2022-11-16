@@ -9,6 +9,7 @@ export interface IAuthState {
   id: string;
   token: string;
   loading: boolean;
+  isLoggedIn: boolean;
 }
 export interface ISignUpResp {
   name: string;
@@ -25,4 +26,11 @@ export interface IDecodedToken {
   iat: number;
   id: string;
   login: string;
+}
+export interface ILocalStorageData {
+  id: string;
+  token: string;
+}
+export interface PrivateRouteProps {
+  children: React.ReactNode;
 }

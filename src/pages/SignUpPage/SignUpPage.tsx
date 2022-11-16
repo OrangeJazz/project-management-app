@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './SingUpPage.module.scss';
+import styles from './SignUpPage.module.scss';
 import { Button, Form, Input, Spin } from 'antd';
 import { IFormData } from 'interfaces/interface';
 import { useAppDispatch, useAppSelector } from 'hooks';
