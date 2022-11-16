@@ -1,0 +1,48 @@
+.footer {
+  box-sizing: border-box;
+  min-height: 80px;
+  background: #33334f;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.footter__year-link {
+  display: flex;
+  gap: 0.5rem;
+  color: white;
+  p {
+    margin: 0;
+  }
+}
+.footer__github-link {
+  font-size: 1rem;
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s ease-in-out;
+  &:hover {
+    color: #ce1f99;
+  }
+}
+.footer__rss-link {
+  width: 5rem;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 80px;
+    height: 80px;
+  }
+}
+@media (max-width: 720px) {
+  .footer {
+    padding: 1.5rem 1.5rem 0 1.5rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
