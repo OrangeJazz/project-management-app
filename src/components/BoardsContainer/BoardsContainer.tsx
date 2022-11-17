@@ -1,8 +1,8 @@
 import React from 'react';
 import { BoardCard, NewBoardCard } from 'components';
 import styles from './BoardsContainer.module.scss';
-import { IBoard } from '../../types/api-types';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/redux';
+import { IBoard } from '../../interfaces/api-types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const newBoard: IBoard = {
   _id: '11111',
@@ -12,7 +12,7 @@ const newBoard: IBoard = {
 };
 
 const BoardsContainer = () => {
-  const boardsState = useAppSelector((state) => state.sliceBoards);
+  const boardsState = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
   return (
     <div className={styles['boards-container']}>

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from '../../utils/api';
-import { IBoard } from '../../types/api-types';
+// import axiosInstance from '../utils/api';
+import { IBoard } from '../interfaces/api-types';
 
 const boardsMock: IBoard[] = [
   {

@@ -1,7 +1,7 @@
 import React from 'react';
-import { changeBoards, changeCurrentBoard, deleteBoard } from 'store/reducers/sliceBoards';
-import { IBoard } from 'types/api-types';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/redux';
+import { changeBoards, changeCurrentBoard, deleteBoard } from 'store/sliceBoards';
+import { IBoard } from 'interfaces/api-types';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import styles from './BoardCard.module.scss';
 
 interface BoardCardProps {
@@ -9,7 +9,7 @@ interface BoardCardProps {
 }
 
 const BoardCard = (props: BoardCardProps) => {
-  const boardsState = useAppSelector((state) => state.sliceBoards);
+  const boardsState = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
   const dragStartHandler = (e: React.DragEvent<HTMLDivElement>, board: IBoard) => {
     dispatch(changeCurrentBoard(board));
