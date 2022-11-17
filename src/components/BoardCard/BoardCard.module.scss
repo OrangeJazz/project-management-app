@@ -1,0 +1,12 @@
+.board-card {
+  &__container {
+    display: flex;
+    width: 36rem;
+    height: 14.3rem;
+    box-shadow: 0 1.2rem 2rem rgba(105, 117, 135, 0.15);
+    border-radius: 1.8rem;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+  }
+}

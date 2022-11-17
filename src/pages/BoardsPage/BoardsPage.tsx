@@ -1,8 +1,17 @@
-import React from 'react';
-// import style from './BoardsPage.module.scss';
+import { BoardsContainer, SearchBar } from 'components';
+import React, { useState } from 'react';
+import styles from './BoardsPage.module.scss';
+import { IBoard } from '../../types/api-types';
 
 const BoardsPage = () => {
-  return <div>BoardsPage</div>;
+  // const [boards, setBoards] = useState(boardsMock);
+  return (
+    <div className={styles['boards__container']}>
+      <h2 className={styles['boards__heading']}>Your Projects:</h2>
+      <SearchBar />
+      <BoardsContainer />
+    </div>
+  );
 };
 
 export default BoardsPage;
