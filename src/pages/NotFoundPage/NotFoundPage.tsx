@@ -1,5 +1,4 @@
-import React from 'react';
-// import style from './NotFoundPage.module.scss';
+import React, { useState } from 'react';
 
 const NotFoundPage = () => {
   return <div>404</div>;
