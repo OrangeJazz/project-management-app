@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Card, Modal } from 'antd';
 import { Column } from 'components';
 import React, { useState } from 'react';
 // import style from './NotFoundPage.module.scss';
@@ -9,7 +9,7 @@ const NotFoundPage = () => {
     <Modal open={true}>
       <Column title="task">
         {tasks.map((task) => (
-          <li key={task}>{task}</li>
+          <Card key={task}>{task}</Card>
         ))}
       </Column>
     </Modal>
