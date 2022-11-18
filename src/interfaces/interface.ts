@@ -31,6 +31,3 @@ export interface ILocalStorageData {
   id: string;
   token: string;
 }
-export interface PrivateRouteProps {
-  children: React.ReactNode;
-}
