@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Layout } from 'components';
+import { Layout, PrivateRoute } from 'components';
 import {
   BoardsPage,
   MainPage,
@@ -15,7 +15,6 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { handleInitialRenderLogIn } from 'store/authSlice';
-import PrivateRoute from 'components/PrivateRoute/PrivateRoute';
 
 function App() {
   const dispatch = useAppDispatch();
