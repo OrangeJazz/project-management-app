@@ -1,45 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-// import axiosInstance from '../utils/api';
+import { message } from 'antd';
+import axios from 'axios';
 import { IBoard } from '../interfaces/api-types';
-
-const boardsMock: IBoard[] = [
-  {
-    _id: '1',
-    title: 'title1',
-    owner: 'owner1',
-    users: ['owner1'],
-  },
-  {
-    _id: '2',
-    title: 'title2',
-    owner: 'owner2',
-    users: ['owner2'],
-  },
-  {
-    _id: '3',
-    title: 'title3',
-    owner: 'owner3',
-    users: ['owner3'],
-  },
-  {
-    _id: '4',
-    title: 'title4',
-    owner: 'owner4',
-    users: ['owner4'],
-  },
-  {
-    _id: '5',
-    title: 'title5',
-    owner: 'owner5',
-    users: ['owner5'],
-  },
-  {
-    _id: '6',
-    title: 'title6',
-    owner: 'owner6',
-    users: ['owner6'],
-  },
-];
 
 export type ApiState = {
   token: string;
@@ -52,30 +14,44 @@ export type ApiState = {
 export const initialState: ApiState = {
   token: '',
   user: '',
-  boards: boardsMock,
+  boards: [],
   loading: true,
   currentBoard: null,
 };
 
-interface NewBoard {
-  user: string;
-  board: IBoard;
-}
+export const getAllBoards = createAsyncThunk('getAllBoards', async () => {
+  const token = localStorage.getItem('token');
+  const res = await axios.get(`boards`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  console.log(res.data);
+  return res.data as IBoard[];
+});
 
-// export const getAllBoards = createAsyncThunk('getAllBoards', async () => {
-//   return (await axiosInstance.get(`boards`)) as IBoard[];
-// });
+export const getUserBoards = createAsyncThunk('getUserBoards', async () => {
+  const token = localStorage.getItem('token');
+  const id = localStorage.getItem('id');
+  const res = await axios.get(`boardsSet/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  console.log(res.data);
+  return res.data as IBoard[];
+});
 
-// export const getUserBoards = createAsyncThunk('getUserBoards', async (userID) => {
-//   return (await axiosInstance.get(`boards/${userID}`)) as IBoard[];
-// });
-
-// export const createUserBoards = createAsyncThunk('createUserBoards', async (state: NewBoard) => {
-//   return (await axiosInstance.post(`boards/${state.user}`, state.board)) as IBoard[];
-// });
-// export const deleteUserBoard = createAsyncThunk('deleteUserBoard', async (state: IBoard) => {
-//   return await axiosInstance.delete(`boards/${state._id}`);
-// });
+export const createUserBoard = createAsyncThunk('createUserBoards', async (board: IBoard) => {
+  const token = localStorage.getItem('token');
+  await axios.post(`boards`, board, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return board;
+});
+export const deleteBoardFetch = createAsyncThunk('deleteUserBoard', async (board: IBoard) => {
+  const token = localStorage.getItem('token');
+  await axios.delete(`boards/${board._id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  return board;
+});
 
 export const slice = createSlice({
   name: 'boards',
@@ -106,31 +82,59 @@ export const slice = createSlice({
     },
   },
 
-  // extraReducers: (builder) => {
-  //   builder
-  //     .addCase(getUserBoards.pending, (state) => {
-  //       state.loading = true;
-  //     })
-  //     .addCase(getUserBoards.fulfilled, (state, action) => {
-  //       state.boards = action.payload as IBoard[];
-  //       state.loading = false;
-  //     })
-  //     .addCase(getUserBoards.rejected, (state, action) => {
-  //       console.log(action.error);
-  //       state.boards = [];
-  //       state.loading = false;
-  //     })
-  //     .addCase(createUserBoards.pending, (state) => {
-  //       state.loading = true;
-  //     })
-  //     .addCase(createUserBoards.fulfilled, (state, action) => {
-  //       state.loading = false;
-  //     })
-  //     .addCase(createUserBoards.rejected, (state, action) => {
-  //       console.log(action.error);
-  //       state.loading = false;
-  //     });
-  // },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllBoards.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllBoards.fulfilled, (state, action) => {
+        state.boards = action.payload.length > 0 ? action.payload : [];
+        state.loading = false;
+      })
+      .addCase(getAllBoards.rejected, (state, action) => {
+        console.log(action.error);
+        state.boards = [];
+        state.loading = false;
+      })
+      .addCase(getUserBoards.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getUserBoards.fulfilled, (state, action) => {
+        state.boards = action.payload.length > 0 ? action.payload : [];
+        state.loading = false;
+      })
+      .addCase(getUserBoards.rejected, (state, action) => {
+        console.log(action.error);
+        state.boards = [];
+        state.loading = false;
+      })
+      .addCase(createUserBoard.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(createUserBoard.fulfilled, (state, action) => {
+        state.loading = false;
+        state.boards.push(action.payload);
+        message.success('Project added');
+      })
+      .addCase(createUserBoard.rejected, (state, action) => {
+        console.log(action.error);
+        state.loading = false;
+        message.error('Server error! Please try again');
+      })
+      .addCase(deleteBoardFetch.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(deleteBoardFetch.fulfilled, (state, action) => {
+        state.loading = false;
+        state.boards = state.boards.filter((el) => el._id !== action.payload._id);
+        message.success('Project delete');
+      })
+      .addCase(deleteBoardFetch.rejected, (state, action) => {
+        console.log(action.error);
+        state.loading = false;
+        message.error('Server error! Please try again');
+      });
+  },
 });
 
 export default slice.reducer;

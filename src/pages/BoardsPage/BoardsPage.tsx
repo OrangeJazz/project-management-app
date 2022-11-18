@@ -1,10 +1,14 @@
 import { BoardsContainer, SearchBar } from 'components';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './BoardsPage.module.scss';
-import { IBoard } from '../../interfaces/api-types';
+import { useAppDispatch } from '../../hooks';
+import { getUserBoards } from '../../store/sliceBoards';
 
 const BoardsPage = () => {
-  // const [boards, setBoards] = useState(boardsMock);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserBoards());
+  }, [dispatch]);
   return (
     <div className={styles['boards__container']}>
       <h2 className={styles['boards__heading']}>Your Projects:</h2>
