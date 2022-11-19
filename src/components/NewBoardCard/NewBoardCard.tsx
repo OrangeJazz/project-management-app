@@ -1,21 +1,17 @@
 import React from 'react';
-import { useAppDispatch } from '../../hooks';
-import { mockBoard } from '../../utils/mocks';
-import { createUserBoard } from '../../store/sliceBoards';
 import styles from './NewBoardCard.module.scss';
 
-const NewBoardCard = () => {
-  const dispatch = useAppDispatch();
+interface NewBoardCardProps {
+  onClick: () => void;
+}
 
-  const addHandler = () => {
-    console.log('click');
-    dispatch(createUserBoard(mockBoard));
-  };
+const NewBoardCard: React.FC<NewBoardCardProps> = ({ onClick }) => {
   return (
-    <div className={styles['new-card__container']} onClick={addHandler}>
+    <div className={styles['new-card__container']} onClick={onClick}>
       <h3 className={styles['new-card__heading']}>Add New Project</h3>
-      <div className={styles['new-card__add-btn']}>+</div>
+      <div className={styles['new-card__add-btn']}>&nbsp;</div>
     </div>
   );
 };
+
 export default NewBoardCard;

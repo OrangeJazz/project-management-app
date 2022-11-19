@@ -1,26 +1,19 @@
 import React from 'react';
-import { deleteBoardFetch } from '../../store/sliceBoards';
 import { IBoard } from '../../interfaces/interface';
-import { useAppDispatch } from '../../hooks';
 import styles from './BoardCard.module.scss';
 import { Progress } from 'antd';
 
 interface BoardCardProps {
   board: IBoard;
+  onBoardClick: (board: IBoard) => void;
+  onCloseClick: (board: IBoard) => void;
 }
 
-const BoardCard = (props: BoardCardProps) => {
-  const dispatch = useAppDispatch();
-  const deleteBoardHandler = () => {
-    dispatch(deleteBoardFetch(props.board));
-  };
-  const clickHandler = () => {
-    console.log(props.board);
-  };
+const BoardCard: React.FC<BoardCardProps> = ({ board, onBoardClick, onCloseClick }) => {
   return (
-    <div className={styles['board-card__container']} onClick={clickHandler}>
+    <div className={styles['board-card__container']} onClick={() => onBoardClick(board)}>
       <div className={styles['board-card__content']}>
-        <h3 className={styles['board-card__heading']}>{props.board.title}</h3>
+        <h3 className={styles['board-card__heading']}>{board.title}</h3>
         <div style={{ width: 170 }}>
           <Progress
             percent={30}
@@ -33,7 +26,7 @@ const BoardCard = (props: BoardCardProps) => {
         <p className={styles['board-card__info']}>30 / 111</p>
       </div>
       <div className={styles['board-card__img']}></div>
-      <div className={styles['board-card__close-btn']} onClick={deleteBoardHandler}>
+      <div className={styles['board-card__close-btn']} onClick={() => onCloseClick(board)}>
         &nbsp;
       </div>
     </div>

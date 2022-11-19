@@ -1,6 +1,6 @@
 import { IBoard } from '../interfaces/interface';
 
-export const boardsMock: IBoard[] = [
+const boardsMock: IBoard[] = [
   {
     _id: '1',
     title: 'title1',
@@ -39,8 +39,4 @@ export const boardsMock: IBoard[] = [
   },
 ];
 
-export const mockBoard: IBoard = {
-  title: 'Mock',
-  owner: 'authState.id',
-  users: ['authState.id'],
-};
+export default boardsMock;
