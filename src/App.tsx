@@ -9,6 +9,7 @@ import {
   SearchPage,
   SingInPage,
   SingUpPage,
+  TasksPage,
 } from 'pages';
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
@@ -36,7 +37,7 @@ function App() {
         <Route path="/signup" element={<SingUpPage />} />
         <Route path="/registration" element={<RegistrationPage />} />
         <Route path="/boards" element={<BoardsPage />} />
-        <Route path="/boards:id" element={<BoardsPage />} />
+        <Route path="/boards/:id" element={<TasksPage />} />
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate to="/404" replace />} />
       </Route>

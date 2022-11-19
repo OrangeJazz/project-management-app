@@ -34,3 +34,21 @@ export interface ILocalStorageData {
 export interface PrivateRouteProps {
   children: React.ReactNode;
 }
+
+export interface IOrder {
+  order: number;
+}
+export interface ITask extends IOrder {
+  _id: string;
+  title: string;
+  boardId: string;
+  columnId: string;
+  description: string;
+  userId: number;
+  users: string[];
+}
+export interface IColunm extends IOrder {
+  _id: string;
+  title: string;
+  boardId: string;
+}

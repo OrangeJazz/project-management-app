@@ -6,3 +6,4 @@ export { default as SingInPage } from './SignInPage/SignInPage';
 export { default as SearchPage } from './SearchPage/SearchPage';
 export { default as BoardsPage } from './BoardsPage/BoardsPage';
 export { default as ProfilePage } from './ProfilePage/ProfilePage';
+export { default as TasksPage } from './TasksPage/TasksPage';

@@ -1,25 +1,35 @@
 import React from 'react';
 import styles from './Task.module.scss';
+import { Draggable } from 'react-beautiful-dnd';
+import { ITask } from 'interfaces/interface';
 
 interface TaskProps {
-  title?: string;
-  description?: string;
-  user?: string[];
+  task: ITask;
+  taskOrder: number;
   onRemove?: () => void;
 }
 
-const Task: React.FC<TaskProps> = ({ title = 'Anonymous Task', description, user, onRemove }) => {
+const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
   return (
-    <div className={styles['task-container']}>
-      <h3>{title}</h3>
-      <p className={styles['task-description']}>{description}</p>
-      <p className={styles['task-description']}>
-        {user?.map((user) => (
-          <span key={user}>{user} </span>
-        ))}
-      </p>
-      <div className={styles['task-close']} onClick={onRemove} />
-    </div>
+    <Draggable draggableId={task._id} index={taskOrder}>
+      {(provided) => (
+        <div
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+          className={styles['task-container']}
+        >
+          <h3>{task.title}</h3>
+          <p className={styles['task-description']}>{task.description}</p>
+          <p className={styles['task-description']}>
+            {task.users?.map((user) => (
+              <span key={user}>{user} </span>
+            ))}
+          </p>
+          <div className={styles['task-close']} onClick={onRemove} />
+        </div>
+      )}
+    </Draggable>
   );
 };
 
