@@ -5,3 +5,4 @@ export { default as BoardCard } from './BoardCard/BoardCard';
 export { default as NewBoardCard } from './NewBoardCard/NewBoardCard';
 export { default as Column } from './Column/Column';
 export { default as Task } from './Task/Task';
+export { default as ModalNewBoard } from './ModalNewBoard/ModalNewBoard';

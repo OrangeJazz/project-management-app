@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoardCard, NewBoardCard } from 'components';
+import { BoardCard, ModalNewBoard } from 'components';
 import styles from './BoardsContainer.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
@@ -37,7 +37,7 @@ const BoardsContainer = () => {
           onCloseClick={deleteBoardHandler}
         />
       ))}
-      <NewBoardCard onClick={addNewBoardHandler} />
+      <ModalNewBoard />
     </div>
   );
 };
