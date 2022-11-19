@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoardCard, ModalNewBoard } from 'components';
+import { BoardCard, ModalBoard } from 'components';
 import styles from './BoardsContainer.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
@@ -32,7 +32,7 @@ const BoardsContainer = () => {
           onCloseClick={deleteBoardHandler}
         />
       ))}
-      <ModalNewBoard user={authState.id} addBoard={fetchNewBoard} />
+      <ModalBoard user={authState.id} addBoard={fetchNewBoard} />
     </div>
   );
 };
