@@ -52,3 +52,13 @@ export interface IColunm extends IOrder {
   title: string;
   boardId: string;
 }
+export interface IBoard {
+  _id?: string;
+  title: string;
+  owner: string;
+  users: string[];
+}
+
+export interface IColumnData extends IColunm {
+  tasks: ITask[];
+}

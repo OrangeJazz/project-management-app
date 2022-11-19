@@ -1,71 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Column, Task } from 'components';
-import { IColunm, ITask } from 'interfaces/interface';
+import { IColumnData, IColunm } from 'interfaces/interface';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
 import sortByOrder from 'utils/sortByOrder';
-
-const TasksList: ITask[] = [
-  {
-    _id: '2',
-    title: 'tytle2',
-    order: 2,
-    boardId: '0',
-    columnId: '0',
-    description: 'descript2',
-    userId: 555,
-    users: ['vasya, lesha'],
-  },
-  {
-    _id: '3',
-    title: 'tytle3',
-    order: 3,
-    boardId: '0',
-    columnId: '0',
-    description: 'descript3',
-    userId: 555,
-    users: ['lesha, petya'],
-  },
-  {
-    _id: '4',
-    title: 'tytle4',
-    order: 4,
-    boardId: '0',
-    columnId: '0',
-    description: 'descript3',
-    userId: 555,
-    users: ['lesha, petya'],
-  },
-  {
-    _id: '0',
-    title: 'tytle0',
-    order: 0,
-    boardId: '0',
-    columnId: '0',
-    description: 'descript0',
-    userId: 555,
-    users: ['lesha, petya'],
-  },
-];
-
-const ColumnList: IColunm[] = [
-  {
-    _id: '1',
-    title: 'column1',
-    order: 0,
-    boardId: '0',
-  },
-  {
-    _id: '0',
-    title: 'column2',
-    order: 1,
-    boardId: '0',
-  },
-];
+import { getTest } from 'store/columnDataSlice';
 
 const TasksPage = () => {
-  const [columns, setColums] = useState<IColunm[]>(ColumnList);
-  const [tasks, setTasks] = useState<ITask[]>(TasksList);
+  const [columns, setColums] = useState<IColumnData[]>([]);
+
+  useEffect(() => {
+    getTest().then((resp) => {
+      console.log(resp);
+
+      setColums(resp);
+    });
+  }, []);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source } = result;
@@ -78,16 +28,27 @@ const TasksPage = () => {
       return;
     }
 
-    const tasksOrder = [...tasks];
-    const from = tasksOrder[source.index];
-    const to = tasksOrder[destination.index];
+    const startColumnID = source.droppableId;
+    const endColumnID = destination.droppableId;
+    const tasksOrder = [...columns];
 
-    [from.columnId, to.columnId] = [to.columnId, from.columnId];
-    [from.order, to.order] = [to.order, from.order];
+    if (startColumnID === endColumnID) {
+      const columnIndex = columns.findIndex((column) => column._id === startColumnID);
+      const from = tasksOrder[columnIndex].tasks[source.index];
+      const to = tasksOrder[columnIndex].tasks[destination.index];
+      [to.order, from.order] = [from.order, to.order];
+    } else {
+      const sourceColumnIndex = columns.findIndex((column) => column._id === startColumnID);
+      const destinationColumnIndex = columns.findIndex((column) => column._id === endColumnID);
+      const [dragItem] = tasksOrder[sourceColumnIndex].tasks.splice(source.index, 1);
+      tasksOrder[sourceColumnIndex].tasks.forEach((task, index) => (task.order = index));
+      dragItem.columnId = endColumnID;
+      dragItem.order = destination.index;
+      tasksOrder[destinationColumnIndex].tasks.splice(destination.index, 0, dragItem);
+      tasksOrder[destinationColumnIndex].tasks.forEach((task, index) => (task.order = index));
+    }
 
-    console.log(tasksOrder);
-
-    setTasks(sortByOrder(tasksOrder));
+    setColums(tasksOrder);
   };
 
   const createTask = (column: IColunm) => {
@@ -97,12 +58,11 @@ const TasksPage = () => {
   return (
     <>
       <h2>Project Title</h2>
-
       <div className={styles['column-container']}>
         <DragDropContext onDragEnd={dragEndHandler}>
           {sortByOrder(columns).map((column) => (
             <Column column={column} key={column._id} onCreate={() => createTask(column)}>
-              {sortByOrder(tasks).map(
+              {sortByOrder(column.tasks).map(
                 (task, index) =>
                   task.columnId === column._id && (
                     <Task key={task._id} task={task} taskOrder={index} />
