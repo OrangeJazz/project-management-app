@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
-// import styles from './ModalNewBoard.module.scss';
 import { Form, Input, Modal } from 'antd';
 import { NewBoardCard } from 'components';
-// interface ModalProps {}
-const ModalLayout: React.FC = () => {
+import { IBoard } from 'interfaces/interface';
+
+interface ModalProps {
+  addBoard: (board: IBoard) => void;
+  user: string;
+}
+
+interface FormValues {
+  title: string;
+}
+
+const ModalLayout: React.FC<ModalProps> = ({ addBoard, user }) => {
+  const [form] = Form.useForm();
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
+  const [newBoardTitle, setNewBoardTitle] = useState('');
 
   const showModal = () => {
     setOpen(true);
@@ -14,15 +25,24 @@ const ModalLayout: React.FC = () => {
   const cancelHandler = () => {
     setOpen(false);
   };
+
   const okHandler = async () => {
     setConfirmLoading(true);
-    setTimeout(() => {
-      setOpen(false);
-      setConfirmLoading(false);
-    }, 2000);
+    const newBoard: IBoard = {
+      title: newBoardTitle,
+      owner: user,
+      users: [user],
+    };
+    addBoard(newBoard);
+    form.resetFields();
+    setOpen(false);
+    setConfirmLoading(false);
   };
 
-  const onFormLayoutChange = () => {};
+  const onFormLayoutChange = (values: FormValues) => {
+    setNewBoardTitle(values.title);
+  };
+
   return (
     <div>
       <NewBoardCard onClick={showModal} />
@@ -36,12 +56,18 @@ const ModalLayout: React.FC = () => {
         centered={true}
       >
         <Form
+          form={form}
           labelCol={{ span: 6 }}
           wrapperCol={{ span: 15 }}
           labelAlign={'right'}
           onValuesChange={onFormLayoutChange}
+          requiredMark={true}
         >
-          <Form.Item label="Project Title">
+          <Form.Item
+            label="Project Title"
+            name="title"
+            rules={[{ required: true, message: 'Please input your name!' }]}
+          >
             <Input />
           </Form.Item>
         </Form>

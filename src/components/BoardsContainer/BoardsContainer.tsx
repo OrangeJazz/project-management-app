@@ -10,21 +10,16 @@ const BoardsContainer = () => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
-  const mockBoard: IBoard = {
-    title: 'Mock',
-    owner: authState.id,
-    users: [authState.id],
+  const deleteBoardHandler = async (board: IBoard) => {
+    await dispatch(deleteBoardFetch(board));
   };
 
-  const addNewBoardHandler = () => {
-    console.log('click');
-    dispatch(createUserBoard(mockBoard));
-  };
-  const deleteBoardHandler = (board: IBoard) => {
-    dispatch(deleteBoardFetch(board));
-  };
   const clickHandler = (board: IBoard) => {
     console.log(board);
+  };
+
+  const fetchNewBoard = async (board: IBoard) => {
+    await dispatch(createUserBoard(board));
   };
 
   return (
@@ -37,7 +32,7 @@ const BoardsContainer = () => {
           onCloseClick={deleteBoardHandler}
         />
       ))}
-      <ModalNewBoard />
+      <ModalNewBoard user={authState.id} addBoard={fetchNewBoard} />
     </div>
   );
 };
