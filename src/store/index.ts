@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
+import sliceBoards from './sliceBoards';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    boards: sliceBoards,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
