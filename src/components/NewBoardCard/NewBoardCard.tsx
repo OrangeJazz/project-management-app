@@ -12,9 +12,9 @@ const NewBoardCard = () => {
     dispatch(createUserBoard(mockBoard));
   };
   return (
-    <div className={styles['board-card__container']} onClick={addHandler}>
-      <h3>Add New Project</h3>
-      <button>+</button>
+    <div className={styles['new-card__container']} onClick={addHandler}>
+      <h3 className={styles['new-card__heading']}>Add New Project</h3>
+      <div className={styles['new-card__add-btn']}>+</div>
     </div>
   );
 };

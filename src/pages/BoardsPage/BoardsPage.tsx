@@ -10,10 +10,12 @@ const BoardsPage = () => {
     dispatch(getUserBoards());
   }, [dispatch]);
   return (
-    <div className={styles['boards__container']}>
-      <h2 className={styles['boards__heading']}>Your Projects:</h2>
-      <SearchBar />
-      <BoardsContainer />
+    <div className={styles['boards__wrapper']}>
+      <div className={styles['boards__content']}>
+        <h2 className={styles['boards__heading']}>Your Projects:</h2>
+        <SearchBar />
+        <BoardsContainer />
+      </div>
     </div>
   );
 };

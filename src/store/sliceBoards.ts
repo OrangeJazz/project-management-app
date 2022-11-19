@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import axios from 'axios';
-import { IBoard } from '../interfaces/api-types';
+import { IBoard } from '../interfaces/interface';
 
 export type ApiState = {
   token: string;
@@ -34,7 +34,6 @@ export const getUserBoards = createAsyncThunk('getUserBoards', async () => {
   const res = await axios.get(`boardsSet/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  console.log(res.data);
   return res.data as IBoard[];
 });
 

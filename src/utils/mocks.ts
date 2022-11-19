@@ -1,4 +1,4 @@
-import { IBoard } from '../interfaces/api-types';
+import { IBoard } from '../interfaces/interface';
 
 export const boardsMock: IBoard[] = [
   {

@@ -34,3 +34,10 @@ export interface ILocalStorageData {
 export interface PrivateRouteProps {
   children: React.ReactNode;
 }
+
+export interface IBoard {
+  _id?: string;
+  title: string;
+  owner: string;
+  users: string[];
+}
