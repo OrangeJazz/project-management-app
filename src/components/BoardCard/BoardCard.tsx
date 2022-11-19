@@ -2,6 +2,7 @@ import React from 'react';
 import { IBoard } from '../../interfaces/interface';
 import styles from './BoardCard.module.scss';
 import { Progress } from 'antd';
+import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 
 interface BoardCardProps {
   board: IBoard;
@@ -26,9 +27,10 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, onBoardClick, onCloseClick
         <p className={styles['board-card__info']}>30 / 111</p>
       </div>
       <div className={styles['board-card__img']}></div>
-      <div className={styles['board-card__close-btn']} onClick={() => onCloseClick(board)}>
+      {/* <div className={styles['board-card__close-btn']} onClick={() => onCloseClick(board)}>
         &nbsp;
-      </div>
+      </div> */}
+      <ModalConfirm element="board-card" confirmHandler={() => onCloseClick(board)} />
     </div>
   );
 };
