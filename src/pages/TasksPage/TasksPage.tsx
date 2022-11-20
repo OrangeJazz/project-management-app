@@ -1,26 +1,48 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Column, Task } from 'components';
-import { IColumnData, IColunm } from 'interfaces/interface';
-import { DragDropContext, DropResult } from 'react-beautiful-dnd';
+import { IColumnData, IColunm, ITask } from 'interfaces/interface';
+import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
-import sortByOrder from 'utils/sortByOrder';
-import { getTest } from 'store/columnDataSlice';
+import {
+  createTask,
+  deleteTask,
+  getColumn,
+  ICreateTask,
+  IDeleteTask,
+  setColumnData,
+} from 'store/columnDataSlice';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { Spin } from 'antd';
 
 const TasksPage = () => {
-  const [columns, setColums] = useState<IColumnData[]>([]);
+  const { id } = useParams();
+  const columns = useAppSelector((state) => state.columnData.columnsData);
+  const user = useAppSelector((state) => state.auth);
+  const loading = useAppSelector((state) => state.columnData.loading);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getTest().then((resp) => {
-      console.log(resp);
-
-      setColums(resp);
-    });
-  }, []);
+    if (id) {
+      dispatch(getColumn(id));
+    }
+  }, [dispatch, id]);
 
   const dragEndHandler = (result: DropResult) => {
-    const { destination, source } = result;
+    const { destination, source, type } = result;
 
     if (!destination) {
+      return;
+    }
+
+    const tasksOrder: IColumnData[] = JSON.parse(JSON.stringify(columns));
+
+    if (type === 'columns') {
+      const [item] = tasksOrder.splice(source.index, 1);
+      tasksOrder.splice(destination.index, 0, item);
+      tasksOrder.forEach((elem, index) => (elem.order = index));
+      dispatch(setColumnData(tasksOrder));
       return;
     }
 
@@ -30,48 +52,89 @@ const TasksPage = () => {
 
     const startColumnID = source.droppableId;
     const endColumnID = destination.droppableId;
-    const tasksOrder = [...columns];
+    const sourceColumnIndex = columns.findIndex((column) => column._id === startColumnID);
+    const destinationColumnIndex = tasksOrder.findIndex((column) => column._id === endColumnID);
 
     if (startColumnID === endColumnID) {
-      const columnIndex = columns.findIndex((column) => column._id === startColumnID);
-      const from = tasksOrder[columnIndex].tasks[source.index];
-      const to = tasksOrder[columnIndex].tasks[destination.index];
-      [to.order, from.order] = [from.order, to.order];
+      const [item] = tasksOrder[destinationColumnIndex].tasks.splice(source.index, 1);
+      tasksOrder[destinationColumnIndex].tasks.splice(destination.index, 0, item);
     } else {
-      const sourceColumnIndex = columns.findIndex((column) => column._id === startColumnID);
-      const destinationColumnIndex = columns.findIndex((column) => column._id === endColumnID);
       const [dragItem] = tasksOrder[sourceColumnIndex].tasks.splice(source.index, 1);
       tasksOrder[sourceColumnIndex].tasks.forEach((task, index) => (task.order = index));
       dragItem.columnId = endColumnID;
-      dragItem.order = destination.index;
       tasksOrder[destinationColumnIndex].tasks.splice(destination.index, 0, dragItem);
-      tasksOrder[destinationColumnIndex].tasks.forEach((task, index) => (task.order = index));
     }
-
-    setColums(tasksOrder);
+    tasksOrder[destinationColumnIndex].tasks.forEach((task, index) => (task.order = index));
+    dispatch(setColumnData(tasksOrder));
   };
 
-  const createTask = (column: IColunm) => {
-    console.log(`in ${column} created new task`);
+  const maxTaskOrder = (arr: ITask[]) => {
+    if (!arr.length) {
+      return;
+    }
+    const result = arr.reduce((acc, curr) => (acc.order > curr.order ? acc : curr));
+    return result.order;
   };
+
+  const createNewTask = (column: IColumnData) => {
+    const query: ICreateTask = {
+      boardID: id || '',
+      columnID: column._id,
+      title: 'new Task',
+      order: (maxTaskOrder(column.tasks) ?? 0) + 1,
+      description: 'New Description',
+      userId: user.id,
+      users: [user.id],
+    };
+    dispatch(createTask(query));
+  };
+
+  const eraseTask = (task: ITask) => {
+    const query: IDeleteTask = {
+      boardID: id || '',
+      columnID: task.columnId,
+      taskID: task._id,
+    };
+    dispatch(deleteTask(query));
+  };
+
+  if (loading) return <Spin></Spin>;
 
   return (
     <>
       <h2>Project Title</h2>
-      <div className={styles['column-container']}>
-        <DragDropContext onDragEnd={dragEndHandler}>
-          {sortByOrder(columns).map((column) => (
-            <Column column={column} key={column._id} onCreate={() => createTask(column)}>
-              {sortByOrder(column.tasks).map(
-                (task, index) =>
-                  task.columnId === column._id && (
-                    <Task key={task._id} task={task} taskOrder={index} />
-                  )
-              )}
-            </Column>
-          ))}
-        </DragDropContext>
-      </div>
+      <DragDropContext onDragEnd={dragEndHandler}>
+        <Droppable droppableId="colums" direction="horizontal" type="columns">
+          {(provided) => (
+            <div
+              className={styles['column-container']}
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+            >
+              {columns.map((column, index) => (
+                <Column
+                  column={column}
+                  key={column._id}
+                  columnOrder={index}
+                  onCreate={() => {
+                    createNewTask(column);
+                  }}
+                >
+                  {column.tasks.map((task, index) => (
+                    <Task
+                      key={task._id}
+                      task={task}
+                      taskOrder={index}
+                      onRemove={() => eraseTask(task)}
+                    />
+                  ))}
+                </Column>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+      </DragDropContext>
     </>
   );
 };
