@@ -1,0 +1,94 @@
+@import '../../styles/index.scss';
+.hero {
+  background: linear-gradient(180deg, $background-light-m -2.24%, $background-transparent 78.75%);
+  margin-top: -10rem;
+
+  &__container {
+    padding: 22rem 14rem 25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__content {
+    max-width: 54.2rem;
+  }
+  &__heading {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4.6rem;
+    line-height: 5.6rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 2.3rem;
+  }
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 5rem;
+    p {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      letter-spacing: 0.8px;
+      font-family: 'Roboto';
+      color: $secondary-dark;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 4rem;
+  }
+  &__button-primary,
+  &__button-secondary {
+    border-radius: 0.4rem;
+    border: none;
+    padding: 1.6rem 0;
+    width: 21rem;
+    font-family: 'Roboto';
+    font-size: 2.4rem;
+    line-height: 2.4rem;
+    letter-spacing: 0.14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s;
+    text-align: center;
+  }
+
+  &__button-primary {
+    background: $btn-primary;
+    color: $primary-light;
+
+    &:hover {
+      transform: scale(1.05);
+      background-color: $background-light-m;
+      color: $primary-dark;
+    }
+
+    &:active {
+      transform: scale(1);
+    }
+  }
+  &__button-secondary {
+    background: $btn-secondary;
+    color: $btn-primary;
+    &:hover {
+      transform: scale(1.05);
+      color: $btn-primary;
+    }
+
+    &:active {
+      transform: scale(1);
+      color: $btn-primary;
+    }
+  }
+
+  &__img {
+    background-image: url('../../assets/img/hero-img.svg');
+    background-size: cover;
+    width: 45.2rem;
+    height: 42.2rem;
+  }
+}
