@@ -1,3 +1,4 @@
+import { StartBtn } from 'components';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './Hero.module.scss';
@@ -17,12 +18,8 @@ const Hero = () => {
             <p>Organize your work in different wonderful projects with RS Task!</p>
           </div>
           <div className={styles.hero__buttons}>
-            <NavLink to="/signin" className={styles['hero__button-primary']}>
-              Start
-            </NavLink>
-            <a href="#features" className={styles['hero__button-secondary']}>
-              Learn more &gt;
-            </a>
+            <StartBtn title="Start" link="/signin" type="primary" />
+            <StartBtn title="Learn more &gt;" link="#features" type="secondary" />
           </div>
         </div>
         <div className={styles.hero__img}></div>
