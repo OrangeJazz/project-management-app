@@ -5,6 +5,7 @@ export { default as BoardCard } from './BoardCard/BoardCard';
 export { default as NewBoardCard } from './NewBoardCard/NewBoardCard';
 export { default as Column } from './Column/Column';
 export { default as Task } from './Task/Task';
+export { default as ModalBoard } from './ModalNewBoard/ModalBoard';
 export { default as ModalConfirm } from './ModalConfirm/ModalConfirm';
 export { default as Hero } from './Hero/Hero';
 export { default as StartBtn } from './StartBtn/StartBtn';
