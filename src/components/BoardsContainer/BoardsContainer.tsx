@@ -12,7 +12,7 @@ interface BoardsContainerProps {
 const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-
+  // console.log(boards);
   const deleteBoardHandler = async (board: IBoard) => {
     await dispatch(deleteBoardFetch(board));
   };

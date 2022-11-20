@@ -11,6 +11,7 @@ const BoardsPage = () => {
 
   useEffect(() => {
     dispatch(getUserBoards());
+    setFilteredBoards([...boardsState.boards]);
   }, [dispatch, boardsState.boards.length]);
 
   const searchValue = (value: string) => {
