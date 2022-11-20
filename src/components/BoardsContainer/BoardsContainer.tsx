@@ -5,8 +5,11 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
 import { IBoard } from '../../interfaces/interface';
 
-const BoardsContainer = () => {
-  const boardsState = useAppSelector((state) => state.boards);
+interface BoardsContainerProps {
+  boards: IBoard[];
+}
+
+const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
@@ -24,7 +27,7 @@ const BoardsContainer = () => {
 
   return (
     <div className={styles['boards-container']}>
-      {boardsState.boards.map((el) => (
+      {boards.map((el) => (
         <BoardCard
           board={el}
           key={el._id || Date.now().toString()}
