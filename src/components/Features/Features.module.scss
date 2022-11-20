@@ -1,0 +1,23 @@
+@import '../../styles/index.scss';
+
+.features {
+  background: linear-gradient(180deg, $background-light-m -2.24%, $background-transparent 78.75%);
+  margin-top: -10rem;
+
+  &__container {
+    padding: 22rem 14rem 25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__heading {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4.6rem;
+    line-height: 5.6rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 2.3rem;
+  }
+}
