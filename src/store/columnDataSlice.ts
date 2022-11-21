@@ -151,11 +151,34 @@ export const columnDataSilce = createSlice({
       })
 
       .addCase(deleteTask.fulfilled, (state, action) => {
-        const columnIndex = state.columnsData.findIndex(
-          (colum) => colum._id === action.payload.columnId
-        );
+        const findTaskIndex = (state: IColumnData[], taskID: string) => {
+          let findedTask: ITask = {
+            _id: '',
+            title: '',
+            boardId: '',
+            columnId: '',
+            description: '',
+            order: 0,
+            userId: '',
+            users: [],
+          };
+          state.forEach((column) => {
+            column.tasks.forEach((task) => {
+              if (task._id === taskID) {
+                findedTask = task;
+              }
+            });
+          });
+          console.log(findedTask);
+
+          return findedTask;
+        };
+
+        const actualTask = findTaskIndex(state.columnsData, action.payload._id);
+        console.log(actualTask);
+        const columnIndex = state.columnsData.findIndex((column) => column._id === actualTask._id);
         const taskIndex = state.columnsData[columnIndex].tasks.findIndex(
-          (task) => task._id === action.payload._id
+          (task) => task._id === actualTask._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1);
         state.columnsData[columnIndex].tasks = sortByOrder(state.columnsData[columnIndex].tasks);

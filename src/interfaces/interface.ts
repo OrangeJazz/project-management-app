@@ -44,7 +44,7 @@ export interface ITask extends IOrder {
   boardId: string;
   columnId: string;
   description: string;
-  userId: number;
+  userId: string;
   users: string[];
 }
 export interface IColunm extends IOrder {
