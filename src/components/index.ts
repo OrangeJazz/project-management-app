@@ -9,3 +9,4 @@ export { default as Hero } from './Hero/Hero';
 export { default as StartBtn } from './StartBtn/StartBtn';
 export { default as MainCard } from './MainCard/MainCard';
 export { default as Features } from './Features/Features';
+export { default as AboutUs } from './AboutUs/AboutUs';
