@@ -4,7 +4,9 @@
   margin-top: -10rem;
 
   &__container {
+    margin: 0 auto;
     padding: 22rem 14rem 25rem;
+    max-width: 144rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
