@@ -1,15 +1,15 @@
 @import '../../styles/index.scss';
 
 .features {
-  background: url('../../assets/img/wave1.svg');
+  background: url('../../assets/img/wave2.svg');
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
-  margin-top: -10rem;
+  margin-top: -15rem;
 
   &__container {
     margin: 0 auto;
-    padding: 22rem 12rem 25rem;
+    padding: 30rem 12rem 15rem;
     max-width: 144rem;
     display: flex;
     flex-direction: column;
