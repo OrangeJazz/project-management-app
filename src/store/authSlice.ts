@@ -76,9 +76,8 @@ const authSlice = createSlice({
       state.login = '';
       state.id = '';
       state.name = '';
-      localStorage.removeItem('login');
+      state.isLoggedIn = false;
       localStorage.removeItem('id');
-      localStorage.removeItem('name');
       localStorage.removeItem('token');
     },
   },
@@ -102,6 +101,7 @@ const authSlice = createSlice({
         state.loading = false;
         message.error('already exict');
       })
+
       .addCase(handleSingIn.pending, (state) => {
         state.loading = true;
       })
@@ -120,6 +120,7 @@ const authSlice = createSlice({
         state.loading = false;
         message.error('no such account');
       })
+
       .addCase(handleInitialRenderLogIn.pending, (state) => {
         state.loading = true;
       })
