@@ -1,0 +1,47 @@
+@import '../../styles/index.scss';
+.board-card {
+  &__container {
+    display: flex;
+    width: 36rem;
+    height: 14.3rem;
+    background-color: $primary-light;
+    box-shadow: 0 1.2rem 2rem rgba(105, 117, 135, 0.15);
+    border-radius: 1.8rem;
+    padding: 1.2rem 1.8rem;
+    justify-content: space-between;
+    align-items: center;
+    cursor: grab;
+  }
+
+  &__content {
+    width: 18.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__heading {
+    text-align: start;
+    font-weight: 700;
+    font-size: 3.2rem;
+    line-height: 1.8rem;
+    letter-spacing: 0.2rem;
+    color: $task-header;
+    font-family: 'Roboto';
+    margin-bottom: 1rem;
+  }
+
+  &__info {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2rem;
+    line-height: 4rem;
+    color: $secondary-dark;
+  }
+
+  &__img {
+    background: url('../../assets/icons/task-img.svg');
+    width: 10rem;
+    height: 10rem;
+  }
+}

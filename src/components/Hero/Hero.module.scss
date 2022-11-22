@@ -1,0 +1,52 @@
+@import '../../styles/index.scss';
+.hero {
+  background: linear-gradient(180deg, $background-light-m -2.24%, $background-transparent 78.75%);
+  margin-top: -10rem;
+
+  &__container {
+    padding: 22rem 14rem 25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__content {
+    max-width: 54.2rem;
+  }
+
+  &__heading {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 4.6rem;
+    line-height: 5.6rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 2.3rem;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    margin-bottom: 5rem;
+    p {
+      font-size: 1.6rem;
+      line-height: 2.2rem;
+      letter-spacing: 0.8px;
+      font-family: 'Roboto';
+      color: $secondary-dark;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 4rem;
+  }
+
+  &__img {
+    background-image: url('../../assets/img/hero-img.svg');
+    background-size: cover;
+    width: 45.2rem;
+    height: 42.2rem;
+  }
+}
