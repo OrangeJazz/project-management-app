@@ -4,7 +4,6 @@ import styles from './Header.module.scss';
 import HeaderButtons from 'components/HeaderButtons/HeaderButtons';
 import { useAppSelector } from 'hooks';
 import { Button, Modal } from 'antd';
-import BurgerMenu from 'components/BurgerMenu/BurgerMenu';
 
 const Header = () => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);

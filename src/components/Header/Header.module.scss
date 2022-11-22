@@ -6,7 +6,7 @@
   padding: 30px 80px;
   transition: all 0.3s ease-in-out;
 }
-.header{
+.header {
   display: flex;
   justify-content: space-between;
   max-width: 1280px;
@@ -22,7 +22,7 @@
     height: 24px;
     margin-top: 4px;
     box-sizing: border-box;
-    color: #54847D;
+    color: #54847d;
     text-decoration: none;
     line-height: 24px;
     letter-spacing: 0.32px;
@@ -30,32 +30,32 @@
     transition: all 0.3s ease-in-out;
   }
   a:hover {
-    color: #153C3C;
+    color: #153c3c;
   }
   .isActive {
-    color: #153C3C;
+    color: #153c3c;
     &:hover {
-      color: #153C3C;
+      color: #153c3c;
     }
   }
 }
 .scroll-header {
   background: #153c3c;
 }
-.nav-wrapper{
+.nav-wrapper {
   display: flex;
   gap: 35px;
 }
 @media (max-width: 990px) {
   .nav {
-    display: none;;
+    display: none;
   }
-  .container{
+  .container {
     padding: 30px 40px;
   }
 }
 @media (max-width: 400px) {
-  .container{
+  .container {
     padding: 30px 10px;
   }
 }

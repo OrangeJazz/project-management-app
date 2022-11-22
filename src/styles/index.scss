@@ -87,12 +87,12 @@ h5 {
     border-color: $btn-secondary-hover;
   }
 }
-.ant-dropdown-trigger{
+.ant-dropdown-trigger {
   color: black;
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 @media (min-width: 990px) {
-  .ant-dropdown-trigger{
+  .ant-dropdown-trigger {
     display: none;
   }
 }
