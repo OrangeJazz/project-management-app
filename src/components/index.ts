@@ -1,4 +1,7 @@
 export { default as Layout } from './Layout/Layout';
+export { default as HeaderButtons } from './HeaderButtons/HeaderButtons';
+export { default as Header } from './Header/Header';
+export { default as PrivateRoute } from './PrivateRoute/PrivateRoute';
 export { default as SearchBar } from './SearchBar/SearchBar';
 export { default as BoardsContainer } from './BoardsContainer/BoardsContainer';
 export { default as BoardCard } from './BoardCard/BoardCard';
