@@ -68,6 +68,7 @@ export const handleSingUp = createAsyncThunk(
     }
   }
 );
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -125,10 +126,10 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(handleInitialRenderLogIn.fulfilled, (state, action: PayloadAction<ISignUpResp>) => {
+        state.isLoggedIn = true;
         state.id = action.payload._id;
         state.login = action.payload.login;
         state.loading = false;
-        state.isLoggedIn = true;
         message.success('intial login');
       })
       .addCase(handleInitialRenderLogIn.rejected, (state) => {
