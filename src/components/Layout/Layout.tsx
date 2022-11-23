@@ -1,5 +1,5 @@
 import Footer from 'components/Footer';
-import Header from 'components/Header';
+import Header from 'components/Header/Header';
 import React from 'react';
 // import style from './Layout.module.scss';
 import { Outlet } from 'react-router-dom';

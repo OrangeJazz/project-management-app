@@ -1,0 +1,10 @@
+@import '../../styles/index.scss';
+.close-btn {
+  &__board-card {
+    background: url('../../assets/icons/close.svg');
+    width: 3rem;
+    height: 3rem;
+    align-self: flex-start;
+    cursor: pointer;
+  }
+}
