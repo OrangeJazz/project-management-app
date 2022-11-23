@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoardCard, NewBoardCard } from 'components';
+import { BoardCard, ModalBoard } from 'components';
 import styles from './BoardsContainer.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
@@ -12,22 +12,17 @@ interface BoardsContainerProps {
 const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-
-  const mockBoard: IBoard = {
-    title: 'Mock',
-    owner: authState.id,
-    users: [authState.id],
+  // console.log(boards);
+  const deleteBoardHandler = async (board: IBoard) => {
+    await dispatch(deleteBoardFetch(board));
   };
 
-  const addNewBoardHandler = () => {
-    console.log('click');
-    dispatch(createUserBoard(mockBoard));
-  };
-  const deleteBoardHandler = (board: IBoard) => {
-    dispatch(deleteBoardFetch(board));
-  };
   const clickHandler = (board: IBoard) => {
     console.log(board);
+  };
+
+  const fetchNewBoard = async (board: IBoard) => {
+    await dispatch(createUserBoard(board));
   };
 
   return (
@@ -40,7 +35,7 @@ const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
           onCloseClick={deleteBoardHandler}
         />
       ))}
-      <NewBoardCard onClick={addNewBoardHandler} />
+      <ModalBoard user={authState.id} addBoard={fetchNewBoard} />
     </div>
   );
 };

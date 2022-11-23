@@ -67,3 +67,35 @@ h5 {
   line-height: 2.6rem;
   letter-spacing: 0.8px;
 }
+.ant-btn-primary {
+  background: $btn-primary;
+  border-color: $btn-primary;
+  width: 100px;
+  &:hover {
+    background: $btn-primary-hover;
+    border-color: $btn-primary-hover;
+  }
+}
+.ant-btn-default {
+  width: 100px;
+  background: $btn-secondary;
+  border-color: $btn-secondary;
+  color: $btn-secondary-text;
+  &:hover {
+    background: $btn-secondary-hover;
+    color: $btn-secondary-text;
+    border-color: $btn-secondary-hover;
+  }
+}
+.ant-dropdown-trigger {
+  color: black;
+  transition: transform 0.3s ease-in-out;
+}
+@media (min-width: 990px) {
+  .ant-dropdown-trigger {
+    display: none;
+  }
+}
+.ant-dropdown-open {
+  transform: rotate(-180deg);
+}
