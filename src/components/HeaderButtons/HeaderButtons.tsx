@@ -36,7 +36,13 @@ const HeaderButtons = () => {
             <Button onClick={() => navigate('/profile')} type="default">
               Edit Profile
             </Button>
-            <Button onClick={() => dispath(handleLogOut())} type="primary">
+            <Button
+              onClick={() => {
+                navigate('/');
+                dispath(handleLogOut());
+              }}
+              type="primary"
+            >
               Sign Out
             </Button>
           </>
