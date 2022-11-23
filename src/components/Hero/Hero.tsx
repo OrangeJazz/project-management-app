@@ -1,6 +1,5 @@
 import { StartBtn } from 'components';
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './Hero.module.scss';
 
 const Hero = () => {
