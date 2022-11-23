@@ -7,79 +7,81 @@
     flex-direction: column;
     background: $primary-light;
     box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
   }
 
-  .card-content__features,
-  .card-content__about {
+  &-content__features,
+  &-content__about {
     display: flex;
     flex-direction: column;
   }
 
-  .img-container__features {
+  &-img-container__features {
     width: 35.5rem;
     height: 23.2rem;
   }
 
-  .img-container__about {
+  &-img-container__about {
     width: 25rem;
     height: 25rem;
+    margin: 2rem auto;
   }
 
-  .card-img__features {
+  &-img__features {
     width: 35.5rem;
     height: 23.2rem;
   }
-  .card-img__about {
+
+  &-img__about {
     width: 25rem;
     height: 25rem;
     border-radius: 25rem;
   }
 
-  .card-content__features,
-  .card-content__about {
+  &-content__features,
+  &-content__about {
     display: flex;
     flex-direction: column;
   }
 
-  .card-content__features {
+  &-content__features {
     padding: 3.2rem;
     gap: 2.5rem;
   }
 
-  .card-header__features,
-  .card-header__about {
-    font-family: 'Roboto';
-    font-style: normal;
+  &-header__features,
+  &-header__about {
     text-align: center;
     color: $primary-dark;
     line-height: 130%;
   }
 
-  .card-header__features {
+  &-header__features {
     font-weight: 500;
     font-size: 2.4rem;
     letter-spacing: 0.2px;
   }
 
-  .card-header__about {
+  &-header__about {
     font-weight: 700;
     font-size: 2rem;
     letter-spacing: 0.8px;
   }
 
-  .card-subheader__about {
+  &-subtitle__about {
     color: $secondary-dark;
     text-align: center;
-    font-family: 'Roboto';
-    font-style: normal;
     font-weight: 500;
-    font-size: 1.6px;
+    font-size: 1.6rem;
   }
 
-  .card-text__features,
-  .card-text__about {
-    font-family: 'Roboto';
-    font-style: normal;
+  &-text__features,
+  &-text__about {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 122%;
@@ -87,18 +89,14 @@
     color: $secondary-dark;
   }
 
-  .card-content__about {
+  &-content__about {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
 
-  .card-text__about {
+  &-text__about {
     text-align: center;
-    padding: 2rem 4.5rem;
+    padding: 0 4.5rem 2rem;
   }
-
-  // width: 35.5rem;
-  // height: 47.6rem;
-  // background-color: aqua;
 }

@@ -31,7 +31,7 @@ const ABOUT_CARDS = [
   {
     title: 'Mariya Vasileva',
     subtitle: 'Developer',
-    text: 'Automating Daily Tasks from Your Phone',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa nostrum voluptates hic iure tenetur ducimus. Quos pariatur id, fugiat quam cupiditate architecto odit a eveniet odio obcaecati voluptate earum excepturi.',
     img: 'about2.jpg',
   },
   {

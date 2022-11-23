@@ -12,7 +12,7 @@ interface MainCardProps {
 const MainCard: React.FC<MainCardProps> = ({ type, title, subtitle, text, img }) => {
   return (
     <div className={styles[`card__${type}`]}>
-      <div className={styles[`img-container__${type}`]}>
+      <div className={styles[`card-img-container__${type}`]}>
         <img src={img} alt={`${title} image`} className={styles[`card-img__${type}`]} />
       </div>
       <div className={styles[`card-content__${type}`]}>
