@@ -127,6 +127,21 @@ export const deleteTask = createAsyncThunk(
   }
 );
 
+interface IUpdateTask {
+  _id: string;
+  order: number;
+}
+
+
+export const updateTaskList = createAsyncThunk(
+  'columnDataSlice/updateTaskList',
+  async (body: IUpdateTask[]) => {
+    const { data } = await axios.patch<ITask[]>('/taskSet', body);
+
+    return data;
+  }
+);
+
 export const columnDataSilce = createSlice({
   name: 'columnData',
   initialState: initialState,
@@ -149,6 +164,7 @@ export const columnDataSilce = createSlice({
         const index = state.columnsData.findIndex((colum) => colum._id === action.payload.columnId);
         state.columnsData[index].tasks.push(action.payload);
       })
+      .addCase(updateTaskList.fulfilled, (state, action) => { })
 
       .addCase(deleteTask.fulfilled, (state, action) => {
         const findTaskIndex = (state: IColumnData[], taskID: string) => {
