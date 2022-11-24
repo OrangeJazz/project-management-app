@@ -6,8 +6,12 @@ import { handleLogOut } from 'store/authSlice';
 import { Select, Spin } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import BurgerMenu from 'components/BurgerMenu/BurgerMenu';
+import i18n from 'i18n';
+import { useTranslation } from 'react-i18next';
+
 export const handleChangeLang = (value: string) => {
   localStorage.setItem('lang', value);
+  i18n.changeLanguage(value.toLocaleLowerCase());
 };
 
 const HeaderButtons = () => {
@@ -16,7 +20,8 @@ const HeaderButtons = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const { Option } = Select;
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
+  const storageLang = localStorage.getItem('lang') || 'EN';
   return (
     <div className={styles['btns-wrapper']}>
       <div className={styles.btns}>
@@ -34,7 +39,7 @@ const HeaderButtons = () => {
         {isLoggedIn ? (
           <>
             <Button onClick={() => navigate('/profile')} type="default">
-              Edit Profile
+              {t('header.edit')}
             </Button>
             <Button
               onClick={() => {
@@ -43,28 +48,28 @@ const HeaderButtons = () => {
               }}
               type="primary"
             >
-              Sign Out
+              {t('header.signout')}
             </Button>
           </>
         ) : (
           <>
             <Button onClick={() => navigate('/signin')} type="default">
-              Sign In
+              {t('header.signin')}
             </Button>
             <Button onClick={() => navigate('/signup')} type="primary">
-              Sign Up
+              {t('header.signoup')}
             </Button>
           </>
         )}
       </div>
       <Select
-        defaultValue="EN"
+        defaultValue={storageLang}
         onChange={handleChangeLang}
         suffixIcon={<img src="./assets/icons/language.svg" />}
         style={{ width: '70px', margin: 'auto 0' }}
       >
         <Option value="EN">EN</Option>
-        <Option value="RU">RU</Option>
+        <Option value="RU">РУ</Option>
       </Select>
       <BurgerMenu />
     </div>

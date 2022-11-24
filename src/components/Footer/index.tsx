@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './Footer.module.scss';
 import rss from '../../assets/icons/rss.svg';
 import github from '../../assets/icons/github.svg';
+import { useTranslation } from 'react-i18next';
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer>
       <svg
@@ -45,7 +47,7 @@ const Footer = () => {
             rel="noreferrer"
           >
             <img src={github} alt="github logo" />
-            <span>Alexander Omelchuk</span>
+            <span>{t('footer.alex')}</span>
           </a>
           <a
             className={styles['footer__github-link']}
@@ -54,7 +56,7 @@ const Footer = () => {
             rel="noreferrer"
           >
             <img src={github} alt="github logo" />
-            <span>Mariya Vasileva</span>
+            <span>{t('footer.maria')}</span>
           </a>
           <a
             className={styles['footer__github-link']}
@@ -63,7 +65,7 @@ const Footer = () => {
             rel="noreferrer"
           >
             <img src={github} alt="github logo" />
-            <span>Aleksei Pepeliaev</span>
+            <span>{t('footer.aleksei')}</span>
           </a>
         </div>
         <div className={styles.footer__copyrigth}>© 2022 RS School. All Rights Reserved.</div>
