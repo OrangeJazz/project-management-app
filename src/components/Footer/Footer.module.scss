@@ -13,13 +13,18 @@
   margin-bottom: 2rem;
   span {
     color: #ffffff80;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
   }
 }
 .footer__github-link {
   display: flex;
   gap: 1rem;
   height: 38px;
-  width: 181px;
+  width: 200px;
   align-items: center;
   opacity: 0.7;
   transition: opacity 0.3s ease-in-out;

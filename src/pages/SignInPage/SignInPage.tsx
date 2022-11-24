@@ -5,11 +5,13 @@ import { IFormData } from 'interfaces/interface';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { handleSingIn } from 'store/authSlice';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SingInPage = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.auth.loading);
+  const { t } = useTranslation();
   const onFinish = (formData: IFormData) => {
     dispatch(handleSingIn(formData));
     form.resetFields();
@@ -18,7 +20,7 @@ const SingInPage = () => {
   return (
     <div className={styles.container}>
       <Spin
-        spinning={loading}
+        spinning={loading!}
         size="large"
         style={{
           position: 'fixed',
@@ -28,18 +30,20 @@ const SingInPage = () => {
           transform: 'translate(-50%,-50%)',
         }}
       />
+      <h2>{t('sign.title1')}</h2>
       <Form
         form={form}
+        labelAlign="left"
         name="basic"
-        style={{ margin: '0 auto', width: '320px' }}
-        labelCol={{ span: 8 }}
+        style={{ margin: '0 auto', width: '300px' }}
+        labelCol={{ span: 7 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
       >
         <Form.Item
-          label="Login"
+          label={t('sign.login')}
           name="login"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
@@ -47,7 +51,7 @@ const SingInPage = () => {
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label={t('sign.pass')}
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
@@ -56,11 +60,11 @@ const SingInPage = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t('sign.btn')}
           </Button>
         </Form.Item>
-        <NavLink to="/signup">You dont have account</NavLink>
       </Form>
+      <NavLink to="/signup">{t('sign.noacc')}</NavLink>
     </div>
   );
 };

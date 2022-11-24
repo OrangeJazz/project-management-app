@@ -14,6 +14,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch } from 'hooks';
 import { handleInitialRenderLogIn } from 'store/authSlice';
+import { ConfigProvider } from 'antd';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,23 +32,34 @@ function App() {
     }
   }, []);
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<MainPage />} />
-        <Route element={<LogInUserRoutes />}>
-          <Route path="/signin" element={<SingInPage />} />
-          <Route path="/signup" element={<SingUpPage />} />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#84a17d',
+          colorPrimaryHover: '#6d9f61',
+          borderRadius: 3,
+          fontFamily: 'Roboto',
+        },
+      }}
+    >
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route element={<LogInUserRoutes />}>
+            <Route path="/signin" element={<SingInPage />} />
+            <Route path="/signup" element={<SingUpPage />} />
+          </Route>
+          <Route element={<LogOutUserRoutes />}>
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/boards" element={<BoardsPage />} />
+            <Route path="/boards:id" element={<BoardsPage />} />
+          </Route>
+          <Route path="/404" element={<NotFoundPage />} />
+          <Route path="*" element={<Navigate to="/404" replace />} />
         </Route>
-        <Route element={<LogOutUserRoutes />}>
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/search" element={<SearchPage />} />
-          <Route path="/boards" element={<BoardsPage />} />
-          <Route path="/boards:id" element={<BoardsPage />} />
-        </Route>
-        <Route path="/404" element={<NotFoundPage />} />
-        <Route path="*" element={<Navigate to="/404" replace />} />
-      </Route>
-    </Routes>
+      </Routes>
+    </ConfigProvider>
   );
 }
 

@@ -15,7 +15,7 @@ export const initialState: IAuthState = {
   name: '',
   id: '',
   token: '',
-  loading: false,
+  loading: null,
   isLoggedIn: false,
 };
 export const handleSingIn = createAsyncThunk(

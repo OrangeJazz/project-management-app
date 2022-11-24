@@ -8,7 +8,7 @@ export interface IAuthState {
   name: string;
   id: string;
   token: string;
-  loading: boolean;
+  loading: boolean | null;
   isLoggedIn: boolean;
 }
 export interface ISignUpResp {
