@@ -18,7 +18,7 @@ const SingUpPage = () => {
   return (
     <div className={styles.container}>
       <Spin
-        spinning={loading}
+        spinning={loading!}
         size="large"
         style={{
           position: 'fixed',

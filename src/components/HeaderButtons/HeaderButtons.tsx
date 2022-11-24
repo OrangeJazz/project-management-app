@@ -26,7 +26,7 @@ const HeaderButtons = () => {
     <div className={styles['btns-wrapper']}>
       <div className={styles.btns}>
         <Spin
-          spinning={loading}
+          spinning={loading!}
           size="large"
           style={{
             position: 'fixed',
