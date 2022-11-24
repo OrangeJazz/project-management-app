@@ -5,9 +5,11 @@ import { IFormData } from 'interfaces/interface';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { handleSingUp } from 'store/authSlice';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const SingUpPage = () => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.auth.loading);
   const onFinish = (formData: IFormData) => {
@@ -17,6 +19,7 @@ const SingUpPage = () => {
 
   return (
     <div className={styles.container}>
+      <h2>{t('sign.title2')}</h2>
       <Spin
         spinning={loading!}
         size="large"
@@ -30,23 +33,24 @@ const SingUpPage = () => {
       />
       <Form
         form={form}
+        labelAlign="left"
         name="basic"
-        style={{ margin: '0 auto', width: '320px' }}
-        labelCol={{ span: 8 }}
+        style={{ margin: '0 auto', width: '300px' }}
+        labelCol={{ span: 7 }}
         wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={onFinish}
         autoComplete="off"
       >
         <Form.Item
-          label="Name"
+          label={t('sign.name')}
           name="name"
           rules={[{ required: true, message: 'Please input your name!' }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          label="Login"
+          label={t('sign.login')}
           name="login"
           rules={[{ required: true, message: 'Please input your username!' }]}
         >
@@ -54,7 +58,7 @@ const SingUpPage = () => {
         </Form.Item>
 
         <Form.Item
-          label="Password"
+          label={t('sign.pass')}
           name="password"
           rules={[{ required: true, message: 'Please input your password!' }]}
         >
@@ -63,11 +67,11 @@ const SingUpPage = () => {
 
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t('sign.btn')}
           </Button>
         </Form.Item>
-        <NavLink to="/signin">You already have account</NavLink>
       </Form>
+      <NavLink to="/signin">{t('sign.already')}</NavLink>
     </div>
   );
 };

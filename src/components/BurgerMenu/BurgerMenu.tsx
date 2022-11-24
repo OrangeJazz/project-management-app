@@ -52,7 +52,7 @@ const BurgerMenu = () => {
   ];
   const items = isLoggedIn ? itemsLoggedIn : itemsNotLoggedIn;
   return (
-    <Dropdown placement="bottom" menu={{ items }} trigger={['click']}>
+    <Dropdown placement="bottomRight" menu={{ items }} trigger={['click']}>
       <a onClick={(e) => e.preventDefault()}>
         <img src="./assets/icons/down.svg" />
       </a>

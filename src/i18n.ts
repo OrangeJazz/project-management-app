@@ -27,8 +27,21 @@ i18n.use(initReactI18next).init({
           btn1: 'Start',
           btn2: 'Learn more >',
         },
+        features: {
+          title: 'Save your time with RS Task',
+        },
         team: {
           title: 'Our team',
+        },
+        sign: {
+          title1: 'Sign In',
+          title2: 'Sign Up',
+          name: 'Name',
+          login: 'Login',
+          pass: 'Password',
+          btn: 'Submit',
+          already: 'If you already have an account, you can sign in here',
+          noacc: 'If you don not have an account, you can sign up here',
         },
         footer: {
           alex: 'Alexander Omelchuk',
@@ -55,6 +68,19 @@ i18n.use(initReactI18next).init({
           desc2: 'Организуйте свою работу в разных замечательных проектах с RS Task!',
           btn1: 'Старт',
           btn2: 'Узнай больше >',
+        },
+        features: {
+          title: 'Экономьте свое время с RS Task',
+        },
+        sign: {
+          title1: 'Войти',
+          title2: 'Регистрация',
+          name: 'Имя',
+          login: 'Логин',
+          pass: 'Пароль',
+          btn: 'Отправить',
+          already: 'Если у вас уже есть аккаунт, вы можеть войту тут',
+          noacc: 'Если у вас нет аккаунт, вы можеть зарегистрироваться тут',
         },
         team: {
           title: 'Наша команда',

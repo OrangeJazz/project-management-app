@@ -1,4 +1,3 @@
-@import 'antd/dist/antd.min.css';
 @import './fonts.scss';
 @import './colors.scss';
 @import-normalize;
@@ -30,7 +29,7 @@ h6,
 p {
   margin: 0;
   color: $primary-dark;
-  font-family: 'Roboto, sans-serif';
+  font-family: 'Roboto';
   font-style: normal;
   font-size: 1.6rem;
 }
@@ -68,26 +67,7 @@ h5 {
   line-height: 2.6rem;
   letter-spacing: 0.8px;
 }
-.ant-btn-primary {
-  background: $btn-primary;
-  border-color: $btn-primary;
-  width: 120px;
-  &:hover {
-    background: $btn-primary-hover;
-    border-color: $btn-primary-hover;
-  }
-}
-.ant-btn-default {
-  width: 110px;
-  background: $btn-secondary;
-  border-color: $btn-secondary;
-  color: $btn-secondary-text;
-  &:hover {
-    background: $btn-secondary-hover;
-    color: $btn-secondary-text;
-    border-color: $btn-secondary-hover;
-  }
-}
+
 .ant-dropdown-trigger {
   color: black;
   transition: transform 0.3s ease-in-out;
@@ -99,4 +79,9 @@ h5 {
 }
 .ant-dropdown-open {
   transform: rotate(-180deg);
+}
+.ant-dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

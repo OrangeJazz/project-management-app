@@ -62,6 +62,7 @@ const HeaderButtons = () => {
           </>
         )}
       </div>
+      <BurgerMenu />
       <Select
         defaultValue={storageLang}
         onChange={handleChangeLang}
@@ -71,7 +72,6 @@ const HeaderButtons = () => {
         <Option value="EN">EN</Option>
         <Option value="RU">РУ</Option>
       </Select>
-      <BurgerMenu />
     </div>
   );
 };
