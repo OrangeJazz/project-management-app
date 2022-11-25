@@ -45,7 +45,10 @@ const SingInPage = () => {
         <Form.Item
           label={t('sign.login')}
           name="login"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[
+            { required: true, message: t('errors.empty')! },
+            { min: 4, message: t('errors.login')! },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -53,7 +56,10 @@ const SingInPage = () => {
         <Form.Item
           label={t('sign.pass')}
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[
+            { required: true, message: t('errors.empty')! },
+            { min: 6, message: t('errors.pass')! },
+          ]}
         >
           <Input.Password />
         </Form.Item>

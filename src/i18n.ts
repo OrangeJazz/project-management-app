@@ -42,11 +42,18 @@ i18n.use(initReactI18next).init({
           btn: 'Submit',
           already: 'If you already have an account, you can sign in here',
           noacc: 'If you don not have an account, you can sign up here',
+          edit: 'Save changes',
+          delete: 'Delete account',
         },
         footer: {
           alex: 'Alexander Omelchuk',
           maria: 'Mariya Vasileva',
           aleksei: 'Aleksei Pepeliaev',
+        },
+        errors: {
+          empty: 'Should not be empty',
+          login: 'Should contain at least 4 characters',
+          pass: 'Should contain at least 6 characters',
         },
       },
     },
@@ -58,7 +65,6 @@ i18n.use(initReactI18next).init({
           signout: 'Выйти',
           boards: 'Доски',
           create: '+ Создать новую доску',
-          create2: '+ Создать',
           edit: 'Профиль',
         },
         hero: {
@@ -81,9 +87,16 @@ i18n.use(initReactI18next).init({
           btn: 'Отправить',
           already: 'Если у вас уже есть аккаунт, вы можеть войту тут',
           noacc: 'Если у вас нет аккаунт, вы можеть зарегистрироваться тут',
+          edit: 'Сохранить измения',
+          delete: 'Удалить аккаунт',
         },
         team: {
           title: 'Наша команда',
+        },
+        errors: {
+          empty: 'Не должно быть пусто',
+          login: 'Дожно быть как минимум 4 символа',
+          pass: 'Дожно быть как минимум 6 символов',
         },
         footer: {
           alex: 'Александр Омельчук',

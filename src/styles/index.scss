@@ -1,6 +1,5 @@
 @import './fonts.scss';
 @import './colors.scss';
-@import-normalize;
 
 html {
   font-size: 62.5%;
@@ -84,4 +83,7 @@ h5 {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.ant-form-item-explain-error {
+  font-size: 12px;
 }
