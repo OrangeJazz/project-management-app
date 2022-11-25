@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import HeaderButtons from 'components/HeaderButtons/HeaderButtons';
 import { useAppSelector } from 'hooks';
 import { Button, Modal } from 'antd';
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState('Content of the modal');
+  const navigate = useNavigate();
   const showModal = () => {
     setOpen(true);
   };
@@ -25,7 +28,6 @@ const Header = () => {
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   };
   const checkSrolling = () => {
@@ -49,14 +51,11 @@ const Header = () => {
           <nav className={styles.nav}>
             {isLoggedIn && (
               <>
-                <NavLink
-                  to="/boards"
-                  className={({ isActive }) => (isActive ? styles.isActive : '')}
-                >
-                  Boards
-                </NavLink>
-                <Button type="primary" style={{ width: '170px' }} onClick={showModal}>
-                  &#43; Create new board
+                <Button onClick={() => navigate('/boards')} type="default">
+                  {t('header.boards')}
+                </Button>
+                <Button type="primary" style={{ width: '180px' }} onClick={showModal}>
+                  {t('header.create')}
                 </Button>
                 <Modal
                   title="Title"
