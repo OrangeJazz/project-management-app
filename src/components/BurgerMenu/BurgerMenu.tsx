@@ -20,13 +20,22 @@ const BurgerMenu = () => {
       key: 'item-2',
     },
     {
-      label: <Button onClick={() => dispath(handleLogOut())}>{t('header.signout')}</Button>,
+      label: (
+        <Button
+          onClick={() => {
+            navigate('/');
+            dispath(handleLogOut());
+          }}
+        >
+          {t('header.signout')}
+        </Button>
+      ),
       key: 'item-3',
     },
     {
       label: (
         <Button type="primary" onClick={() => navigate('/boards')}>
-          {t('header.create2')}
+          {t('header.create')}
         </Button>
       ),
       key: 'item-4',

@@ -8,14 +8,15 @@ export interface IAuthState {
   name: string;
   id: string;
   token: string;
-  loading: boolean | null;
-  isLoggedIn: boolean;
+  loading: boolean;
+  isLoggedIn: boolean | null;
 }
-export interface ISignUpResp {
+export interface ISignResp {
   name: string;
   login: string;
   _id: string;
   token: string;
+  password: string;
 }
 export interface IErrorResp {
   statusCode: number;

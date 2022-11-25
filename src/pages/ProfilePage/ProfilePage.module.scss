@@ -1,0 +1,29 @@
+.card {
+  background: #84a17d;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 180px;
+    height: 180px;
+  }
+  p {
+    color: white;
+  }
+}
+.container {
+  display: flex;
+  gap: 0 3rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 5rem;
+}
+.wrapper-card {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

@@ -28,7 +28,6 @@ const Header = () => {
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setOpen(false);
   };
   const checkSrolling = () => {

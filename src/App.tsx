@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Layout, LogInUserRoutes, LogOutUserRoutes } from 'components';
+import { Layout, SignOutUserRoutes, SignInUserRoutes } from 'components';
 import {
   BoardsPage,
   MainPage,
@@ -13,7 +13,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAppDispatch } from 'hooks';
-import { handleInitialRenderLogIn } from 'store/authSlice';
+import { handleFailedIntialLogIn, handleInitialRenderLogIn } from 'store/authSlice';
 import { ConfigProvider } from 'antd';
 
 function App() {
@@ -29,7 +29,7 @@ function App() {
         .catch(() => {
           navigate('/');
         });
-    }
+    } else dispatch(handleFailedIntialLogIn());
   }, []);
   return (
     <ConfigProvider
@@ -45,11 +45,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route element={<LogInUserRoutes />}>
+          <Route element={<SignOutUserRoutes />}>
             <Route path="/signin" element={<SingInPage />} />
             <Route path="/signup" element={<SingUpPage />} />
           </Route>
-          <Route element={<LogOutUserRoutes />}>
+          <Route element={<SignInUserRoutes />}>
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/search" element={<SearchPage />} />
             <Route path="/boards" element={<BoardsPage />} />
