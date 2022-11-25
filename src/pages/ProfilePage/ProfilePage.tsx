@@ -3,23 +3,24 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { IFormData } from 'interfaces/interface';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { handleSingUp } from 'store/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { handleDeleteAcc, handleUpdateAcc } from 'store/authSlice';
 import avatar from '../../assets/icons/avatar.svg';
 import styles from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-  const loading = useAppSelector((state) => state.auth.loading);
-  const login = useAppSelector((state) => state.auth.login);
-  const name = useAppSelector((state) => state.auth.name);
+
   const onFinish = (formData: IFormData) => {
-    dispatch(handleSingUp(formData));
+    dispatch(handleUpdateAcc(formData));
     form.resetFields();
   };
   const onDelete = () => {
-    console.log('dfsdf');
+    dispatch(handleDeleteAcc());
+    navigate('/');
   };
   return (
     <div className={styles.container}>
@@ -37,23 +38,23 @@ const ProfilePage = () => {
         name="basic"
         style={{ width: '300px', marginTop: '4rem' }}
         labelCol={{ span: 7 }}
-        initialValues={{ remember: true }}
+        autoComplete={'nope'}
         onFinish={onFinish}
-        autoComplete="off"
       >
         <Form.Item
           label={t('sign.name')}
           name="name"
-          initialValue={name}
-          rules={[{ required: true, message: 'Please input your name!' }]}
+          rules={[{ required: true, message: t('errors.empty')! }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label={t('sign.login')}
           name="login"
-          initialValue={login}
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[
+            { required: true, message: t('errors.empty')! },
+            { min: 4, message: t('errors.login')! },
+          ]}
         >
           <Input />
         </Form.Item>
@@ -61,7 +62,10 @@ const ProfilePage = () => {
         <Form.Item
           label={t('sign.pass')}
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[
+            { required: true, message: t('errors.empty')! },
+            { min: 6, message: t('errors.pass')! },
+          ]}
         >
           <Input.Password />
         </Form.Item>
