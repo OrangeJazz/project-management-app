@@ -1,7 +1,7 @@
 @import '../../styles/index.scss';
 
 .card-container {
-  width: 32rem;
+  min-width: 32rem;
   position: relative;
   background-color: $card-background;
   border-radius: 18px;

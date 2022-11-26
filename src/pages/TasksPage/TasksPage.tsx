@@ -23,6 +23,7 @@ import patchColumn from 'utils/patchColumn';
 const TasksPage = () => {
   const { id } = useParams();
   const columns = useAppSelector((state) => state.columnData.columnsData);
+  const columnloading = useAppSelector((state) => state.columnData.loading);
   const user = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
@@ -107,7 +108,7 @@ const TasksPage = () => {
     dispatch(deleteTask(query));
   };
 
-  if (!columns.length) return <Spin />;
+  if (columnloading) return <Spin />;
 
   return (
     <>
