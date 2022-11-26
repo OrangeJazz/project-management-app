@@ -36,9 +36,30 @@ export interface PrivateRouteProps {
   children: React.ReactNode;
 }
 
+export interface IOrder {
+  order: number;
+}
+export interface ITask extends IOrder {
+  _id: string;
+  title: string;
+  boardId: string;
+  columnId: string;
+  description: string;
+  userId: string;
+  users: string[];
+}
+export interface IColumn extends IOrder {
+  _id: string;
+  title: string;
+  boardId: string;
+}
 export interface IBoard {
   _id?: string;
   title: string;
   owner: string;
   users: string[];
+}
+
+export interface IColumnData extends IColumn {
+  tasks: ITask[];
 }

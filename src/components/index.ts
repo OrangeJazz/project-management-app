@@ -12,6 +12,8 @@ export { default as ModalBoard } from './ModalNewBoard/ModalBoard';
 export { default as ModalConfirm } from './ModalConfirm/ModalConfirm';
 export { default as Hero } from './Hero/Hero';
 export { default as StartBtn } from './StartBtn/StartBtn';
+export { default as ModalColumn } from './ModalColumn/ModalColumn';
+export { default as ColumnAddButton } from './ColumnAddButton/ColumnAddButton';
 export { default as MainCard } from './MainCard/MainCard';
 export { default as Features } from './Features/Features';
 export { default as AboutUs } from './AboutUs/AboutUs';
