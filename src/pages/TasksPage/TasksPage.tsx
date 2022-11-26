@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Column, ColumnAddButton, Task } from 'components';
+import { Column, ColumnAddButton, ModalTask, Task } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
@@ -86,16 +86,7 @@ const TasksPage = () => {
     dispatch(deleteColumn(column));
   };
 
-  const createNewTask = (column: IColumnData) => {
-    const query: ICreateTask = {
-      boardID: id || '',
-      columnID: column._id,
-      title: 'new Task',
-      order: (getMaxOrder(column.tasks) ?? 0) + 1,
-      description: 'New Description',
-      userId: user.id,
-      users: [user.id],
-    };
+  const createNewTask = (query: ICreateTask) => {
     dispatch(createTask(query));
   };
 
@@ -126,9 +117,7 @@ const TasksPage = () => {
                   column={column}
                   key={column._id}
                   columnOrder={index}
-                  onCreate={() => {
-                    createNewTask(column);
-                  }}
+                  onCreate={createNewTask}
                   onClose={() => deleteColumnHandler(column)}
                 >
                   {column.tasks.map((task, index) => (
@@ -142,7 +131,7 @@ const TasksPage = () => {
                 </Column>
               ))}
               {provided.placeholder}
-              <ColumnAddButton onClick={createColumnHandler} state={columns} boardId={id} />
+              <ColumnAddButton onClick={createColumnHandler} state={columns} />
             </div>
           )}
         </Droppable>

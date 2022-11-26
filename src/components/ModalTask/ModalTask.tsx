@@ -2,20 +2,21 @@ import { Form, Input, Modal } from 'antd';
 import { t } from 'i18next';
 import React from 'react';
 
-interface IModalColumnProps {
+interface IModalTaskProps {
   title?: React.ReactNode;
   isVisible?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
-  onValueChange?: (formTitle: string) => void;
+  onValueChange?: (formTitle: FormValues) => void;
 }
 
 interface FormValues {
   title: string;
+  description: string;
 }
 
-const ModalColumn: React.FC<IModalColumnProps> = ({
-  title = <h4>Create column</h4>,
+const ModalTask: React.FC<IModalTaskProps> = ({
+  title = <h4>Create task</h4>,
   isVisible = true,
   onOk = () => {},
   onCancel = () => {},
@@ -24,7 +25,7 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
   const [form] = Form.useForm();
 
   const onFormLayoutChange = (values: FormValues) => {
-    onValueChange(values.title);
+    onValueChange(values);
   };
 
   const onOkHandler = () => {
@@ -41,21 +42,37 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
       onOk={onOkHandler}
       onCancel={onCancel}
     >
-      <Form layout="vertical" form={form} onValuesChange={onFormLayoutChange} autoComplete="off">
+      <Form
+        layout="vertical"
+        form={form}
+        onValuesChange={(a, b) => onFormLayoutChange(b)}
+        autoComplete="off"
+      >
         <Form.Item
           name="title"
           rules={[
             { required: true, message: 'Please, input column title!' },
             { min: 4, message: t('errors.login')! },
           ]}
-          label={<h5>Column title:</h5>}
+          label={<h5>Task title:</h5>}
           initialValue=""
         >
-          <Input placeholder="input column title" />
+          <Input placeholder="input task title" />
+        </Form.Item>
+        <Form.Item
+          name="description"
+          rules={[
+            { required: true, message: 'Please, input column title!' },
+            { min: 4, message: t('errors.login')! },
+          ]}
+          label={<h5>Task description:</h5>}
+          initialValue=""
+        >
+          <Input placeholder="input task description" />
         </Form.Item>
       </Form>
     </Modal>
   );
 };
 
-export default ModalColumn;
+export default ModalTask;

@@ -19,3 +19,5 @@ export { default as Features } from './Features/Features';
 export { default as AboutUs } from './AboutUs/AboutUs';
 export { default as SignOutUserRoutes } from './SignOutUserRoutes/SignOutUserRoutes';
 export { default as SignInUserRoutes } from './SignInUserRoutes/SignInUserRoutes';
+export { default as ModalTask } from './ModalTask/ModalTask';
+export { default as TaskAddButton } from './TaskAddButton/TaskAddButton';
