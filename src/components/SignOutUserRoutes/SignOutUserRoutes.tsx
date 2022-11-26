@@ -2,8 +2,8 @@ import { useAppSelector } from 'hooks';
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const LogOutUserRoutes = () => {
+const SignOutUserRoutes = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-  return !isLoggedIn ? <Navigate to="/signin" /> : <Outlet />;
+  return isLoggedIn ? <Navigate to="/boards" /> : <Outlet />;
 };
-export default LogOutUserRoutes;
+export default SignOutUserRoutes;

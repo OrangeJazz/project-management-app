@@ -1,0 +1,36 @@
+@import '../../styles/index.scss';
+
+.features {
+  background: url('../../assets/img/wave2.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -15rem;
+
+  &__container {
+    margin: 0 auto;
+    padding: 30rem 12rem 15rem;
+    max-width: 144rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__heading {
+    font-family: 'Roboto';
+    font-style: normal;
+    color: $background-dark;
+    font-weight: 700;
+    font-size: 4rem;
+    line-height: 5rem;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 8rem;
+  }
+
+  &__cards {
+    display: flex;
+    gap: 6.8rem;
+    margin-bottom: 8rem;
+  }
+}

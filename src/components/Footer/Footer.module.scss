@@ -1,48 +1,58 @@
+.wrapper {
+  background: #153c3c;
+  padding: 0 0 4rem 0;
+}
 .footer {
-  box-sizing: border-box;
-  min-height: 80px;
-  background: #33334f;
-  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  background: #153c3c;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
-  padding: 0 1.5rem;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-}
-.footter__year-link {
-  display: flex;
-  gap: 0.5rem;
-  color: white;
-  p {
-    margin: 0;
+  align-items: center;
+  margin-bottom: 2rem;
+  span {
+    color: #ffffff80;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: 0em;
+    text-align: left;
   }
 }
 .footer__github-link {
-  font-size: 1rem;
-  text-decoration: none;
-  color: white;
-  transition: color 0.3s ease-in-out;
+  display: flex;
+  gap: 1rem;
+  height: 38px;
+  width: 200px;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease-in-out;
   &:hover {
-    color: #ce1f99;
+    opacity: 1;
   }
+}
+.footer__copyrigth {
+  color: #54847d;
+  font-family: 'Roboto';
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.2;
+  text-align: center;
+  padding-bottom: 2rem;
 }
 .footer__rss-link {
-  width: 5rem;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 80px;
-    height: 80px;
+  opacity: 0.8;
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 1;
   }
 }
-@media (max-width: 720px) {
+@media (max-width: 1350px) {
   .footer {
-    padding: 1.5rem 1.5rem 0 1.5rem;
     flex-direction: column;
-    gap: 10px;
+    gap: 2rem;
+    margin-bottom: 2rem;
   }
 }
