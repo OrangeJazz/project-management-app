@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './Column.module.scss';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { IColunm } from 'interfaces/interface';
+import { IColumn } from 'interfaces/interface';
 
 interface ColumnProps {
-  column?: IColunm;
+  column?: IColumn;
   columnOrder: number;
   children?: React.ReactNode;
   onClose?: () => void;

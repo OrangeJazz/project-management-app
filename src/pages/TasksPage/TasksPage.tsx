@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { Column, Task } from 'components';
-import { IColumnData, IColunm, ITask } from 'interfaces/interface';
+import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
 import {
+  addColumn,
   createTask,
+  deleteColumn,
   deleteTask,
   getColumn,
   ICreateTask,
@@ -14,12 +16,13 @@ import {
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Spin } from 'antd';
+import getMaxOrder from 'utils/getMaxOrder';
+import patchColumn from 'utils/patchColumn';
 
 const TasksPage = () => {
   const { id } = useParams();
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const user = useAppSelector((state) => state.auth);
-  const loading = useAppSelector((state) => state.columnData.loading);
 
   const dispatch = useAppDispatch();
 
@@ -28,6 +31,11 @@ const TasksPage = () => {
       dispatch(getColumn(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (!columns.length) return;
+    patchColumn(columns);
+  }, [columns]);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, type } = result;
@@ -68,12 +76,17 @@ const TasksPage = () => {
     dispatch(setColumnData(tasksOrder));
   };
 
-  const maxTaskOrder = (arr: ITask[]) => {
-    if (!arr.length) {
-      return;
-    }
-    const result = arr.reduce((acc, curr) => (acc.order > curr.order ? acc : curr));
-    return result.order;
+  const createColumnHandler = () => {
+    const query = {
+      title: 'new Column',
+      order: (getMaxOrder(columns) ?? 0) + 1,
+      boardID: id || '',
+    };
+    dispatch(addColumn(query));
+  };
+
+  const deleteColumnHandler = (column: IColumn) => {
+    dispatch(deleteColumn(column));
   };
 
   const createNewTask = (column: IColumnData) => {
@@ -81,7 +94,7 @@ const TasksPage = () => {
       boardID: id || '',
       columnID: column._id,
       title: 'new Task',
-      order: (maxTaskOrder(column.tasks) ?? 0) + 1,
+      order: (getMaxOrder(column.tasks) ?? 0) + 1,
       description: 'New Description',
       userId: user.id,
       users: [user.id],
@@ -98,7 +111,7 @@ const TasksPage = () => {
     dispatch(deleteTask(query));
   };
 
-  if (loading) return <Spin></Spin>;
+  if (!columns.length) return <Spin />;
 
   return (
     <>
@@ -119,6 +132,7 @@ const TasksPage = () => {
                   onCreate={() => {
                     createNewTask(column);
                   }}
+                  onClose={() => deleteColumnHandler(column)}
                 >
                   {column.tasks.map((task, index) => (
                     <Task
@@ -135,6 +149,7 @@ const TasksPage = () => {
           )}
         </Droppable>
       </DragDropContext>
+      <button onClick={createColumnHandler}> Create Column</button>
     </>
   );
 };

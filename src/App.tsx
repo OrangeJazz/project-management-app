@@ -43,7 +43,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/boards" element={<BoardsPage />} />
-          <Route path="/boards:id" element={<BoardsPage />} />
+          <Route path="/boards/:id" element={<TasksPage />} />
         </Route>
         <Route path="/404" element={<NotFoundPage />} />
         <Route path="*" element={<Navigate to="/404" replace />} />

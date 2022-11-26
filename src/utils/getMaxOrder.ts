@@ -1,7 +1,7 @@
-import { IColunm, ITask } from 'interfaces/interface';
+import { IColumnData, ITask } from 'interfaces/interface';
 import { default as sortByOrder } from './sortByOrder';
 
-const getMaxOrder = <T extends Array<ITask | IColunm>>(arg: T): number | undefined => {
+const getMaxOrder = <T extends Array<ITask | IColumnData>>(arg: T): number | undefined => {
   if (!arg.length) {
     return;
   }

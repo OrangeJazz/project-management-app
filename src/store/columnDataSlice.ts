@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { message } from 'antd';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
+import memoizedGet from 'utils/memoizedGet';
 import sortByOrder from 'utils/sortByOrder';
-import { IColumnData, IColunm, ITask } from '../interfaces/interface';
-
+import { IColumn, IColumnData, ITask } from '../interfaces/interface';
 const token = localStorage.getItem('token');
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+interface IBoardID {
+  boardID: string;
+}
 
 interface IState {
   columnsData: IColumnData[];
@@ -19,59 +21,42 @@ const initialState: IState = {
 };
 
 export const getColumn = createAsyncThunk('columnDataSlice/getColumn', async (boardID: string) => {
-  const { data } = await axios.get<IColunm[]>(`boards/${boardID}/columns/`);
+  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`);
   const columnsData: IColumnData[] = [];
 
   for await (const column of data) {
-    const { data } = await axios.get<ITask[]>(`/boards/${boardID}/columns/${column._id}/tasks/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const data: ITask[] = (await memoizedGet(
+      `/boards/${boardID}/columns/${column._id}/tasks/`
+    )) as ITask[];
     columnsData.push({ ...column, tasks: data });
   }
   return columnsData;
 });
 
-interface IAddColumn {
-  boardID: string;
-  tytle: string;
-  order: string;
+export interface IAddColumn extends IBoardID {
+  title: string;
+  order: number;
 }
 
-const addColumn = createAsyncThunk('columnDataSlice/addColumn', async (query: IAddColumn) => {
-  const body = {
-    title: query.tytle,
-    order: query.order,
-  };
-  const { data } = await axios.post<IColunm>(`boards/${query.boardID}/columns/`, body);
-  return data;
-});
-
-interface ChangeColumn extends IAddColumn {
-  columnID: string;
-}
-
-const changeColumn = createAsyncThunk(
-  'columnDataSlice/changeColumn',
-  async (query: ChangeColumn) => {
+export const addColumn = createAsyncThunk(
+  'columnDataSlice/addColumn',
+  async (query: IAddColumn) => {
     const body = {
-      title: query.tytle,
+      title: query.title,
       order: query.order,
     };
-    const { data } = await axios.put<IColunm>(
-      `boards/${query.boardID}/columns/${query.columnID}`,
-      body
-    );
+    const { data } = await axios.post<IColumn>(`boards/${query.boardID}/columns/`, body);
     return data;
   }
 );
 
-const deleteColumn = createAsyncThunk(
+export const deleteColumn = createAsyncThunk(
   'columnDataSlice/deleteColumn',
-  async (query: ChangeColumn) => {
-    const { data } = await axios.delete<IColunm>(
-      `boards/${query.boardID}/columns/${query.columnID}`
+  async (column: IColumn) => {
+    const deleteResponse = await axios.delete<IColumn>(
+      `boards/${column.boardId}/columns/${column._id}`
     );
-    return data;
+    return deleteResponse.data;
   }
 );
 
@@ -129,9 +114,9 @@ export const deleteTask = createAsyncThunk(
 
 interface IUpdateTask {
   _id: string;
+  columnId: string;
   order: number;
 }
-
 
 export const updateTaskList = createAsyncThunk(
   'columnDataSlice/updateTaskList',
@@ -160,11 +145,25 @@ export const columnDataSilce = createSlice({
         state.columnsData = sortByOrder(action.payload);
         state.loading = false;
       })
+
+      .addCase(addColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
+        const columnData: IColumnData = { ...action.payload, tasks: [] };
+        console.log('columnData', columnData);
+        state.columnsData.push(columnData);
+      })
+
+      .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
+        state.columnsData.splice(action.payload.order, 1);
+      })
+
       .addCase(createTask.fulfilled, (state, action: PayloadAction<ITask>) => {
         const index = state.columnsData.findIndex((colum) => colum._id === action.payload.columnId);
         state.columnsData[index].tasks.push(action.payload);
       })
-      .addCase(updateTaskList.fulfilled, (state, action) => { })
+
+      // .addCase(updateTaskList.fulfilled, (state, action) => {
+      //   action.payload.map(() => )
+      //  })
 
       .addCase(deleteTask.fulfilled, (state, action) => {
         const findTaskIndex = (state: IColumnData[], taskID: string) => {
@@ -204,7 +203,7 @@ export const columnDataSilce = createSlice({
 
 export const getTest = async (boardID: string) => {
   const token = localStorage.getItem('token');
-  const { data } = await axios.get<IColunm[]>(`boards/${boardID}/columns/`, {
+  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   const columnsData: IColumnData[] = [];

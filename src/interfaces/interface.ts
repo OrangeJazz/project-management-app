@@ -47,7 +47,7 @@ export interface ITask extends IOrder {
   userId: string;
   users: string[];
 }
-export interface IColunm extends IOrder {
+export interface IColumn extends IOrder {
   _id: string;
   title: string;
   boardId: string;
@@ -59,6 +59,6 @@ export interface IBoard {
   users: string[];
 }
 
-export interface IColumnData extends IColunm {
+export interface IColumnData extends IColumn {
   tasks: ITask[];
 }
