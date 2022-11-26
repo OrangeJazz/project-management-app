@@ -14,3 +14,5 @@ export { default as Hero } from './Hero/Hero';
 export { default as StartBtn } from './StartBtn/StartBtn';
 export { default as LogInUserRoutes } from './LogInUserRoutes/LogInUserRoutes';
 export { default as LogOutUserRoutes } from './LogOutUserRoutes/LogOutUserRoutes';
+export { default as ModalColumn } from './ModalColumn/ModalColumn';
+export { default as ColumnAddButton } from './ColumnAddButton/ColumnAddButton';
