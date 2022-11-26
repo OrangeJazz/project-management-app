@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Column.module.scss';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { IColumn } from 'interfaces/interface';
+import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 
 interface ColumnProps {
   column?: IColumn;
@@ -27,7 +28,7 @@ const Column: React.FC<ColumnProps> = ({ column, children, columnOrder, onClose,
         >
           <div className={styles.column}>
             <div className={styles.column__header}>
-              <div className={styles['close-button']} onClick={onClose} />
+              <ModalConfirm element="column" confirmHandler={onClose} />
               <h3>{column.title}</h3>
             </div>
             <Droppable droppableId={column._id} type="tasks">

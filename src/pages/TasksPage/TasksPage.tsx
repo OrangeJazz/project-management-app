@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Column, ColumnAddButton, ModalColumn, Task } from 'components';
+import { Column, ColumnAddButton, ModalColumn, ModalConfirm, Task } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
@@ -111,7 +111,6 @@ const TasksPage = () => {
 
   return (
     <>
-      <ModalColumn isVisible={false} />
       <h2>Project Title</h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
