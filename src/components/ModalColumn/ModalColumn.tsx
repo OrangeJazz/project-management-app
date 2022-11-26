@@ -6,6 +6,7 @@ interface IModalColumnProps {
   isVisible?: boolean;
   onOk?: () => void;
   onCancel?: () => void;
+  onValueChange?: (formTitle: string) => void;
 }
 
 interface FormValues {
@@ -17,27 +18,26 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
   isVisible = true,
   onOk = () => {},
   onCancel = () => {},
+  onValueChange = () => {},
 }) => {
   const [form] = Form.useForm();
-  const [formTitle, setFormTitle] = useState('');
-
-  const okHandler = () => {
-    if (!formTitle) return;
-    onOk();
-  };
 
   const onFormLayoutChange = (values: FormValues) => {
-    setFormTitle(values.title);
+    onValueChange(values.title);
+  };
+
+  const onOkHandler = () => {
+    onOk();
+    form.resetFields();
   };
 
   return (
     <Modal
       open={isVisible}
       centered
-      destroyOnClose
+      destroyOnClose={true}
       title={title}
-      onOk={okHandler}
-      okButtonProps={{ htmlType: 'submit' }}
+      onOk={onOkHandler}
       onCancel={onCancel}
     >
       <Form layout="vertical" form={form} onValuesChange={onFormLayoutChange} autoComplete="off">
@@ -45,6 +45,7 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
           name="title"
           rules={[{ required: true, message: 'Please, input column title!' }]}
           label={<h5>Column title:</h5>}
+          initialValue=""
         >
           <Input placeholder="input column title" />
         </Form.Item>

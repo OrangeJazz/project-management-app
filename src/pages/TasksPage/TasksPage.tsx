@@ -9,6 +9,7 @@ import {
   deleteColumn,
   deleteTask,
   getColumn,
+  IAddColumn,
   ICreateTask,
   IDeleteTask,
   setColumnData,
@@ -76,12 +77,7 @@ const TasksPage = () => {
     dispatch(setColumnData(tasksOrder));
   };
 
-  const createColumnHandler = () => {
-    const query = {
-      title: 'new Column',
-      order: (getMaxOrder(columns) ?? 0) + 1,
-      boardID: id || '',
-    };
+  const createColumnHandler = (query: IAddColumn) => {
     dispatch(addColumn(query));
   };
 
@@ -146,12 +142,11 @@ const TasksPage = () => {
                 </Column>
               ))}
               {provided.placeholder}
+              <ColumnAddButton onClick={createColumnHandler} state={columns} boardId={id} />
             </div>
           )}
         </Droppable>
       </DragDropContext>
-      <ColumnAddButton />
-      <button onClick={createColumnHandler}> Create Column</button>
     </>
   );
 };
