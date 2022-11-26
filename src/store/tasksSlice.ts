@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import sortByOrder from 'utils/sortByOrder';
-import { IColumnData, IColumn, ITask } from '../interfaces/interface';
+import { ITask } from '../interfaces/interface';
 const token = localStorage.getItem('token');
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 

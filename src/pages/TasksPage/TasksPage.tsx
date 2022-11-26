@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Column, ColumnAddButton, ModalColumn, ModalConfirm, Task } from 'components';
+import { Column, ColumnAddButton, Task } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';

@@ -1,5 +1,5 @@
 import { Form, Input, Modal } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 
 interface IModalColumnProps {
   title?: React.ReactNode;
