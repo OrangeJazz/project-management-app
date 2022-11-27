@@ -175,7 +175,7 @@ const TasksPage = () => {
         title={<h5>Create Task </h5>}
         isVisible={isVisibleCreateModal}
         onCancel={onCancelCreateModal}
-        // onOk={createNewTask}
+        onOk={createNewTask as () => void}
       />
       <ModalTask
         type="edit"
@@ -184,7 +184,7 @@ const TasksPage = () => {
         title={<h5>Edit Task </h5>}
         isVisible={isVisibleEditModal}
         onCancel={onCancelEditModal}
-        onOk={editTask}
+        onOk={editTask as () => void}
       />
     </>
   );

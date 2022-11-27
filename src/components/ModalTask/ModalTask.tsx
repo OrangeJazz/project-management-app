@@ -12,7 +12,7 @@ interface IModalTaskProps {
   column?: IColumnData | null;
   title?: React.ReactNode;
   isVisible?: boolean;
-  onOk?: <T extends ITask>(query: T) => void;
+  onOk?: <T extends ITask | ICreateTask>(query: T) => void;
   onCancel?: () => void;
   onValueChange?: (formTitle: FormValues) => void;
 }
@@ -45,7 +45,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         userId: user.name,
         users: [user.name],
       };
-      // onOk(query);
+      onOk<ICreateTask>(query);
       onCancel();
     }
     if (type === 'edit') {
@@ -59,7 +59,8 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         userId: task!.userId,
         users: task!.users,
       };
-      onOk(query);
+      onOk<ITask>(query);
+      onCancel();
     }
 
     form.resetFields();
