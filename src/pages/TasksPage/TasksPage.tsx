@@ -17,7 +17,7 @@ import {
 } from 'store/columnDataSlice';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { Spin } from 'antd';
+import { Alert, Spin } from 'antd';
 import getMaxOrder from 'utils/getMaxOrder';
 import patchColumn from 'utils/patchColumn';
 
@@ -127,8 +127,13 @@ const TasksPage = () => {
     };
     dispatch(deleteTask(query));
   };
-
-  if (columnloading) return <Spin />;
+  if (columnloading) {
+    return (
+      <Spin size="large">
+        <div style={{ height: '30vh' }} />
+      </Spin>
+    );
+  }
 
   return (
     <>

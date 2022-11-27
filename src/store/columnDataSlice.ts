@@ -25,9 +25,7 @@ export const getColumn = createAsyncThunk('columnDataSlice/getColumn', async (bo
   const columnsData: IColumnData[] = [];
 
   for await (const column of data) {
-    const data: ITask[] = (await memoizedGet(
-      `/boards/${boardID}/columns/${column._id}/tasks/`
-    )) as ITask[];
+    const { data } = await axios.get(`/boards/${boardID}/columns/${column._id}/tasks/`);
     columnsData.push({ ...column, tasks: data });
   }
   return columnsData;
@@ -64,9 +62,6 @@ interface IGetTask {
   boardID: string;
   columnID: string;
 }
-// const getTask = createAsyncThunk('columnDataSlice/getTask', async (params: IGetTask) => {
-
-// })
 
 export interface ICreateTask extends IGetTask {
   title: string;
@@ -189,42 +184,14 @@ export const columnDataSilce = createSlice({
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1, actions.payload);
       })
 
-      // .addCase(updateTaskList.fulfilled, (state, action) => {
-      //   action.payload.map(() => )
-      //  })
-
-      .addCase(deleteTask.fulfilled, (state, action) => {
-        const findTaskIndex = (state: IColumnData[], taskID: string) => {
-          let findedTask: ITask = {
-            _id: '',
-            title: '',
-            boardId: '',
-            columnId: '',
-            description: '',
-            order: 0,
-            userId: '',
-            users: [],
-          };
-          state.forEach((column) => {
-            column.tasks.forEach((task) => {
-              if (task._id === taskID) {
-                findedTask = task;
-              }
-            });
-          });
-          console.log(findedTask);
-
-          return findedTask;
-        };
-
-        const actualTask = findTaskIndex(state.columnsData, action.payload._id);
-        console.log(actualTask);
-        const columnIndex = state.columnsData.findIndex((column) => column._id === actualTask._id);
+      .addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITask>) => {
+        const columnIndex = state.columnsData.findIndex(
+          (column) => column._id === action.payload.columnId
+        );
         const taskIndex = state.columnsData[columnIndex].tasks.findIndex(
-          (task) => task._id === actualTask._id
+          (task) => task._id === action.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1);
-        state.columnsData[columnIndex].tasks = sortByOrder(state.columnsData[columnIndex].tasks);
       });
   },
 });

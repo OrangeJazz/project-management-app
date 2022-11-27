@@ -63,8 +63,3 @@ export interface IBoard {
 export interface IColumnData extends IColumn {
   tasks: ITask[];
 }
-
-
-// const OkTypeFunc = <T>(arg: T): T => arg;
-
-// type OkHandler = ReturnType<OkTypeFunc>

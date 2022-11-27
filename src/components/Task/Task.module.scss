@@ -4,7 +4,7 @@
   display: relative;
   background-color: $primary-light;
   width: 100%;
-  min-height: 12rem;
+  min-height: 5rem;
   border-radius: 1.8rem;
   padding: 2rem 1.8rem;
   position: relative;
@@ -20,22 +20,6 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 18px;
-}
-
-.task-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: url('../../assets/icons/task-close.svg');
-  background-repeat: no-repeat;
-  width: 5rem;
-  height: 5rem;
-  background-position: center;
-  cursor: pointer;
-
-  &:active {
-    transform: scale(0.95);
-  }
 }
 
 .task-btn-edit {

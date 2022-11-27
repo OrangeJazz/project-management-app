@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Task.module.scss';
 import { Draggable } from 'react-beautiful-dnd';
 import { ITask } from 'interfaces/interface';
+import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 
 interface TaskProps {
   task: ITask;
@@ -31,7 +32,7 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove, onEdit = () 
               <span key={user}>{user} </span>
             ))}
           </p>
-          <div className={styles['task-close']} onClick={onRemove} />
+          <ModalConfirm element="task" confirmHandler={onRemove} />
         </div>
       )}
     </Draggable>
