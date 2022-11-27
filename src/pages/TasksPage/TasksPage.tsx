@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Column, ColumnAddButton, ModalColumn, ModalConfirm, Task } from 'components';
+import React, { useEffect, useState } from 'react';
+import { Column, ColumnAddButton, ModalTask, Task, TaskAddButton } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
@@ -8,6 +8,7 @@ import {
   createTask,
   deleteColumn,
   deleteTask,
+  editTaskFetch,
   getColumn,
   IAddColumn,
   ICreateTask,
@@ -17,7 +18,6 @@ import {
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Spin } from 'antd';
-import getMaxOrder from 'utils/getMaxOrder';
 import patchColumn from 'utils/patchColumn';
 
 const TasksPage = () => {
@@ -28,11 +28,16 @@ const TasksPage = () => {
 
   const dispatch = useAppDispatch();
 
+  const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
+  const [isVisibleEditModal, setIsEditVisibleModal] = useState<boolean>(false);
+  const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
+  const [currentTask, setCurrentTask] = useState<ITask | null>(null);
+
   useEffect(() => {
     if (id) {
       dispatch(getColumn(id));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, user.token]);
 
   useEffect(() => {
     if (!columns.length) return;
@@ -78,25 +83,39 @@ const TasksPage = () => {
     dispatch(setColumnData(tasksOrder));
   };
 
+  const openCreteModal = (column: IColumnData) => {
+    setIsCreateVisibleModal(true);
+    setCurrentColumn(column);
+  };
+
+  const onCancelCreateModal = () => {
+    setIsCreateVisibleModal(false);
+  };
+
+  const createNewTask = (query: ICreateTask) => {
+    dispatch(createTask(query));
+  };
+
+  const openEditModal = (task: ITask) => {
+    setIsEditVisibleModal(true);
+    setCurrentTask(task);
+  };
+
+  const onCancelEditModal = () => {
+    setIsEditVisibleModal(false);
+  };
+
+  const editTask = (task: ITask) => {
+    dispatch(editTaskFetch(task));
+  };
+
   const createColumnHandler = (query: IAddColumn) => {
     dispatch(addColumn(query));
+    setCurrentColumn(null);
   };
 
   const deleteColumnHandler = (column: IColumn) => {
     dispatch(deleteColumn(column));
-  };
-
-  const createNewTask = (column: IColumnData) => {
-    const query: ICreateTask = {
-      boardID: id || '',
-      columnID: column._id,
-      title: 'new Task',
-      order: (getMaxOrder(column.tasks) ?? 0) + 1,
-      description: 'New Description',
-      userId: user.id,
-      users: [user.id],
-    };
-    dispatch(createTask(query));
   };
 
   const eraseTask = (task: ITask) => {
@@ -107,8 +126,13 @@ const TasksPage = () => {
     };
     dispatch(deleteTask(query));
   };
-
-  if (columnloading) return <Spin />;
+  if (columnloading) {
+    return (
+      <Spin size="large">
+        <div style={{ height: '30vh' }} />
+      </Spin>
+    );
+  }
 
   return (
     <>
@@ -123,30 +147,49 @@ const TasksPage = () => {
             >
               {columns.map((column, index) => (
                 <Column
+                  addTaskButton={<TaskAddButton onClick={() => openCreteModal(column)} />}
                   column={column}
                   key={column._id}
                   columnOrder={index}
-                  onCreate={() => {
-                    createNewTask(column);
-                  }}
                   onClose={() => deleteColumnHandler(column)}
                 >
-                  {column.tasks.map((task, index) => (
-                    <Task
-                      key={task._id}
-                      task={task}
-                      taskOrder={index}
-                      onRemove={() => eraseTask(task)}
-                    />
-                  ))}
+                  <>
+                    {column.tasks.map((task, index) => (
+                      <Task
+                        onEdit={() => openEditModal(task)}
+                        key={task._id}
+                        task={task}
+                        taskOrder={index}
+                        onRemove={() => eraseTask(task)}
+                      />
+                    ))}
+                  </>
                 </Column>
               ))}
+              <ColumnAddButton onClick={createColumnHandler} state={columns} />
               {provided.placeholder}
-              <ColumnAddButton onClick={createColumnHandler} state={columns} boardId={id} />
             </div>
           )}
         </Droppable>
       </DragDropContext>
+      <ModalTask
+        type="create"
+        column={currentColumn}
+        task={currentTask}
+        title={<h5>Create Task </h5>}
+        isVisible={isVisibleCreateModal}
+        onCancel={onCancelCreateModal}
+        onOk={createNewTask as () => void}
+      />
+      <ModalTask
+        type="edit"
+        column={currentColumn}
+        task={currentTask}
+        title={<h5>Edit Task </h5>}
+        isVisible={isVisibleEditModal}
+        onCancel={onCancelEditModal}
+        onOk={editTask as () => void}
+      />
     </>
   );
 };

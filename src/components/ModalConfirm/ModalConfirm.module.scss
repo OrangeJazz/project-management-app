@@ -26,4 +26,20 @@
       transform: scale(0.95);
     }
   }
+
+  &__task {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-image: url('../../assets/icons/task-close.svg');
+    background-repeat: no-repeat;
+    width: 5rem;
+    height: 5rem;
+    background-position: center;
+    cursor: pointer;
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
 }

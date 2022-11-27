@@ -1,5 +1,6 @@
 import { Form, Input, Modal } from 'antd';
-import React, { useState } from 'react';
+import { t } from 'i18next';
+import React from 'react';
 
 interface IModalColumnProps {
   title?: React.ReactNode;
@@ -43,7 +44,10 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
       <Form layout="vertical" form={form} onValuesChange={onFormLayoutChange} autoComplete="off">
         <Form.Item
           name="title"
-          rules={[{ required: true, message: 'Please, input column title!' }]}
+          rules={[
+            { required: true, message: 'Please, input column title!' },
+            { min: 4, message: t('errors.login')! },
+          ]}
           label={<h5>Column title:</h5>}
           initialValue=""
         >

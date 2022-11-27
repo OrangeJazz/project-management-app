@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { message } from 'antd';
 import axios from 'axios';
-import memoizedGet from 'utils/memoizedGet';
 import sortByOrder from 'utils/sortByOrder';
 import { IColumn, IColumnData, ITask } from '../interfaces/interface';
 const token = localStorage.getItem('token');
@@ -25,9 +25,7 @@ export const getColumn = createAsyncThunk('columnDataSlice/getColumn', async (bo
   const columnsData: IColumnData[] = [];
 
   for await (const column of data) {
-    const data: ITask[] = (await memoizedGet(
-      `/boards/${boardID}/columns/${column._id}/tasks/`
-    )) as ITask[];
+    const { data } = await axios.get(`/boards/${boardID}/columns/${column._id}/tasks/`);
     columnsData.push({ ...column, tasks: data });
   }
   return columnsData;
@@ -64,9 +62,6 @@ interface IGetTask {
   boardID: string;
   columnID: string;
 }
-// const getTask = createAsyncThunk('columnDataSlice/getTask', async (params: IGetTask) => {
-
-// })
 
 export interface ICreateTask extends IGetTask {
   title: string;
@@ -95,9 +90,25 @@ export const createTask = createAsyncThunk(
   }
 );
 
-// const changeTask = createAsyncThunk('columnDataSlice/changeTask', async (params: type) => {
+export const editTaskFetch = createAsyncThunk(
+  'columnDataSlice/changeTask',
+  async (params: ITask) => {
+    const query = {
+      title: params.title,
+      description: params.description,
+      order: params.order,
+      columnId: params.columnId,
+      userId: params.userId,
+      users: params.users,
+    };
 
-// })
+    const { data } = await axios.put<ITask>(
+      `/boards/${params.boardId}/columns/${params.columnId}/tasks/${params._id}`,
+      query
+    );
+    return data;
+  }
+);
 
 export interface IDeleteTask extends IGetTask {
   taskID: string;
@@ -141,81 +152,52 @@ export const columnDataSilce = createSlice({
         state.loading = true;
       })
       .addCase(getColumn.fulfilled, (state, action) => {
-        console.log(sortByOrder(action.payload));
         state.columnsData = sortByOrder(action.payload);
         state.loading = false;
       })
 
       .addCase(addColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         const columnData: IColumnData = { ...action.payload, tasks: [] };
-        console.log('columnData', columnData);
         state.columnsData.push(columnData);
+        message.success('column added');
       })
 
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.columnsData.splice(action.payload.order, 1);
+        message.success('column deteted');
       })
 
       .addCase(createTask.fulfilled, (state, action: PayloadAction<ITask>) => {
-        const index = state.columnsData.findIndex((colum) => colum._id === action.payload.columnId);
+        const index = state.columnsData.findIndex(
+          (column) => column._id === action.payload.columnId
+        );
         state.columnsData[index].tasks.push(action.payload);
+        message.success('task added');
       })
 
-      // .addCase(updateTaskList.fulfilled, (state, action) => {
-      //   action.payload.map(() => )
-      //  })
-
-      .addCase(deleteTask.fulfilled, (state, action) => {
-        const findTaskIndex = (state: IColumnData[], taskID: string) => {
-          let findedTask: ITask = {
-            _id: '',
-            title: '',
-            boardId: '',
-            columnId: '',
-            description: '',
-            order: 0,
-            userId: '',
-            users: [],
-          };
-          state.forEach((column) => {
-            column.tasks.forEach((task) => {
-              if (task._id === taskID) {
-                findedTask = task;
-              }
-            });
-          });
-          console.log(findedTask);
-
-          return findedTask;
-        };
-
-        const actualTask = findTaskIndex(state.columnsData, action.payload._id);
-        console.log(actualTask);
-        const columnIndex = state.columnsData.findIndex((column) => column._id === actualTask._id);
+      .addCase(editTaskFetch.fulfilled, (state, actions: PayloadAction<ITask>) => {
+        const columnIndex = state.columnsData.findIndex(
+          (column) => column._id === actions.payload.columnId
+        );
         const taskIndex = state.columnsData[columnIndex].tasks.findIndex(
-          (task) => task._id === actualTask._id
+          (task) => task._id === actions.payload._id
+        );
+        state.columnsData[columnIndex].tasks.splice(taskIndex, 1, actions.payload);
+        message.success('task edited');
+      })
+
+      .addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITask>) => {
+        const columnIndex = state.columnsData.findIndex(
+          (column) => column._id === action.payload.columnId
+        );
+        const taskIndex = state.columnsData[columnIndex].tasks.findIndex(
+          (task) => task._id === action.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1);
-        state.columnsData[columnIndex].tasks = sortByOrder(state.columnsData[columnIndex].tasks);
+        message.success('task deteted');
       });
   },
 });
-
-export const getTest = async (boardID: string) => {
-  const token = localStorage.getItem('token');
-  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const columnsData: IColumnData[] = [];
-
-  for await (const column of data) {
-    const { data } = await axios.get<ITask[]>(`/boards/${boardID}/columns/${column._id}/tasks/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    columnsData.push({ ...column, tasks: data });
-  }
-  return columnsData;
-};
 
 export default columnDataSilce.reducer;
 

@@ -4,7 +4,7 @@ import styles from './ModalConfirm.module.scss';
 
 interface ModalConfirmProps {
   confirmHandler?: () => void;
-  element: 'board-card' | 'column';
+  element: 'board-card' | 'column' | 'task';
 }
 
 const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler = () => {}, element }) => {

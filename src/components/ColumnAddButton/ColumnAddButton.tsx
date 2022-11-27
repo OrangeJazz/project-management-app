@@ -11,11 +11,7 @@ interface IColumnAddButtonProps {
   boardId?: string;
 }
 
-const ColumnAddButton: React.FC<IColumnAddButtonProps> = ({
-  boardId = '',
-  state = [],
-  onClick = () => {},
-}) => {
+const ColumnAddButton: React.FC<IColumnAddButtonProps> = ({ state = [], onClick = () => {} }) => {
   const [isVisibleModal, setIsVisilbeModal] = useState<boolean>(false);
   const [columnTitle, setColumnTitle] = useState<string>('');
 
@@ -34,7 +30,7 @@ const ColumnAddButton: React.FC<IColumnAddButtonProps> = ({
     const query = {
       title: columnTitle,
       order: (getMaxOrder(state) ?? 0) + 1,
-      boardID: boardId,
+      boardID: state[0].boardId,
     };
     onClick(query);
     onCancel();
