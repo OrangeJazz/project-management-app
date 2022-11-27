@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { message } from 'antd';
 import axios from 'axios';
 import sortByOrder from 'utils/sortByOrder';
 import { IColumn, IColumnData, ITask } from '../interfaces/interface';
@@ -158,10 +159,12 @@ export const columnDataSilce = createSlice({
       .addCase(addColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         const columnData: IColumnData = { ...action.payload, tasks: [] };
         state.columnsData.push(columnData);
+        message.success('column added');
       })
 
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.columnsData.splice(action.payload.order, 1);
+        message.success('column deteted');
       })
 
       .addCase(createTask.fulfilled, (state, action: PayloadAction<ITask>) => {
@@ -169,6 +172,7 @@ export const columnDataSilce = createSlice({
           (column) => column._id === action.payload.columnId
         );
         state.columnsData[index].tasks.push(action.payload);
+        message.success('task added');
       })
 
       .addCase(editTaskFetch.fulfilled, (state, actions: PayloadAction<ITask>) => {
@@ -179,6 +183,7 @@ export const columnDataSilce = createSlice({
           (task) => task._id === actions.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1, actions.payload);
+        message.success('task edited');
       })
 
       .addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITask>) => {
@@ -189,6 +194,7 @@ export const columnDataSilce = createSlice({
           (task) => task._id === action.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1);
+        message.success('task deteted');
       });
   },
 });
