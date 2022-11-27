@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Column, ColumnAddButton, ModalTask, Task } from 'components';
+import React, { useEffect, useState } from 'react';
+import { Column, ColumnAddButton, ModalTask, Task, TaskAddButton } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
 import styles from './TasksPage.module.scss';
@@ -8,6 +8,7 @@ import {
   createTask,
   deleteColumn,
   deleteTask,
+  editTaskFetch,
   getColumn,
   IAddColumn,
   ICreateTask,
@@ -27,6 +28,11 @@ const TasksPage = () => {
   const user = useAppSelector((state) => state.auth);
 
   const dispatch = useAppDispatch();
+
+  const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
+  const [isVisibleEditModal, setIsEditVisibleModal] = useState<boolean>(false);
+  const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
+  const [currentTask, setCurrentTask] = useState<ITask | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -78,16 +84,39 @@ const TasksPage = () => {
     dispatch(setColumnData(tasksOrder));
   };
 
-  const createColumnHandler = (query: IAddColumn) => {
-    dispatch(addColumn(query));
+  const openCreteModal = (column: IColumnData) => {
+    setIsCreateVisibleModal(true);
+    setCurrentColumn(column);
   };
 
-  const deleteColumnHandler = (column: IColumn) => {
-    dispatch(deleteColumn(column));
+  const onCancelCreateModal = () => {
+    setIsCreateVisibleModal(false);
   };
 
   const createNewTask = (query: ICreateTask) => {
     dispatch(createTask(query));
+  };
+
+  const openEditModal = (task: ITask) => {
+    setIsEditVisibleModal(true);
+    setCurrentTask(task);
+  };
+
+  const onCancelEditModal = () => {
+    setIsEditVisibleModal(false);
+  };
+
+  const editTask = (task: ITask) => {
+    dispatch(editTaskFetch(task));
+  };
+
+  const createColumnHandler = (query: IAddColumn) => {
+    dispatch(addColumn(query));
+    setCurrentColumn(null);
+  };
+
+  const deleteColumnHandler = (column: IColumn) => {
+    dispatch(deleteColumn(column));
   };
 
   const eraseTask = (task: ITask) => {
@@ -114,28 +143,49 @@ const TasksPage = () => {
             >
               {columns.map((column, index) => (
                 <Column
+                  addTaskButton={<TaskAddButton onClick={() => openCreteModal(column)} />}
                   column={column}
                   key={column._id}
                   columnOrder={index}
-                  onCreate={createNewTask}
                   onClose={() => deleteColumnHandler(column)}
                 >
-                  {column.tasks.map((task, index) => (
-                    <Task
-                      key={task._id}
-                      task={task}
-                      taskOrder={index}
-                      onRemove={() => eraseTask(task)}
-                    />
-                  ))}
+                  <>
+                    {column.tasks.map((task, index) => (
+                      <Task
+                        onEdit={() => openEditModal(task)}
+                        key={task._id}
+                        task={task}
+                        taskOrder={index}
+                        onRemove={() => eraseTask(task)}
+                      />
+                    ))}
+                  </>
                 </Column>
               ))}
-              {provided.placeholder}
               <ColumnAddButton onClick={createColumnHandler} state={columns} />
+              {provided.placeholder}
             </div>
           )}
         </Droppable>
       </DragDropContext>
+      <ModalTask
+        type="create"
+        column={currentColumn}
+        task={currentTask}
+        title={<h5>Create Task </h5>}
+        isVisible={isVisibleCreateModal}
+        onCancel={onCancelCreateModal}
+        // onOk={createNewTask}
+      />
+      <ModalTask
+        type="edit"
+        column={currentColumn}
+        task={currentTask}
+        title={<h5>Edit Task </h5>}
+        isVisible={isVisibleEditModal}
+        onCancel={onCancelEditModal}
+        onOk={editTask}
+      />
     </>
   );
 };

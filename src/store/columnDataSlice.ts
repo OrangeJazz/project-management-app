@@ -95,9 +95,25 @@ export const createTask = createAsyncThunk(
   }
 );
 
-// const changeTask = createAsyncThunk('columnDataSlice/changeTask', async (params: type) => {
+export const editTaskFetch = createAsyncThunk(
+  'columnDataSlice/changeTask',
+  async (params: ITask) => {
+    const query = {
+      title: params.title,
+      description: params.description,
+      order: params.order,
+      columnId: params.columnId,
+      userId: params.userId,
+      users: params.users,
+    };
 
-// })
+    const { data } = await axios.put<ITask>(
+      `/boards/${params.boardId}/columns/${params.columnId}/tasks/${params._id}`,
+      query
+    );
+    return data;
+  }
+);
 
 export interface IDeleteTask extends IGetTask {
   taskID: string;
@@ -157,8 +173,20 @@ export const columnDataSilce = createSlice({
       })
 
       .addCase(createTask.fulfilled, (state, action: PayloadAction<ITask>) => {
-        const index = state.columnsData.findIndex((colum) => colum._id === action.payload.columnId);
+        const index = state.columnsData.findIndex(
+          (column) => column._id === action.payload.columnId
+        );
         state.columnsData[index].tasks.push(action.payload);
+      })
+
+      .addCase(editTaskFetch.fulfilled, (state, actions: PayloadAction<ITask>) => {
+        const columnIndex = state.columnsData.findIndex(
+          (column) => column._id === actions.payload.columnId
+        );
+        const taskIndex = state.columnsData[columnIndex].tasks.findIndex(
+          (task) => task._id === actions.payload._id
+        );
+        state.columnsData[columnIndex].tasks.splice(taskIndex, 1, actions.payload);
       })
 
       // .addCase(updateTaskList.fulfilled, (state, action) => {

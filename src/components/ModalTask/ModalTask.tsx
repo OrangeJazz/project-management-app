@@ -1,11 +1,18 @@
 import { Form, Input, Modal } from 'antd';
+import { useAppSelector } from 'hooks';
 import { t } from 'i18next';
+import { IColumnData, ITask } from 'interfaces/interface';
 import React from 'react';
+import { ICreateTask } from 'store/columnDataSlice';
+import getMaxOrder from 'utils/getMaxOrder';
 
 interface IModalTaskProps {
+  type: 'create' | 'edit';
+  task?: ITask | null;
+  column?: IColumnData | null;
   title?: React.ReactNode;
   isVisible?: boolean;
-  onOk?: () => void;
+  onOk?: <T extends ITask>(query: T) => void;
   onCancel?: () => void;
   onValueChange?: (formTitle: FormValues) => void;
 }
@@ -16,20 +23,45 @@ interface FormValues {
 }
 
 const ModalTask: React.FC<IModalTaskProps> = ({
+  type = 'create',
   title = <h4>Create task</h4>,
   isVisible = true,
+  task,
+  column,
   onOk = () => {},
   onCancel = () => {},
-  onValueChange = () => {},
 }) => {
+  const user = useAppSelector((state) => state.auth);
   const [form] = Form.useForm();
 
-  const onFormLayoutChange = (values: FormValues) => {
-    onValueChange(values);
-  };
-
   const onOkHandler = () => {
-    onOk();
+    if (type === 'create') {
+      const query: ICreateTask = {
+        boardID: column!.boardId,
+        columnID: column!._id,
+        title: form.getFieldValue('title'),
+        description: form.getFieldValue('description'),
+        order: (getMaxOrder(column!.tasks) ?? 0) + 1,
+        userId: user.name,
+        users: [user.name],
+      };
+      // onOk(query);
+      onCancel();
+    }
+    if (type === 'edit') {
+      const query = {
+        _id: task!._id,
+        boardId: task!.boardId,
+        title: form.getFieldValue('title'),
+        description: form.getFieldValue('description'),
+        order: task!.order,
+        columnId: task!.columnId,
+        userId: task!.userId,
+        users: task!.users,
+      };
+      onOk(query);
+    }
+
     form.resetFields();
   };
 
@@ -42,12 +74,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
       onOk={onOkHandler}
       onCancel={onCancel}
     >
-      <Form
-        layout="vertical"
-        form={form}
-        onValuesChange={(a, b) => onFormLayoutChange(b)}
-        autoComplete="off"
-      >
+      <Form layout="vertical" form={form} autoComplete="off">
         <Form.Item
           name="title"
           rules={[

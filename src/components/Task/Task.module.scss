@@ -10,6 +10,11 @@
   position: relative;
 }
 
+.task-header {
+  display: flex;
+  gap: 1rem;
+}
+
 .task-description {
   margin-top: 2rem;
   font-weight: 700;
@@ -29,6 +34,22 @@
   cursor: pointer;
 
   &:active {
+    transform: scale(0.95);
+  }
+}
+
+.task-btn-edit {
+  background-image: url('../../assets/icons/edit.svg');
+  height: 32px;
+  width: 32px;
+  align-self: center;
+  background-repeat: no-repeat;
+  background-size: 2rem 2rem;
+  transition: all 0.3s;
+  filter: invert(62%) sepia(13%) saturate(621%) hue-rotate(63deg) brightness(95%) contrast(86%);
+
+  &:hover {
+    cursor: pointer;
     transform: scale(0.95);
   }
 }

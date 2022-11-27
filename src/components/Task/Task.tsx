@@ -7,9 +7,10 @@ interface TaskProps {
   task: ITask;
   taskOrder: number;
   onRemove?: () => void;
+  onEdit?: () => void;
 }
 
-const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
+const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove, onEdit = () => {} }) => {
   return (
     <Draggable draggableId={task._id} index={taskOrder}>
       {(provided) => (
@@ -19,7 +20,11 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
           ref={provided.innerRef}
           className={styles['task-container']}
         >
-          <h3>{task.title}</h3>
+          <div className={styles['task-header']}>
+            <h3>{task.title}</h3>
+            <div className={styles['task-btn-edit']} onClick={onEdit} />
+          </div>
+
           <p className={styles['task-description']}>{task.description}</p>
           <p className={styles['task-description']}>
             {task.users?.map((user) => (
