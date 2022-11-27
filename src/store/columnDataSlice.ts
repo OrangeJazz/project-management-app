@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import memoizedGet from 'utils/memoizedGet';
 import sortByOrder from 'utils/sortByOrder';
 import { IColumn, IColumnData, ITask } from '../interfaces/interface';
 const token = localStorage.getItem('token');
@@ -152,14 +151,12 @@ export const columnDataSilce = createSlice({
         state.loading = true;
       })
       .addCase(getColumn.fulfilled, (state, action) => {
-        console.log(sortByOrder(action.payload));
         state.columnsData = sortByOrder(action.payload);
         state.loading = false;
       })
 
       .addCase(addColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         const columnData: IColumnData = { ...action.payload, tasks: [] };
-        console.log('columnData', columnData);
         state.columnsData.push(columnData);
       })
 
@@ -195,22 +192,6 @@ export const columnDataSilce = createSlice({
       });
   },
 });
-
-export const getTest = async (boardID: string) => {
-  const token = localStorage.getItem('token');
-  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`, {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const columnsData: IColumnData[] = [];
-
-  for await (const column of data) {
-    const { data } = await axios.get<ITask[]>(`/boards/${boardID}/columns/${column._id}/tasks/`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    columnsData.push({ ...column, tasks: data });
-  }
-  return columnsData;
-};
 
 export default columnDataSilce.reducer;
 

@@ -17,8 +17,7 @@ import {
 } from 'store/columnDataSlice';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { Alert, Spin } from 'antd';
-import getMaxOrder from 'utils/getMaxOrder';
+import { Spin } from 'antd';
 import patchColumn from 'utils/patchColumn';
 
 const TasksPage = () => {
@@ -38,7 +37,7 @@ const TasksPage = () => {
     if (id) {
       dispatch(getColumn(id));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, user.token]);
 
   useEffect(() => {
     if (!columns.length) return;

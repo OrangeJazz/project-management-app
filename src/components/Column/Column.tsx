@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Column.module.scss';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { IColumnData } from 'interfaces/interface';
