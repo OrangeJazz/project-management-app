@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
+import columnDataSilce from './columnDataSlice';
 import sliceBoards from './sliceBoards';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     boards: sliceBoards,
+    columnData: columnDataSilce,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

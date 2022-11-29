@@ -4,10 +4,15 @@
   display: relative;
   background-color: $primary-light;
   width: 100%;
-  min-height: 12rem;
+  min-height: 5rem;
   border-radius: 1.8rem;
   padding: 2rem 1.8rem;
   position: relative;
+}
+
+.task-header {
+  display: flex;
+  gap: 1rem;
 }
 
 .task-description {
@@ -17,18 +22,18 @@
   line-height: 18px;
 }
 
-.task-close {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-image: url('../../assets/icons/task-close.svg');
+.task-btn-edit {
+  background-image: url('../../assets/icons/edit.svg');
+  height: 32px;
+  width: 32px;
+  align-self: center;
   background-repeat: no-repeat;
-  width: 5rem;
-  height: 5rem;
-  background-position: center;
-  cursor: pointer;
+  background-size: 2rem 2rem;
+  transition: all 0.3s;
+  filter: invert(62%) sepia(13%) saturate(621%) hue-rotate(63deg) brightness(95%) contrast(86%);
 
-  &:active {
+  &:hover {
+    cursor: pointer;
     transform: scale(0.95);
   }
 }

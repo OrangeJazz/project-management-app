@@ -1,7 +1,102 @@
 @import '../../styles/index.scss';
 
 .card {
-  width: 35.5rem;
-  height: 47.6rem;
-  background-color: aqua;
+  &__features,
+  &__about {
+    display: flex;
+    flex-direction: column;
+    background: $primary-light;
+    box-shadow: 0px 5px 12px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &-content__features,
+  &-content__about {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-img-container__features {
+    width: 35.5rem;
+    height: 23.2rem;
+  }
+
+  &-img-container__about {
+    width: 25rem;
+    height: 25rem;
+    margin: 2rem auto;
+  }
+
+  &-img__features {
+    width: 35.5rem;
+    height: 23.2rem;
+  }
+
+  &-img__about {
+    width: 25rem;
+    height: 25rem;
+    border-radius: 25rem;
+  }
+
+  &-content__features,
+  &-content__about {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-content__features {
+    padding: 3.2rem;
+    gap: 2.5rem;
+  }
+
+  &-header__features,
+  &-header__about {
+    text-align: center;
+    color: $primary-dark;
+    line-height: 130%;
+  }
+
+  &-header__features {
+    font-weight: 500;
+    font-size: 2.4rem;
+    letter-spacing: 0.2px;
+  }
+
+  &-header__about {
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: 0.8px;
+  }
+
+  &-subtitle__about {
+    color: $secondary-dark;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.6rem;
+  }
+
+  &-text__features,
+  &-text__about {
+    font-weight: 400;
+    font-size: 1.6rem;
+    line-height: 122%;
+    letter-spacing: 0.2px;
+    color: $secondary-dark;
+  }
+
+  &-content__about {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &-text__about {
+    text-align: center;
+    padding: 0 4.5rem 2rem;
+  }
 }

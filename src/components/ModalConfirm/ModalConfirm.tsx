@@ -3,11 +3,11 @@ import { Modal } from 'antd';
 import styles from './ModalConfirm.module.scss';
 
 interface ModalConfirmProps {
-  confirmHandler: () => void;
-  element: string;
+  confirmHandler?: () => void;
+  element: 'board-card' | 'column' | 'task';
 }
 
-const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler, element }) => {
+const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler = () => {}, element }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);

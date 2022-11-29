@@ -1,29 +1,62 @@
-import { Button } from 'antd';
 import React from 'react';
 import styles from './Column.module.scss';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
+import { IColumnData } from 'interfaces/interface';
+import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 
 interface ColumnProps {
-  title?: string;
+  column?: IColumnData;
+  columnOrder: number;
   children?: React.ReactNode;
+  addTaskButton: React.ReactNode;
   onClose?: () => void;
-  onCreate?: () => void;
 }
 
-const Column: React.FC<ColumnProps> = ({ title, children, onClose, onCreate }) => {
+const Column: React.FC<ColumnProps> = ({
+  column,
+  children,
+  columnOrder,
+  addTaskButton,
+  onClose,
+}) => {
+  if (!column) {
+    return null;
+  }
+
   return (
-    <div className={styles['card-container']}>
-      <div className={styles.column}>
-        <div className={styles.column__header}>
-          <div className={styles['close-button']} onClick={onClose} />
-          <h3>{title}</h3>
-        </div>
-        <div className={styles['task-container']}>{children}</div>
-        <button className={styles['create-button']} onClick={onCreate}>
-          <div className={styles['add-icon']} />
-        </button>
-        <div className={styles.column__footer}></div>
-      </div>
-    </div>
+    <>
+      <Draggable draggableId={column._id} index={columnOrder}>
+        {(provided) => (
+          <div
+            className={styles['card-container']}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            <div className={styles.column}>
+              <div className={styles.column__header}>
+                <ModalConfirm element="column" confirmHandler={onClose} />
+                <h3>{column.title}</h3>
+              </div>
+              <Droppable droppableId={column._id} type="tasks">
+                {(provided) => (
+                  <div
+                    className={styles['task-container']}
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {children}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+              {addTaskButton}
+              <div className={styles.column__footer} />
+            </div>
+          </div>
+        )}
+      </Draggable>
+    </>
   );
 };
 
