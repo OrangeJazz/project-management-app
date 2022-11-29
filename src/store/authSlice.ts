@@ -67,7 +67,44 @@ export const handleSingUp = createAsyncThunk(
     }
   }
 );
-
+export const handleDeleteAcc = createAsyncThunk(
+  'auth/handleDeleteAcc',
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const id = localStorage.getItem('id');
+      const resp = await axios.delete(`/users/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return resp.data;
+    } catch (err) {
+      const error = err as AxiosError<IErrorResp>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+export const handleUpdateAcc = createAsyncThunk(
+  'auth/handleUpdateAcc',
+  async (query: IFormData, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const id = localStorage.getItem('id');
+      const resp = await axios.put(`/users/${id}`, query, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return resp.data;
+    } catch (err) {
+      const error = err as AxiosError<IErrorResp>;
+      if (!error.response) {
+        throw err;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
 const authSlice = createSlice({
   name: 'auth',
   initialState,
@@ -97,12 +134,12 @@ const authSlice = createSlice({
         localStorage.setItem('id', action.payload._id);
         localStorage.setItem('token', action.payload.token);
         state.loading = false;
-        message.success('acc created');
+        message.success('Account was created');
       })
       .addCase(handleSingUp.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('already exict');
+        message.error('Account with this login already exist');
       })
 
       .addCase(handleSingIn.pending, (state) => {
@@ -116,12 +153,12 @@ const authSlice = createSlice({
         localStorage.setItem('id', action.payload._id);
         localStorage.setItem('token', action.payload.token);
         state.loading = false;
-        message.success('your logged');
+        message.success('You are logged in');
       })
       .addCase(handleSingIn.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('no such account');
+        message.error('Incorrect login and/or password');
       })
 
       .addCase(handleInitialRenderLogIn.pending, (state) => {
@@ -138,7 +175,40 @@ const authSlice = createSlice({
       .addCase(handleInitialRenderLogIn.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('please log in again');
+        message.error('Your token expired, please sign in again');
+      })
+
+      .addCase(handleDeleteAcc.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(handleDeleteAcc.fulfilled, (state) => {
+        state.login = '';
+        state.loading = false;
+        state.id = '';
+        state.name = '';
+        state.isLoggedIn = false;
+        localStorage.removeItem('id');
+        localStorage.removeItem('token');
+        message.success('Account deleted!');
+      })
+      .addCase(handleDeleteAcc.rejected, (state) => {
+        state.loading = false;
+        message.error('Oops something went wrong.. Try reload');
+      })
+
+      .addCase(handleUpdateAcc.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(handleUpdateAcc.fulfilled, (state, action: PayloadAction<ISignResp>) => {
+        state.loading = false;
+        state.login = action.payload.login;
+        state.id = action.payload._id;
+        state.name = action.payload.name;
+        message.success('Account changed!');
+      })
+      .addCase(handleUpdateAcc.rejected, (state) => {
+        state.loading = false;
+        message.error('User with this login already exist');
       });
   },
 });
