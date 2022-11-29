@@ -5,6 +5,7 @@ import HeaderButtons from 'components/HeaderButtons/HeaderButtons';
 import { useAppSelector } from 'hooks';
 import { Button, Modal } from 'antd';
 import { useTranslation } from 'react-i18next';
+import logoIcon from '../../assets/icons/logo.svg';
 
 const Header = () => {
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
@@ -46,7 +47,7 @@ const Header = () => {
       <div className={styles.header}>
         <div className={styles['nav-wrapper']}>
           <NavLink to="/">
-            <img src="./assets/icons/logo.svg" alt="logo" />
+            <img src={logoIcon} alt="logo" />
           </NavLink>
           <nav className={styles.nav}>
             {isLoggedIn && (

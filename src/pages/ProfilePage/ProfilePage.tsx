@@ -13,7 +13,8 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const dispatch = useAppDispatch();
-
+  const login = useAppSelector((state) => state.auth.login);
+  const name = useAppSelector((state) => state.auth.name);
   const onFinish = (formData: IFormData) => {
     dispatch(handleUpdateAcc(formData));
     form.resetFields();
@@ -44,12 +45,14 @@ const ProfilePage = () => {
         <Form.Item
           label={t('sign.name')}
           name="name"
+          initialValue={name}
           rules={[{ required: true, message: t('errors.empty')! }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label={t('sign.login')}
+          initialValue={login}
           name="login"
           rules={[
             { required: true, message: t('errors.empty')! },

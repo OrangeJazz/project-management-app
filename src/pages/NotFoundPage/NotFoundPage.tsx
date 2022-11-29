@@ -1,7 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
+import styles from './NotFoundPage.module.scss';
+import error from '../../assets/img/error.svg';
+import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NotFoundPage = () => {
-  return <div>404</div>;
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+  return (
+    <div className={styles.container}>
+      <img className={styles['error-img']} src={error} alt="error" />
+      <Button style={{ width: '250px' }} onClick={() => navigate('/')} type="primary">
+        {t('errors.pagebtn')}
+      </Button>
+    </div>
+  );
 };
 
 export default NotFoundPage;

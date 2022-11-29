@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import BurgerMenu from 'components/BurgerMenu/BurgerMenu';
 import i18n from 'i18n';
 import { useTranslation } from 'react-i18next';
+import langIcon from '../../assets/icons/language.svg';
 
 export const handleChangeLang = (value: string) => {
   localStorage.setItem('lang', value);
@@ -66,7 +67,7 @@ const HeaderButtons = () => {
       <Select
         defaultValue={storageLang}
         onChange={handleChangeLang}
-        suffixIcon={<img src="./assets/icons/language.svg" />}
+        suffixIcon={<img src={langIcon} />}
         style={{ width: '70px', margin: 'auto 0' }}
       >
         <Option value="EN">EN</Option>
