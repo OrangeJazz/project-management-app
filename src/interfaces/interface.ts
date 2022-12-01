@@ -56,8 +56,8 @@ export interface IColumn extends IOrder {
 export interface IBoard {
   _id?: string;
   title: string;
-  owner: string;
-  users: string[];
+  owner?: string;
+  users?: string[];
 }
 
 export interface IColumnData extends IColumn {

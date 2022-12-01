@@ -2,9 +2,8 @@ import React from 'react';
 import { BoardCard, ModalBoard } from 'components';
 import styles from './BoardsContainer.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
+import { createUserBoard, deleteBoardFetch, editUserBoard } from '../../store/sliceBoards';
 import { IBoard } from '../../interfaces/interface';
-import { NavLink } from 'react-router-dom';
 
 interface BoardsContainerProps {
   boards: IBoard[];
@@ -13,27 +12,29 @@ interface BoardsContainerProps {
 const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   const authState = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  // console.log(boards);
   const deleteBoardHandler = async (board: IBoard) => {
     await dispatch(deleteBoardFetch(board));
-  };
-
-  const clickHandler = (board: IBoard) => {
-    console.log(board);
   };
 
   const fetchNewBoard = async (board: IBoard) => {
     await dispatch(createUserBoard(board));
   };
+  const editBoard = (board: IBoard) => {
+    dispatch(editUserBoard(board));
+  };
 
   return (
     <div className={styles['boards-container']}>
       {boards.map((el) => (
-        <NavLink to={el._id || ''} key={el._id || Date.now().toString()}>
-          <BoardCard board={el} onBoardClick={clickHandler} onCloseClick={deleteBoardHandler} />
-        </NavLink>
+        <BoardCard
+          key={el._id || Date.now().toString()}
+          board={el}
+          onCloseClick={deleteBoardHandler}
+          onEditClick={editBoard}
+          userID={authState.id}
+        />
       ))}
-      <ModalBoard user={authState.id} addBoard={fetchNewBoard} />
+      <ModalBoard user={authState.id} addBoard={fetchNewBoard} type="new" />
     </div>
   );
 };
