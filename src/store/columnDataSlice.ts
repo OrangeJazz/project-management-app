@@ -3,8 +3,6 @@ import { message } from 'antd';
 import axios from 'axios';
 import sortByOrder from 'utils/sortByOrder';
 import { IColumn, IColumnData, ITask } from '../interfaces/interface';
-const token = localStorage.getItem('token');
-axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
 interface IBoardID {
   boardID: string;
@@ -21,11 +19,16 @@ const initialState: IState = {
 };
 
 export const getColumn = createAsyncThunk('columnDataSlice/getColumn', async (boardID: string) => {
-  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`);
+  const token = localStorage.getItem('token');
+  const { data } = await axios.get<IColumn[]>(`boards/${boardID}/columns/`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
   const columnsData: IColumnData[] = [];
 
   for await (const column of data) {
-    const { data } = await axios.get(`/boards/${boardID}/columns/${column._id}/tasks/`);
+    const { data } = await axios.get(`/boards/${boardID}/columns/${column._id}/tasks/`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
     columnsData.push({ ...column, tasks: data });
   }
   return columnsData;
@@ -39,20 +42,28 @@ export interface IAddColumn extends IBoardID {
 export const addColumn = createAsyncThunk(
   'columnDataSlice/addColumn',
   async (query: IAddColumn) => {
+    const token = localStorage.getItem('token') || '';
     const body = {
       title: query.title,
       order: query.order,
     };
-    const { data } = await axios.post<IColumn>(`boards/${query.boardID}/columns/`, body);
-    return data;
+    const { data } = await axios.post<IColumn>(`boards/${query.boardID}/columns/`, body, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const result: IColumnData = { ...data, tasks: [] };
+    return result;
   }
 );
 
 export const deleteColumn = createAsyncThunk(
   'columnDataSlice/deleteColumn',
   async (column: IColumn) => {
+    const token = localStorage.getItem('token');
     const deleteResponse = await axios.delete<IColumn>(
-      `boards/${column.boardId}/columns/${column._id}`
+      `boards/${column.boardId}/columns/${column._id}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
     return deleteResponse.data;
   }
@@ -74,6 +85,7 @@ export interface ICreateTask extends IGetTask {
 export const createTask = createAsyncThunk(
   'columnDataSlice/createTask',
   async (params: ICreateTask) => {
+    const token = localStorage.getItem('token');
     const body = {
       title: params.title,
       order: params.order,
@@ -83,7 +95,10 @@ export const createTask = createAsyncThunk(
     };
     const { data } = await axios.post<ITask>(
       `boards/${params.boardID}/columns/${params.columnID}/tasks`,
-      body
+      body,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
 
     return data;
@@ -101,10 +116,11 @@ export const editTaskFetch = createAsyncThunk(
       userId: params.userId,
       users: params.users,
     };
-
+    const token = localStorage.getItem('token');
     const { data } = await axios.put<ITask>(
       `/boards/${params.boardId}/columns/${params.columnId}/tasks/${params._id}`,
-      query
+      query,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     return data;
   }
@@ -116,8 +132,10 @@ export interface IDeleteTask extends IGetTask {
 export const deleteTask = createAsyncThunk(
   'columnDataSlice/deleteTask',
   async (params: IDeleteTask) => {
+    const token = localStorage.getItem('token');
     const { data } = await axios.delete<ITask>(
-      `boards/${params.boardID}/columns/${params.columnID}/tasks/${params.taskID}`
+      `boards/${params.boardID}/columns/${params.columnID}/tasks/${params.taskID}`,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
     return data;
   }
@@ -132,7 +150,10 @@ interface IUpdateTask {
 export const updateTaskList = createAsyncThunk(
   'columnDataSlice/updateTaskList',
   async (body: IUpdateTask[]) => {
-    const { data } = await axios.patch<ITask[]>('/taskSet', body);
+    const token = localStorage.getItem('token');
+    const { data } = await axios.patch<ITask[]>('/taskSet', body, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     return data;
   }
@@ -153,6 +174,11 @@ export const columnDataSilce = createSlice({
       })
       .addCase(getColumn.fulfilled, (state, action) => {
         state.columnsData = sortByOrder(action.payload);
+        state.loading = false;
+      })
+      .addCase(getColumn.rejected, (state) => {
+        console.log('get column error');
+
         state.loading = false;
       })
 

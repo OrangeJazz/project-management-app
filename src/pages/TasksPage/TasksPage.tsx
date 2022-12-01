@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useDeferredValue, useEffect, useLayoutEffect, useState } from 'react';
 import { Column, ColumnAddButton, ModalTask, Task, TaskAddButton } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -22,27 +22,37 @@ import patchColumn from 'utils/patchColumn';
 
 const TasksPage = () => {
   const { id } = useParams();
+  const boards = useAppSelector((state) => state.boards);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
   const user = useAppSelector((state) => state.auth);
+
+  const deferedColumns = useDeferredValue(columns);
 
   const dispatch = useAppDispatch();
 
   const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
   const [isVisibleEditModal, setIsEditVisibleModal] = useState<boolean>(false);
+  // const [boardTitle, setBoardTitle] = useState<string | undefined>('');
   const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
+  const [pageLoaded, setPageLoaded] = useState<boolean>(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (id) {
       dispatch(getColumn(id));
+      setPageLoaded(true);
     }
   }, [dispatch, id, user.token]);
 
   useEffect(() => {
-    if (!columns.length) return;
-    patchColumn(columns);
-  }, [columns]);
+    if (!pageLoaded) return;
+    patchColumn(deferedColumns);
+    // return () => {
+    //   console.log('effect');
+    //   patchColumn(deferedColumns);
+    // };
+  }, [deferedColumns, pageLoaded]);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, type } = result;
@@ -126,6 +136,7 @@ const TasksPage = () => {
     };
     dispatch(deleteTask(query));
   };
+
   if (columnloading) {
     return (
       <Spin size="large">
@@ -136,7 +147,7 @@ const TasksPage = () => {
 
   return (
     <>
-      <h2>Project Title</h2>
+      <h2 className={styles.boardheader}>{boards.currentBoard?.title}</h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
           {(provided) => (
@@ -166,7 +177,7 @@ const TasksPage = () => {
                   </>
                 </Column>
               ))}
-              <ColumnAddButton onClick={createColumnHandler} state={columns} />
+              <ColumnAddButton onClick={createColumnHandler} boardId={id} state={columns} />
               {provided.placeholder}
             </div>
           )}

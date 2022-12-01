@@ -2,7 +2,7 @@ import React from 'react';
 import { BoardCard, ModalBoard } from 'components';
 import styles from './BoardsContainer.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
+import { changeCurrentBoard, createUserBoard, deleteBoardFetch } from '../../store/sliceBoards';
 import { IBoard } from '../../interfaces/interface';
 import { NavLink } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   };
 
   const clickHandler = (board: IBoard) => {
-    console.log(board);
+    dispatch(changeCurrentBoard(board));
   };
 
   const fetchNewBoard = async (board: IBoard) => {
