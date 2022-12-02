@@ -1,7 +1,7 @@
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { IFormData } from 'interfaces/interface';
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { handleDeleteAcc, handleUpdateAcc } from 'store/authSlice';
@@ -15,13 +15,22 @@ const ProfilePage = () => {
   const dispatch = useAppDispatch();
   const login = useAppSelector((state) => state.auth.login);
   const name = useAppSelector((state) => state.auth.name);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    dispatch(handleDeleteAcc());
+    setIsModalOpen(false);
+    navigate('/');
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const onFinish = (formData: IFormData) => {
     dispatch(handleUpdateAcc(formData));
     form.resetFields();
-  };
-  const onDelete = () => {
-    dispatch(handleDeleteAcc());
-    navigate('/');
   };
   return (
     <div className={styles.container}>
@@ -29,9 +38,12 @@ const ProfilePage = () => {
         <div className={styles.card}>
           <img src={avatar} alt="avatar" />
         </div>
-        <Button htmlType="button" type="primary" danger onClick={onDelete}>
+        <Button htmlType="button" type="primary" danger onClick={showModal}>
           {t('sign.delete')}
         </Button>
+        <Modal title="Warning!" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+          <p>Are you sure?</p>
+        </Modal>
       </div>
       <Form
         form={form}
