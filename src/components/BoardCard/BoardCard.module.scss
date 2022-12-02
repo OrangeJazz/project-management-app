@@ -2,7 +2,7 @@
 .board-card {
   &__container {
     display: flex;
-    width: 36rem;
+    width: 38rem;
     height: 14.3rem;
     background-color: $primary-light;
     box-shadow: 0 1.2rem 2rem rgba(105, 117, 135, 0.15);
@@ -14,9 +14,7 @@
   }
 
   &__content {
-    width: 18.5rem;
-    display: flex;
-    flex-direction: column;
+    width: 20.5rem;
   }
 
   &__heading {
@@ -43,5 +41,10 @@
     background: url('../../assets/icons/task-img.svg');
     width: 10rem;
     height: 10rem;
+  }
+
+  &__text {
+    margin-top: 1rem;
+    max-width: 100%;
   }
 }
