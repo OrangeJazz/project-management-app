@@ -3,6 +3,8 @@ import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import sortByOrder from './sortByOrder';
 
 const patchColumn = async (query: IColumnData[]) => {
+  const token = localStorage.getItem('token');
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   console.log('patched');
   const patchColumn = sortByOrder(query).map((columndata) => {
     const { order, _id } = columndata;
