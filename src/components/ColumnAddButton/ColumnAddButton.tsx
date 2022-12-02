@@ -46,7 +46,7 @@ const ColumnAddButton: React.FC<IColumnAddButtonProps> = ({ state = [], onClick 
         onOk={onCreateColumnHandler}
         onValueChange={setColumnTitle}
       />
-      <div className={styles['column-add-button']} onClick={onClickHandler} />;
+      <div className={styles['column-add-button']} onClick={onClickHandler} />
     </>
   );
 };

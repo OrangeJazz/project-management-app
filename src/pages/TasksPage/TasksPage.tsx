@@ -1,4 +1,4 @@
-import React, { useDeferredValue, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useDeferredValue, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Column, ColumnAddButton, ModalTask, Task, TaskAddButton } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -28,31 +28,28 @@ const TasksPage = () => {
   const user = useAppSelector((state) => state.auth);
 
   const deferedColumns = useDeferredValue(columns);
+  const isMounted = useRef(false);
 
   const dispatch = useAppDispatch();
 
   const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
   const [isVisibleEditModal, setIsEditVisibleModal] = useState<boolean>(false);
-  // const [boardTitle, setBoardTitle] = useState<string | undefined>('');
   const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
   const [currentTask, setCurrentTask] = useState<ITask | null>(null);
-  const [pageLoaded, setPageLoaded] = useState<boolean>(false);
 
   useLayoutEffect(() => {
     if (id) {
       dispatch(getColumn(id));
-      setPageLoaded(true);
     }
   }, [dispatch, id, user.token]);
 
   useEffect(() => {
-    if (!pageLoaded) return;
-    patchColumn(deferedColumns);
-    // return () => {
-    //   console.log('effect');
-    //   patchColumn(deferedColumns);
-    // };
-  }, [deferedColumns, pageLoaded]);
+    if (isMounted.current) {
+      patchColumn(deferedColumns);
+    } else {
+      isMounted.current = true;
+    }
+  }, [deferedColumns]);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, type } = result;
@@ -177,8 +174,8 @@ const TasksPage = () => {
                   </>
                 </Column>
               ))}
-              <ColumnAddButton onClick={createColumnHandler} boardId={id} state={columns} />
               {provided.placeholder}
+              <ColumnAddButton onClick={createColumnHandler} boardId={id} state={columns} />
             </div>
           )}
         </Droppable>
