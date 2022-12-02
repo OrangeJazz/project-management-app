@@ -16,11 +16,17 @@
   }
 }
 .container {
+  min-height: calc(100vh - 248px);
   display: flex;
   gap: 0 3rem;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 5rem;
+  min-height: calc(100vh - 248px);
+  margin: 5rem 0 15rem 0;
+  form {
+    margin-bottom: 2rem;
+    z-index: 2;
+  }
 }
 .wrapper-card {
   display: flex;

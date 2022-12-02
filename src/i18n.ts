@@ -51,6 +51,7 @@ i18n.use(initReactI18next).init({
           aleksei: 'Aleksei Pepeliaev',
         },
         errors: {
+          pagebtn: 'To Main Page',
           empty: 'Should not be empty',
           login: 'Should contain at least 4 characters',
           pass: 'Should contain at least 6 characters',
@@ -87,13 +88,14 @@ i18n.use(initReactI18next).init({
           btn: 'Отправить',
           already: 'Если у вас уже есть аккаунт, вы можеть войту тут',
           noacc: 'Если у вас нет аккаунт, вы можеть зарегистрироваться тут',
-          edit: 'Сохранить измения',
+          edit: 'Сохранить изменения',
           delete: 'Удалить аккаунт',
         },
         team: {
           title: 'Наша команда',
         },
         errors: {
+          pagebtn: 'На Главную Страницу',
           empty: 'Не должно быть пусто',
           login: 'Дожно быть как минимум 4 символа',
           pass: 'Дожно быть как минимум 6 символов',

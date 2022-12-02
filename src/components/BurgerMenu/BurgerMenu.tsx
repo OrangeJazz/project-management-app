@@ -4,6 +4,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { handleLogOut } from 'store/authSlice';
 import { useTranslation } from 'react-i18next';
+import downIcon from '../../assets/icons/down.svg';
 
 const BurgerMenu = () => {
   const dispath = useAppDispatch();
@@ -63,7 +64,7 @@ const BurgerMenu = () => {
   return (
     <Dropdown placement="bottomRight" menu={{ items }} trigger={['click']}>
       <a onClick={(e) => e.preventDefault()}>
-        <img src="./assets/icons/down.svg" />
+        <img src={downIcon} />
       </a>
     </Dropdown>
   );

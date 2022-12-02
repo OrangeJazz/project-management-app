@@ -44,6 +44,17 @@ export const createUserBoard = createAsyncThunk('createUserBoards', async (board
   });
   return board;
 });
+
+export const editUserBoard = createAsyncThunk('editUserBoards', async (board: IBoard) => {
+  const sendBoard = {
+    title: board.title,
+    owner: board.owner,
+    users: [board.owner],
+  };
+  await axios.put(`boards/${board._id}`, sendBoard);
+  return board;
+});
+
 export const deleteBoardFetch = createAsyncThunk('deleteUserBoard', async (board: IBoard) => {
   const token = localStorage.getItem('token');
   await axios.delete(`boards/${board._id}`, {
@@ -129,6 +140,20 @@ export const slice = createSlice({
         message.success('Project delete');
       })
       .addCase(deleteBoardFetch.rejected, (state, action) => {
+        console.log(action.error);
+        state.loading = false;
+        message.error('Server error! Please try again');
+      })
+      .addCase(editUserBoard.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(editUserBoard.fulfilled, (state, action) => {
+        state.loading = false;
+        const i = state.boards.findIndex((el) => el._id === action.payload._id);
+        state.boards.splice(i, 1, action.payload);
+        message.success('Project edited');
+      })
+      .addCase(editUserBoard.rejected, (state, action) => {
         console.log(action.error);
         state.loading = false;
         message.error('Server error! Please try again');
