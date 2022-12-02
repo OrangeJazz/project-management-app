@@ -143,7 +143,7 @@ const TasksPage = () => {
   }
 
   return (
-    <>
+    <section className={styles['task-container']}>
       <h2 className={styles.boardheader}>{boards.currentBoard?.title}</h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
@@ -198,7 +198,7 @@ const TasksPage = () => {
         onCancel={onCancelEditModal}
         onOk={editTask as () => void}
       />
-    </>
+    </section>
   );
 };
 

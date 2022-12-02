@@ -1,5 +1,7 @@
 @import '../../styles/index.scss';
-
+.task-container {
+  min-height: calc(100vh - 248px);
+}
 .column-container {
   display: flex;
   flex-basis: 32rem;
