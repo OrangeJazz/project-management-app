@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  min-height: calc(100vh - 559px);
   margin: 5rem 0 280px 0;
   a {
     font-size: 13px;

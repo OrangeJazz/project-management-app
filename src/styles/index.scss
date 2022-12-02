@@ -95,3 +95,16 @@ h5 {
 .ant-form-item-explain-error {
   font-size: 12px;
 }
+::-webkit-scrollbar {
+  width: 15px;
+}
+::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(154, 179, 158);
+  border-radius: 7px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffffff;
+}
