@@ -21,3 +21,4 @@ export { default as SignOutUserRoutes } from './SignOutUserRoutes/SignOutUserRou
 export { default as SignInUserRoutes } from './SignInUserRoutes/SignInUserRoutes';
 export { default as ModalTask } from './ModalTask/ModalTask';
 export { default as TaskAddButton } from './TaskAddButton/TaskAddButton';
+export { default as ModalAddBoard } from './ModalBoard/ModalBoard';

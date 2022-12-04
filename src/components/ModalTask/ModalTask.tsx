@@ -139,7 +139,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
           name="users"
           initialValue={form.setFieldValue('users', task?.users)}
         >
-          <Select mode="multiple" onChange={onSelectChange} value={task?.users}>
+          <Select mode="multiple" onChange={onSelectChange}>
             {users.map((user) => (
               <Option key={user._id} value={user._id}>
                 {user.name}

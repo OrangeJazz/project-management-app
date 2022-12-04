@@ -11,6 +11,7 @@ interface BoardsContainerProps {
 
 const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
   const authState = useAppSelector((state) => state.auth);
+  const currentBoards = useAppSelector((state) => state.boards.boards);
   const dispatch = useAppDispatch();
   const deleteBoardHandler = async (board: IBoard) => {
     await dispatch(deleteBoardFetch(board));
@@ -23,11 +24,13 @@ const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
     dispatch(editUserBoard(board));
   };
 
+  if (boards.length === 0) return null;
+
   return (
     <div className={styles['boards-container']}>
-      {boards.map((el) => (
+      {currentBoards.map((el) => (
         <BoardCard
-          key={el._id || Date.now().toString()}
+          key={el._id}
           board={el}
           onCloseClick={deleteBoardHandler}
           onEditClick={editBoard}
