@@ -86,16 +86,6 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
             </div>
             {/* <Divider orientation="center">{t('tasks.description')}</Divider> */}
             <p className={styles['task-description']}>{task.description}</p>
-
-            <Divider orientation="center">{t('tasks.autor')}</Divider>
-            <p className={styles['task-autor']}>{getUserNameById(task.userId)}</p>
-            <Divider orientation="center">{t('tasks.responsibles')}</Divider>
-
-            {task.users?.map((user, index) => (
-              <Tag key={`${user}-${index}`} color={getRandomColor()}>
-                {getUserNameById(user)}
-              </Tag>
-            ))}
             <div className={styles.task__users}>
               {task.users?.map((user, index) => (
                 <Tag key={`${user}-${index}`} color={getRandomColor()}>
