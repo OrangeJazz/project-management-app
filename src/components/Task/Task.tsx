@@ -84,7 +84,6 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
               <h3 className={styles['task-header__title']}>{task.title}</h3>
               <div className={styles['task-btn-edit']} onClick={openEditModal} />
             </div>
-            {/* <Divider orientation="center">{t('tasks.description')}</Divider> */}
             <p className={styles['task-description']}>{task.description}</p>
             <div className={styles.task__users}>
               {task.users?.map((user, index) => (
