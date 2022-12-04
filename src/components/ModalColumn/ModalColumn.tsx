@@ -1,12 +1,14 @@
 import { Form, Input, Modal } from 'antd';
 import { t } from 'i18next';
-import React from 'react';
+import { IColumn } from 'interfaces/interface';
+import React, { useState } from 'react';
 
 interface IModalColumnProps {
+  column?: IColumn;
   type?: 'create' | 'edit';
   title?: React.ReactNode;
   isVisible?: boolean;
-  onOk?: () => void;
+  onOk?: (data?: IColumn) => void;
   onCancel?: () => void;
   onValueChange?: (formTitle: string) => void;
 }
@@ -19,29 +21,46 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
   type = 'create',
   title = <h4>Create column</h4>,
   isVisible = true,
+  column,
   onOk = () => {},
   onCancel = () => {},
   onValueChange = () => {},
 }) => {
   const [form] = Form.useForm();
+  const columnTitle = Form.useWatch('title', form);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onFormLayoutChange = (values: FormValues) => {
     onValueChange(values.title);
   };
 
-  const onOkHandler = () => {
-    onOk();
+  const onCancelHandler = () => {
     form.resetFields();
+    onCancel();
+  };
+
+  const onOkHandler = () => {
+    setLoading(true);
+    if (type === 'create') {
+      onOk();
+    } else {
+      const query = { ...column, title: columnTitle } as IColumn;
+      onOk(query);
+      onCancel();
+    }
+    form.resetFields();
+    setLoading(false);
   };
 
   return (
     <Modal
+      forceRender={true}
+      confirmLoading={loading}
       open={isVisible}
       centered
-      destroyOnClose={true}
       title={title}
       onOk={form.submit}
-      onCancel={onCancel}
+      onCancel={onCancelHandler}
     >
       <Form
         id="form"
@@ -58,7 +77,7 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
             { min: 4, message: t('errors.login')! },
           ]}
           label={<h5>{`Column title`}</h5>}
-          initialValue={type === 'create' ? '' : '123'}
+          initialValue={type === 'edit' ? column?.title : ''}
         >
           <Input placeholder="input column title" />
         </Form.Item>

@@ -1,8 +1,8 @@
-import { Form, Input, Modal } from 'antd';
+import { Form, Input, Modal, Select } from 'antd';
 import { useAppSelector } from 'hooks';
 import { t } from 'i18next';
 import { IColumnData, ITask } from 'interfaces/interface';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ICreateTask } from 'store/columnDataSlice';
 import getMaxOrder from 'utils/getMaxOrder';
 
@@ -14,12 +14,12 @@ interface IModalTaskProps {
   isVisible?: boolean;
   onOk?: <T extends ITask | ICreateTask>(query: T) => void;
   onCancel?: () => void;
-  onValueChange?: (formTitle: FormValues) => void;
 }
 
-interface FormValues {
+interface Fields {
   title: string;
   description: string;
+  users: string[];
 }
 
 const ModalTask: React.FC<IModalTaskProps> = ({
@@ -31,8 +31,23 @@ const ModalTask: React.FC<IModalTaskProps> = ({
   onOk = () => {},
   onCancel = () => {},
 }) => {
-  const user = useAppSelector((state) => state.auth);
+  const users = useAppSelector((state) => state.users.users);
+  const user = useAppSelector((state) => state.auth.name);
   const [form] = Form.useForm();
+  const { Option } = Select;
+  const [currentField, setCurrentFields] = useState<Fields>({
+    title: '',
+    description: '',
+    users: [],
+  });
+
+  useEffect(() => {
+    setCurrentFields(form.getFieldsValue());
+  }, []);
+
+  const onValueChangeHandler = (fields: Fields) => {
+    setCurrentFields(fields);
+  };
 
   const onOkHandler = () => {
     if (type === 'create') {
@@ -42,40 +57,53 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
         order: (getMaxOrder(column!.tasks) ?? 0) + 1,
-        userId: user.name,
-        users: [user.name],
+        userId: user,
+        users: currentField.users || [user],
       };
       onOk<ICreateTask>(query);
       onCancel();
     }
     if (type === 'edit') {
       const query = {
-        _id: task!._id,
-        boardId: task!.boardId,
+        ...task,
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
-        order: task!.order,
-        columnId: task!.columnId,
-        userId: task!.userId,
-        users: task!.users,
-      };
+        userId: user,
+        users: currentField.users,
+        // users: form.getFieldValue('users'),
+      } as ITask;
       onOk<ITask>(query);
       onCancel();
     }
-
     form.resetFields();
+  };
+
+  const onCancelHandler = () => {
+    onCancel();
+    form.resetFields();
+  };
+
+  const onSelectChange = (value: string[]) => {
+    form.setFieldValue('users', value);
   };
 
   return (
     <Modal
+      forceRender
       open={isVisible}
       centered
       destroyOnClose={true}
       title={title}
-      onOk={onOkHandler}
-      onCancel={onCancel}
+      onOk={form.submit}
+      onCancel={onCancelHandler}
     >
-      <Form layout="vertical" form={form} autoComplete="off">
+      <Form
+        layout="vertical"
+        form={form}
+        autoComplete="off"
+        onFinish={onOkHandler}
+        onValuesChange={(value, values) => onValueChangeHandler(values)}
+      >
         <Form.Item
           name="title"
           rules={[
@@ -83,7 +111,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
             { min: 4, message: t('errors.login')! },
           ]}
           label={<h5>Task title:</h5>}
-          initialValue=""
+          initialValue={type === 'edit' ? task?.title : ''}
         >
           <Input placeholder="input task title" />
         </Form.Item>
@@ -94,9 +122,18 @@ const ModalTask: React.FC<IModalTaskProps> = ({
             { min: 4, message: t('errors.login')! },
           ]}
           label={<h5>Task description:</h5>}
-          initialValue=""
+          initialValue={type === 'edit' ? task?.description : ''}
         >
           <Input placeholder="input task description" />
+        </Form.Item>
+        <Form.Item label={<h5>Responsible user:</h5>} name="users" initialValue={task?.users}>
+          <Select mode="multiple" defaultValue={task?.users} onChange={onSelectChange}>
+            {users.map((user) => (
+              <Option key={user._id} value={user.name}>
+                {user.name}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
       </Form>
     </Modal>
