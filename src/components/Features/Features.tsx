@@ -7,7 +7,9 @@ const Features = () => {
   return (
     <div className={styles.features}>
       <div className={styles.features__container}>
-        <h3 className={styles.features__heading}>Save your time with RS Task</h3>
+        <h3 className={styles.features__heading} id="features">
+          Save your time with RS Task
+        </h3>
         <div className={styles.features__cards}>
           <MainCard
             type="features"
