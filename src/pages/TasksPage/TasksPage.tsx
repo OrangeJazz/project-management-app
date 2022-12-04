@@ -26,6 +26,7 @@ const TasksPage = () => {
   const { id } = useParams();
   const userId = useAppSelector((state) => state.auth.id) || localStorage.getItem('id') || '';
   const boards = useAppSelector((state) => state.boards);
+  const points = useAppSelector((state) => state.points.points);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
   const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
@@ -133,6 +134,7 @@ const TasksPage = () => {
       columnID: task.columnId,
       taskID: task._id,
     };
+
     dispatch(deleteTask(query));
   };
 
