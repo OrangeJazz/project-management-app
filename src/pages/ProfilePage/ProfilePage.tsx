@@ -33,7 +33,7 @@ const ProfilePage = () => {
     form.resetFields();
   };
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <div className={styles['wrapper-card']}>
         <div className={styles.card}>
           <img src={avatar} alt="avatar" />
@@ -95,7 +95,7 @@ const ProfilePage = () => {
           </Button>
         </Form.Item>
       </Form>
-    </div>
+    </main>
   );
 };
 

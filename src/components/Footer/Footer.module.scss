@@ -1,12 +1,17 @@
+@import '../../styles/utilities.scss';
 .wrapper {
-  background: #153c3c;
+  background: url('../../assets/img/footer-waves.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -10rem;
+  padding-top: 33rem;
   padding-bottom: 2rem;
   position: relative;
 }
 .footer {
   max-width: 1280px;
   margin: 0 auto;
-  background: #153c3c;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -14,9 +19,9 @@
   margin-bottom: 2rem;
   span {
     color: #ffffff80;
-    font-size: 14px;
+    font-size: 1.4rem;
     font-weight: 700;
-    line-height: 20px;
+    line-height: 2rem;
     letter-spacing: 0em;
     text-align: left;
   }
@@ -24,8 +29,8 @@
 .footer__github-link {
   display: flex;
   gap: 1rem;
-  height: 38px;
-  width: 200px;
+  height: 3.8rem;
+  width: 20rem;
   align-items: center;
   opacity: 0.7;
   transition: opacity 0.3s ease-in-out;
@@ -36,9 +41,9 @@
 .footer__copyrigth {
   color: #54847d;
   font-family: 'Roboto';
-  font-size: 13px;
+  font-size: 1.3rem;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 2rem;
   letter-spacing: 0.2;
   text-align: center;
 }
@@ -51,11 +56,12 @@
 }
 .lines {
   width: 100%;
-  height: 280px;
+  height: 28rem;
   position: absolute;
-  top: -270px;
+  top: -27rem;
 }
-@media (max-width: 1350px) {
+
+@include respond(tablet-l) {
   .footer {
     flex-direction: column;
     gap: 2rem;

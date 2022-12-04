@@ -78,13 +78,13 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className={styles[`task-container__${isCompleted}`]}
+            className={`${styles['task-container']} ${styles[`task-container__${isCompleted}`]}`}
           >
             <div className={styles['task-header-container']}>
               <h3 className={styles['task-header__title']}>{task.title}</h3>
               <div className={styles['task-btn-edit']} onClick={openEditModal} />
             </div>
-            <Divider orientation="center">{t('tasks.description')}</Divider>
+            {/* <Divider orientation="center">{t('tasks.description')}</Divider> */}
             <p className={styles['task-description']}>{task.description}</p>
 
             <Divider orientation="center">{t('tasks.autor')}</Divider>
@@ -96,7 +96,13 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
                 {getUserNameById(user)}
               </Tag>
             ))}
-            <Divider orientation="center">{t('tasks.complite')}</Divider>
+            <div className={styles.task__users}>
+              {task.users?.map((user, index) => (
+                <Tag key={`${user}-${index}`} color={getRandomColor()}>
+                  {getUserNameById(user)}
+                </Tag>
+              ))}
+            </div>
             <Switch
               className={styles['task-done-switcher']}
               checkedChildren="done"

@@ -147,9 +147,9 @@ const TasksPage = () => {
   }
 
   return (
-    <section className={styles['task-container']}>
+    <main className={styles['task-container']}>
       <h2 className={styles.boardheader}>
-        {t('taskPage.title')}: {getBoardTitleById(id)}
+        {t('taskPage.title')}: {getBoardTitleById(id)} {getBoardTitleById(id)}
       </h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
@@ -193,7 +193,7 @@ const TasksPage = () => {
         onCancel={onCancelCreateModal}
         onOk={createNewTask as () => void}
       />
-    </section>
+    </main>
   );
 };
 

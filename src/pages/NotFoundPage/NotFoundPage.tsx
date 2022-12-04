@@ -9,12 +9,12 @@ const NotFoundPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <img className={styles['error-img']} src={error} alt="error" />
       <Button style={{ width: '250px' }} onClick={() => navigate('/')} type="primary">
         {t('errors.pagebtn')}
       </Button>
-    </div>
+    </main>
   );
 };
 

@@ -1,10 +1,15 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utilities.scss';
 .search {
   display: flex;
   min-width: 70vw;
   justify-content: center;
   gap: 2rem;
   padding: 1.8rem 5rem;
+  @include respond(phone) {
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
 
   &__container {
     background-color: $primary-dark;
@@ -12,6 +17,12 @@
     border-radius: 0.5rem;
     text-align: center;
     margin-bottom: 7.4rem;
+    @include respond(tablet-l) {
+      margin-bottom: 5rem;
+    }
+    @include respond(phone) {
+      margin-bottom: 3rem;
+    }
   }
 
   &__input {
@@ -24,6 +35,10 @@
     letter-spacing: 0.05em;
     font-family: 'Roboto';
     font-weight: 500;
+    @include respond(phone) {
+      padding: 0.5rem;
+      letter-spacing: auto;
+    }
   }
 
   &__input:target {

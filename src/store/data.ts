@@ -25,7 +25,7 @@ const ABOUT_CARDS = [
     title: 'Alexey Pepelyaev',
     subtitle: 'Team Lead',
     text: 'Responsible for: organizing teamwork, building private and public routes, drag and drop and interaction with columns and tasks.',
-    img: 'about1.png',
+    img: 'about1.jpg',
   },
   {
     title: 'Mariya Vasileva',
@@ -37,7 +37,7 @@ const ABOUT_CARDS = [
     title: 'Alexandr',
     subtitle: 'Developer',
     text: 'Created login, sign up and edit profile page, set up app localization, the sticky header with user menu and footer.',
-    img: 'about3.png',
+    img: 'about3.jpg',
   },
 ];
 

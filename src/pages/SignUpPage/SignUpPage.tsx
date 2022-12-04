@@ -18,7 +18,7 @@ const SingUpPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <h2>{t('sign.title2')}</h2>
       <Spin
         spinning={loading!}
@@ -78,7 +78,7 @@ const SingUpPage = () => {
         </Form.Item>
       </Form>
       <NavLink to="/signin">{t('sign.already')}</NavLink>
-    </div>
+    </main>
   );
 };
 
