@@ -10,13 +10,27 @@
   position: relative;
 }
 
-.task-header {
+.task-header-container {
+  justify-content: center;
   display: flex;
   gap: 1rem;
 }
 
+.task-header__title {
+  font-size: 2.4rem;
+}
+
 .task-description {
-  margin-top: 2rem;
+  width: 100%;
+  word-wrap: break-word;
+  margin: 1rem 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 18px;
+}
+
+.task-autor {
+  margin-left: 1rem;
   font-weight: 700;
   font-size: 20px;
   line-height: 18px;
@@ -24,8 +38,8 @@
 
 .task-btn-edit {
   background-image: url('../../assets/icons/edit.svg');
-  height: 32px;
-  width: 32px;
+  height: 24px;
+  width: 24px;
   align-self: center;
   background-repeat: no-repeat;
   background-size: 2rem 2rem;

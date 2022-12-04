@@ -1,4 +1,4 @@
-import React, { useDeferredValue, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Column, ColumnAddButton, ModalTask, Task, TaskAddButton } from 'components';
 import { IColumnData, IColumn, ITask } from 'interfaces/interface';
 import { DragDropContext, Droppable, DropResult } from 'react-beautiful-dnd';
@@ -8,7 +8,6 @@ import {
   createTask,
   deleteColumn,
   deleteTask,
-  editTaskFetch,
   getColumn,
   IAddColumn,
   ICreateTask,
@@ -19,42 +18,44 @@ import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'hooks';
 import { Spin } from 'antd';
 import patchColumn from 'utils/patchColumn';
+import { getUsersFetch } from 'store/usersSlice';
 
 const TasksPage = () => {
   const { id } = useParams();
   const boards = useAppSelector((state) => state.boards);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
-  const user = useAppSelector((state) => state.auth);
+  const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
 
-  const deferedColumns = useDeferredValue(columns);
-  const isMounted = useRef(false);
+  const isRender = useRef(false);
 
   const dispatch = useAppDispatch();
 
   const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
-  const [isVisibleEditModal, setIsEditVisibleModal] = useState<boolean>(false);
-  const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
-  const [currentTask, setCurrentTask] = useState<ITask | null>(null);
 
   useLayoutEffect(() => {
     if (id) {
       dispatch(getColumn(id));
+      dispatch(getUsersFetch());
     }
-  }, [dispatch, id, user.token]);
+  }, [dispatch, id]);
 
   useEffect(() => {
-    if (isMounted.current) {
-      patchColumn(deferedColumns);
+    if (isRender.current) {
+      patchColumn(columns);
     } else {
-      isMounted.current = true;
+      isRender.current = true;
     }
-  }, [deferedColumns]);
+  }, [columns]);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, type } = result;
 
     if (!destination) {
+      return;
+    }
+
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
 
@@ -68,10 +69,6 @@ const TasksPage = () => {
       return;
     }
 
-    if (destination.droppableId === source.droppableId && destination.index === source.index) {
-      return;
-    }
-
     const startColumnID = source.droppableId;
     const endColumnID = destination.droppableId;
     const sourceColumnIndex = columns.findIndex((column) => column._id === startColumnID);
@@ -79,6 +76,7 @@ const TasksPage = () => {
 
     if (startColumnID === endColumnID) {
       const [item] = tasksOrder[destinationColumnIndex].tasks.splice(source.index, 1);
+
       tasksOrder[destinationColumnIndex].tasks.splice(destination.index, 0, item);
     } else {
       const [dragItem] = tasksOrder[sourceColumnIndex].tasks.splice(source.index, 1);
@@ -87,6 +85,7 @@ const TasksPage = () => {
       tasksOrder[destinationColumnIndex].tasks.splice(destination.index, 0, dragItem);
     }
     tasksOrder[destinationColumnIndex].tasks.forEach((task, index) => (task.order = index));
+
     dispatch(setColumnData(tasksOrder));
   };
 
@@ -97,23 +96,11 @@ const TasksPage = () => {
 
   const onCancelCreateModal = () => {
     setIsCreateVisibleModal(false);
+    setCurrentColumn(null);
   };
 
   const createNewTask = (query: ICreateTask) => {
     dispatch(createTask(query));
-  };
-
-  const openEditModal = (task: ITask) => {
-    setIsEditVisibleModal(true);
-    setCurrentTask(task);
-  };
-
-  const onCancelEditModal = () => {
-    setIsEditVisibleModal(false);
-  };
-
-  const editTask = (task: ITask) => {
-    dispatch(editTaskFetch(task));
   };
 
   const createColumnHandler = (query: IAddColumn) => {
@@ -134,7 +121,7 @@ const TasksPage = () => {
     dispatch(deleteTask(query));
   };
 
-  if (columnloading) {
+  if (!columns.length && columnloading) {
     return (
       <Spin size="large">
         <div style={{ height: '30vh' }} />
@@ -164,7 +151,6 @@ const TasksPage = () => {
                   <>
                     {column.tasks.map((task, index) => (
                       <Task
-                        onEdit={() => openEditModal(task)}
                         key={task._id}
                         task={task}
                         taskOrder={index}
@@ -183,20 +169,10 @@ const TasksPage = () => {
       <ModalTask
         type="create"
         column={currentColumn}
-        task={currentTask}
         title={<h5>Create Task </h5>}
         isVisible={isVisibleCreateModal}
         onCancel={onCancelCreateModal}
         onOk={createNewTask as () => void}
-      />
-      <ModalTask
-        type="edit"
-        column={currentColumn}
-        task={currentTask}
-        title={<h5>Edit Task </h5>}
-        isVisible={isVisibleEditModal}
-        onCancel={onCancelEditModal}
-        onOk={editTask as () => void}
       />
     </section>
   );

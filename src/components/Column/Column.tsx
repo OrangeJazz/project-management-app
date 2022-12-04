@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Column.module.scss';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
-import { IColumnData } from 'interfaces/interface';
+import { IColumn, IColumnData } from 'interfaces/interface';
 import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
+import ModalColumn from 'components/ModalColumn/ModalColumn';
+import { useAppDispatch } from 'hooks';
+import { editColumn } from 'store/columnDataSlice';
 
 interface ColumnProps {
   column?: IColumnData;
@@ -19,6 +22,23 @@ const Column: React.FC<ColumnProps> = ({
   addTaskButton,
   onClose,
 }) => {
+  const [isVisibleColumModal, setIsVisibleColumModal] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
+
+  const onOkHandler = (column?: IColumn) => {
+    if (!column) return;
+    dispatch(editColumn(column));
+  };
+
+  const openEditColumModal = () => {
+    setIsVisibleColumModal(true);
+  };
+
+  const closeEditColumModal = () => {
+    setIsVisibleColumModal(false);
+  };
+
   if (!column) {
     return null;
   }
@@ -36,7 +56,10 @@ const Column: React.FC<ColumnProps> = ({
             <div className={styles.column}>
               <div className={styles.column__header}>
                 <ModalConfirm element="column" confirmHandler={onClose} />
-                <h3>{column.title}</h3>
+                <div className={styles['column-header']}>
+                  <h3>{column.title}</h3>
+                  <div className={styles['column-btn-edit']} onClick={openEditColumModal} />
+                </div>
               </div>
               <Droppable droppableId={column._id} type="tasks">
                 {(provided) => (
@@ -56,6 +79,14 @@ const Column: React.FC<ColumnProps> = ({
           </div>
         )}
       </Draggable>
+      <ModalColumn
+        title={<h4>Edit Column</h4>}
+        column={column}
+        type="edit"
+        isVisible={isVisibleColumModal}
+        onCancel={closeEditColumModal}
+        onOk={onOkHandler}
+      />
     </>
   );
 };

@@ -26,10 +26,10 @@ export const getColumn = createAsyncThunk('columnDataSlice/getColumn', async (bo
   const columnsData: IColumnData[] = [];
 
   for await (const column of data) {
-    const { data } = await axios.get(`/boards/${boardID}/columns/${column._id}/tasks/`, {
+    const { data } = await axios.get<ITask[]>(`/boards/${boardID}/columns/${column._id}/tasks/`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    columnsData.push({ ...column, tasks: data });
+    columnsData.push({ ...column, tasks: sortByOrder(data) });
   }
   return columnsData;
 });
@@ -59,13 +59,31 @@ export const deleteColumn = createAsyncThunk(
   'columnDataSlice/deleteColumn',
   async (column: IColumn) => {
     const token = localStorage.getItem('token');
-    const deleteResponse = await axios.delete<IColumn>(
-      `boards/${column.boardId}/columns/${column._id}`,
+    const { data } = await axios.delete<IColumn>(`boards/${column.boardId}/columns/${column._id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return data;
+  }
+);
+
+export const editColumn = createAsyncThunk(
+  'columnDataSlice/editColumn',
+  async (params: IColumn) => {
+    const token = localStorage.getItem('token');
+    const query = {
+      title: params.title,
+      order: params.order,
+    };
+
+    const { data } = await axios.put<IColumn>(
+      `/boards/${params.boardId}/columns/${params._id}`,
+      query,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    return deleteResponse.data;
+
+    return data;
   }
 );
 
@@ -177,8 +195,7 @@ export const columnDataSilce = createSlice({
         state.loading = false;
       })
       .addCase(getColumn.rejected, (state) => {
-        console.log('get column error');
-
+        message.error('loading is not success');
         state.loading = false;
       })
 
@@ -188,9 +205,22 @@ export const columnDataSilce = createSlice({
         message.success('column added');
       })
 
+      .addCase(deleteColumn.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.columnsData.splice(action.payload.order, 1);
+        state.loading = false;
         message.success('column deteted');
+      })
+
+      .addCase(deleteColumn.rejected, (state) => {
+        state.loading = false;
+        message.error('delete false');
+      })
+
+      .addCase(editColumn.fulfilled, (state, actions: PayloadAction<IColumn>) => {
+        state.columnsData[actions.payload.order].title = actions.payload.title;
       })
 
       .addCase(createTask.fulfilled, (state, action: PayloadAction<ITask>) => {

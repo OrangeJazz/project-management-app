@@ -37,7 +37,6 @@ const ModalLayout: React.FC<ModalProps> = ({ addBoard, editBoard, board, type, u
         owner: user,
         users: [user],
       };
-      console.log(newBoard);
       addBoard && addBoard(newBoard);
       form.resetFields();
     }
