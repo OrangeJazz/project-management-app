@@ -1,4 +1,5 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from './SearchBar.module.scss';
 
 interface SearchBarProps {
@@ -7,6 +8,7 @@ interface SearchBarProps {
 
 const SearchBar: React.FC<SearchBarProps> = ({ searchValue }) => {
   const [value, setValue] = useState('');
+  const { t } = useTranslation();
   const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const str = e.target.value;
     setValue(str);
@@ -23,13 +25,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchValue }) => {
         <input
           type="search"
           className={styles['search__input']}
-          placeholder="Enter Project Name..."
+          placeholder={t('search.placeHolder')!}
           value={value}
           id="search"
           onChange={changeHandler}
         />
         <button type="submit" className={styles.search__button}>
-          Search
+          {t('search.search')}
         </button>
       </form>
     </div>

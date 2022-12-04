@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { Divider, Switch, Tag } from 'antd';
 import getRandomColor from 'utils/geRandomColor';
 import { createPointsFetch, patchPointFetch } from 'store/pointsSlice';
+import { useTranslation } from 'react-i18next';
 
 interface TaskProps {
   task: ITask;
@@ -22,6 +23,7 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
   const points = useAppSelector((state) => state.points);
   const [isVisilbeModal, setIsVisibleModal] = useState<boolean>(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (points.loading || points.error) return;
@@ -82,12 +84,7 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
               <h3 className={styles['task-header__title']}>{task.title}</h3>
               <div className={styles['task-btn-edit']} onClick={openEditModal} />
             </div>
-            {/* <Divider orientation="center">Description</Divider> */}
             <p className={styles['task-description']}>{task.description}</p>
-
-            {/* <Divider orientation="center">Autor</Divider>
-            <p className={styles['task-autor']}>{getUserNameById(task.userId)}</p> */}
-            {/* <Divider orientation="center">Responsible user:</Divider> */}
             <div className={styles.task__users}>
               {task.users?.map((user, index) => (
                 <Tag key={`${user}-${index}`} color={getRandomColor()}>
@@ -95,7 +92,6 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
                 </Tag>
               ))}
             </div>
-            {/* <Divider orientation="center">Complite</Divider> */}
             <Switch
               className={styles['task-done-switcher']}
               checkedChildren="done"
@@ -112,7 +108,7 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
       <ModalTask
         type="edit"
         task={task}
-        title={<h5>Edit Task </h5>}
+        title={<h5>{t('taskPopap.editTitle')} </h5>}
         isVisible={isVisilbeModal}
         onCancel={closeEditModal}
         onOk={editTask as () => void}

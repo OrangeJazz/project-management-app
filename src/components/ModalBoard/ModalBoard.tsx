@@ -1,9 +1,9 @@
 import { Form, Input, Modal } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { useAppSelector } from 'hooks';
-import { t } from 'i18next';
 import { IBoard } from 'interfaces/interface';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 interface ModalBoard {
@@ -19,7 +19,7 @@ const ModalBoard: React.FC<ModalBoard> = ({
 }) => {
   const [form] = Form.useForm();
   const boards = useAppSelector((state) => state.boards);
-
+  const { t } = useTranslation();
   const onOkHandler = () => {
     const userId = localStorage.getItem('id') || '';
     const title = `${form.getFieldValue('title') || ''}|${
@@ -33,13 +33,15 @@ const ModalBoard: React.FC<ModalBoard> = ({
 
   return (
     <Modal
-      title="Add New Project"
+      title={t('boardPopap.createTitle')}
       open={isOpen}
       onOk={form.submit}
       okButtonProps={{ htmlType: 'submit', icon: <LinkIcon /> }}
       confirmLoading={boards.loading}
       onCancel={onCancel}
       centered={true}
+      okText={t('popapBtn.Ok')}
+      cancelText={t('popapBtn.Cancel')}
     >
       <Form
         form={form}
@@ -51,7 +53,7 @@ const ModalBoard: React.FC<ModalBoard> = ({
         onFinish={onOkHandler}
       >
         <Form.Item
-          label="Project Title"
+          label={t('boardPopap.projectTitle')}
           name="title"
           rules={[
             { required: true, message: t('errors.empty')! },
@@ -60,7 +62,11 @@ const ModalBoard: React.FC<ModalBoard> = ({
         >
           <Input />
         </Form.Item>
-        <Form.Item label="Project description" name="description" rules={[{ required: false }]}>
+        <Form.Item
+          label={t('boardPopap.projectDesc')}
+          name="description"
+          rules={[{ required: false }]}
+        >
           <TextArea rows={4} />
         </Form.Item>
       </Form>
