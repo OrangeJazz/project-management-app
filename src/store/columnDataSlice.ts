@@ -109,7 +109,7 @@ export const createTask = createAsyncThunk(
       order: params.order,
       description: params.description,
       userId: params.userId,
-      users: [params.userId],
+      users: params.users,
     };
     const { data } = await axios.post<ITask>(
       `boards/${params.boardID}/columns/${params.columnID}/tasks`,

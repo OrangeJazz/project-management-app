@@ -26,7 +26,6 @@ const TasksPage = () => {
   const { id } = useParams();
   const userId = useAppSelector((state) => state.auth.id) || localStorage.getItem('id') || '';
   const boards = useAppSelector((state) => state.boards);
-  const points = useAppSelector((state) => state.points.points);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
   const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
@@ -43,7 +42,7 @@ const TasksPage = () => {
       dispatch(getUsersFetch());
       dispatch(getPointsFetch(userId));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, userId]);
 
   useEffect(() => {
     if (isRender.current) {
@@ -148,7 +147,7 @@ const TasksPage = () => {
 
   return (
     <section className={styles['task-container']}>
-      <h2 className={styles.boardheader}>{getBoardTitleById(id)}</h2>
+      <h2 className={styles.boardheader}>Board: {getBoardTitleById(id)}</h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
           {(provided) => (
