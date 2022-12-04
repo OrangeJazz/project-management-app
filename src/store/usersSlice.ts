@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { message } from 'antd';
 import axios from 'axios';
-import { IBoard } from '../interfaces/interface';
 
 interface IUsers {
   name: string;

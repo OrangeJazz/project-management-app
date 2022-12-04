@@ -19,9 +19,11 @@ import { useAppDispatch, useAppSelector } from 'hooks';
 import { Spin } from 'antd';
 import patchColumn from 'utils/patchColumn';
 import { getUsersFetch } from 'store/usersSlice';
+import { getPointsFetch } from 'store/pointsSlice';
 
 const TasksPage = () => {
   const { id } = useParams();
+  const userId = useAppSelector((state) => state.auth.id);
   const boards = useAppSelector((state) => state.boards);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
@@ -37,6 +39,7 @@ const TasksPage = () => {
     if (id) {
       dispatch(getColumn(id));
       dispatch(getUsersFetch());
+      dispatch(getPointsFetch(userId));
     }
   }, [dispatch, id]);
 

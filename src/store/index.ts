@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import columnDataSilce from './columnDataSlice';
+import pointsSlice from './pointsSlice';
 import sliceBoards from './sliceBoards';
 import usersSlice from './usersSlice';
 
@@ -10,6 +11,7 @@ const store = configureStore({
     boards: sliceBoards,
     columnData: columnDataSilce,
     users: usersSlice,
+    points: pointsSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

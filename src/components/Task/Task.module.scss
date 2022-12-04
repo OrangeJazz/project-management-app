@@ -1,17 +1,31 @@
 @import '../../styles/index.scss';
 
 .task-container {
-  display: relative;
-  background-color: $primary-light;
-  width: 100%;
-  min-height: 5rem;
-  border-radius: 1.8rem;
-  padding: 2rem 1.8rem;
-  position: relative;
+  &__false {
+    display: relative;
+    width: 100%;
+    min-height: 5rem;
+    border-radius: 1.8rem;
+    padding: 2rem 1.8rem;
+    position: relative;
+    background-color: $primary-light;
+  }
+
+  &__true {
+    display: relative;
+    width: 100%;
+    min-height: 5rem;
+    border-radius: 1.8rem;
+    padding: 2rem 1.8rem;
+    position: relative;
+    background-color: rgb(220, 213, 213);
+  }
 }
 
 .task-header-container {
-  justify-content: center;
+  padding: 0 20px;
+  justify-content: space-between;
+  align-items: center;
   display: flex;
   gap: 1rem;
 }
