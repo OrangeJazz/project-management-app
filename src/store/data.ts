@@ -37,7 +37,7 @@ const ABOUT_CARDS = [
     title: 'Alexandr',
     subtitle: 'Developer',
     text: 'Created login, sign up and edit profile page, set up app localization, the sticky header with user menu and footer.',
-    img: 'about2.jpg',
+    img: 'about3.jpg',
   },
 ];
 
