@@ -3,9 +3,9 @@
 .boards {
   &__wrapper {
     background-color: $background-light;
-    padding: 8rem 0 24rem 0;
+    padding: 8rem 0 15rem 0;
     @include respond(tablet-l) {
-      padding: 4rem 0 24rem 0;
+      padding: 4rem 0 15rem 0;
     }
   }
 

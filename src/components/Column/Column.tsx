@@ -61,19 +61,21 @@ const Column: React.FC<ColumnProps> = ({
                   <div className={styles['column-btn-edit']} onClick={openEditColumModal} />
                 </div>
               </div>
-              <Droppable droppableId={column._id} type="tasks">
-                {(provided) => (
-                  <div
-                    className={styles['task-container']}
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    {children}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-              {addTaskButton}
+              <div>
+                <Droppable droppableId={column._id} type="tasks">
+                  {(provided) => (
+                    <div
+                      className={styles['task-container']}
+                      ref={provided.innerRef}
+                      {...provided.droppableProps}
+                    >
+                      {children}
+                      {provided.placeholder}
+                    </div>
+                  )}
+                </Droppable>
+                {addTaskButton}
+              </div>
               <div className={styles.column__footer} />
             </div>
           </div>

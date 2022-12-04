@@ -10,7 +10,7 @@
 
   &__container {
     margin: 0 auto;
-    padding: 30rem 12rem 25rem;
+    padding: 30rem 12rem 15rem;
     max-width: 144rem;
     display: flex;
     flex-direction: column;
@@ -19,24 +19,24 @@
 
     @include respond(desktop) {
       max-width: 128rem;
-      padding: 17rem 7rem 28rem;
+      padding: 17rem 7rem 15rem;
     }
 
     @include respond(tablet-l) {
       max-width: 102.4rem;
-      padding: 17rem 3.5rem 28rem;
+      padding: 17rem 3.5rem 15rem;
     }
 
     @include respond(tablet-p) {
       max-width: 76.8rem;
-      padding: 23rem 2rem 27rem;
+      padding: 23rem 2rem 15rem;
       flex-direction: column;
       gap: 3rem;
     }
 
     @include respond(phone) {
       max-width: 42.5rem;
-      padding: 20rem 1rem 25rem;
+      padding: 20rem 1rem 15rem;
     }
   }
 

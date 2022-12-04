@@ -1,13 +1,17 @@
 @import '../../styles/utilities.scss';
 .wrapper {
-  background: #153c3c;
+  background: url('../../assets/img/footer-waves.svg');
+  background-position: top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -10rem;
+  padding-top: 33rem;
   padding-bottom: 2rem;
   position: relative;
 }
 .footer {
   max-width: 1280px;
   margin: 0 auto;
-  background: #153c3c;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;

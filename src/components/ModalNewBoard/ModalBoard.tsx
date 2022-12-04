@@ -59,7 +59,7 @@ const ModalLayout: React.FC<ModalProps> = ({ addBoard, editBoard, board, type, u
       {type === 'new' && <NewBoardCard onClick={showModal} />}
       {type === 'edit' && <div className={styles['edit-btn']} onClick={showModal} />}
       <Modal
-        title="Add New Project"
+        title={type === 'new' ? 'Add New Project' : 'Edit Project'}
         open={open}
         onOk={form.submit}
         okButtonProps={{ htmlType: 'submit' }}

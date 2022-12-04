@@ -76,25 +76,26 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
             {...provided.draggableProps}
             {...provided.dragHandleProps}
             ref={provided.innerRef}
-            className={styles[`task-container__${isCompleted}`]}
+            className={`${styles['task-container']} ${styles[`task-container__${isCompleted}`]}`}
           >
             <div className={styles['task-header-container']}>
               <h3 className={styles['task-header__title']}>{task.title}</h3>
               <div className={styles['task-btn-edit']} onClick={openEditModal} />
             </div>
-            <Divider orientation="center">Description</Divider>
+            {/* <Divider orientation="center">Description</Divider> */}
             <p className={styles['task-description']}>{task.description}</p>
 
-            <Divider orientation="center">Autor</Divider>
-            <p className={styles['task-autor']}>{getUserNameById(task.userId)}</p>
-            <Divider orientation="center">Responsible user:</Divider>
-
-            {task.users?.map((user, index) => (
-              <Tag key={`${user}-${index}`} color={getRandomColor()}>
-                {getUserNameById(user)}
-              </Tag>
-            ))}
-            <Divider orientation="center">Complite</Divider>
+            {/* <Divider orientation="center">Autor</Divider>
+            <p className={styles['task-autor']}>{getUserNameById(task.userId)}</p> */}
+            {/* <Divider orientation="center">Responsible user:</Divider> */}
+            <div className={styles.task__users}>
+              {task.users?.map((user, index) => (
+                <Tag key={`${user}-${index}`} color={getRandomColor()}>
+                  {getUserNameById(user)}
+                </Tag>
+              ))}
+            </div>
+            {/* <Divider orientation="center">Complite</Divider> */}
             <Switch
               className={styles['task-done-switcher']}
               checkedChildren="done"
