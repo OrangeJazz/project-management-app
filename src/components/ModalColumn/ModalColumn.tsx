@@ -77,8 +77,9 @@ const ModalColumn: React.FC<IModalColumnProps> = ({
         <Form.Item
           name="title"
           rules={[
-            { required: true, message: 'Please, input column title!' },
+            { required: true, message: t('errors.columnTitEmpty')! },
             { min: 4, message: t('errors.login')! },
+            { max: 16, message: t('errors.longtext')! },
           ]}
           label={<h5>{t('columnPopap.columnTitle')}</h5>}
           initialValue={type === 'edit' ? column?.title : ''}

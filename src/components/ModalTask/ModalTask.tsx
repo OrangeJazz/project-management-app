@@ -41,7 +41,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         description: form.getFieldValue('description'),
         order: (getMaxOrder(column!.tasks) ?? 0) + 1,
         userId: userId,
-        users: form.getFieldValue('users'),
+        users: form.getFieldValue('users') || [userId],
       };
       onOk<ICreateTask>(query);
       onCancel();
@@ -52,7 +52,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
         userId: userId,
-        users: form.getFieldValue('users'),
+        users: form.getFieldValue('users') || [userId],
       } as ITask;
       onOk<ITask>(query);
       onCancel();
@@ -101,7 +101,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
           ]}
           label={<h5>{t('taskPopap.taskTitle')}</h5>}
         >
-          <Input placeholder="input task title" />
+          <Input placeholder={t('taskPopap.taskTitlePlaceHolder') as string} />
         </Form.Item>
 
         <Form.Item
