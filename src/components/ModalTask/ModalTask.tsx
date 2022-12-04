@@ -20,7 +20,7 @@ const userId = localStorage.getItem('id') || '';
 
 const ModalTask: React.FC<IModalTaskProps> = ({
   type = 'create',
-  title = <h4>Create task</h4>,
+  title = <h4>{t('taskPopap.createTitle')}</h4>,
   isVisible = true,
   task,
   column,
@@ -78,6 +78,8 @@ const ModalTask: React.FC<IModalTaskProps> = ({
       title={title}
       onOk={form.submit}
       onCancel={onCancelHandler}
+      okText={t('popapBtn.Ok')}
+      cancelText={t('popapBtn.Cancel')}
     >
       <Form
         layout="vertical"
@@ -93,11 +95,11 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         <Form.Item
           name="title"
           rules={[
-            { required: true, message: 'Please, input column title!' },
+            { required: true, message: t('errors.taskTitEmpty')! },
             { min: 4, message: t('errors.login')! },
-            { max: 10, message: t('errors.login')! },
+            { max: 10, message: t('errors.longtext')! },
           ]}
-          label={<h5>Task title:</h5>}
+          label={<h5>{t('taskPopap.taskTitle')}</h5>}
         >
           <Input placeholder="input task title" />
         </Form.Item>
@@ -105,16 +107,16 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         <Form.Item
           name="description"
           rules={[
-            { required: true, message: 'Please, input column title!' },
+            { required: true, message: t('errors.taskDescEmpty')! },
             { min: 4, message: t('errors.login')! },
-            { max: 15, message: t('errors.login')! },
+            { max: 15, message: t('errors.longtext')! },
           ]}
-          label={<h5>Task description:</h5>}
+          label={<h5>{t('taskPopap.taskDesc')}</h5>}
         >
-          <Input placeholder="input task description" />
+          <Input placeholder={t('taskPopap.taskDescPlaceHolder') as string} />
         </Form.Item>
 
-        <Form.Item label={<h5>Responsible user:</h5>} name="users">
+        <Form.Item label={<h5>{t('taskPopap.responsibles')}</h5>} name="users">
           <Select mode="multiple" onChange={onSelectChange}>
             {users.map((user) => (
               <Option key={user._id} value={user._id}>

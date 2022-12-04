@@ -6,6 +6,7 @@ import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 import ModalColumn from 'components/ModalColumn/ModalColumn';
 import { useAppDispatch } from 'hooks';
 import { editColumn } from 'store/columnDataSlice';
+import { t } from 'i18next';
 
 interface ColumnProps {
   column?: IColumnData;
@@ -80,7 +81,7 @@ const Column: React.FC<ColumnProps> = ({
         )}
       </Draggable>
       <ModalColumn
-        title={<h4>Edit Column</h4>}
+        title={<h4>{t('columnPopap.editTitle')}</h4>}
         column={column}
         type="edit"
         isVisible={isVisibleColumModal}

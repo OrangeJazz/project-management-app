@@ -21,6 +21,7 @@ import patchColumn from 'utils/patchColumn';
 import { getUsersFetch } from 'store/usersSlice';
 import { getPointsFetch } from 'store/pointsSlice';
 import { getUserBoards } from 'store/sliceBoards';
+import { useTranslation } from 'react-i18next';
 
 const TasksPage = () => {
   const { id } = useParams();
@@ -33,7 +34,7 @@ const TasksPage = () => {
   const isRender = useRef(false);
 
   const dispatch = useAppDispatch();
-
+  const { t } = useTranslation();
   const [isVisibleCreateModal, setIsCreateVisibleModal] = useState<boolean>(false);
 
   useLayoutEffect(() => {
@@ -147,7 +148,9 @@ const TasksPage = () => {
 
   return (
     <section className={styles['task-container']}>
-      <h2 className={styles.boardheader}>Board: {getBoardTitleById(id)}</h2>
+      <h2 className={styles.boardheader}>
+        {t('taskPage.title')}: {getBoardTitleById(id)}
+      </h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
           {(provided) => (

@@ -3,11 +3,13 @@ import React, { useEffect, useState } from 'react';
 import styles from './BoardsPage.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserBoards } from '../../store/sliceBoards';
+import { useTranslation } from 'react-i18next';
 
 const BoardsPage = () => {
   const boardsState = useAppSelector((state) => state.boards);
   const dispatch = useAppDispatch();
   const [filteredBoards, setFilteredBoards] = useState([...boardsState.boards]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     dispatch(getUserBoards());
@@ -29,7 +31,7 @@ const BoardsPage = () => {
   return (
     <div className={styles['boards__wrapper']}>
       <div className={styles['boards__content']}>
-        <h2 className={styles['boards__heading']}>Your Projects:</h2>
+        <h2 className={styles['boards__heading']}>{t('boardPage.title')}</h2>
         <SearchBar searchValue={searchValue} />
         <BoardsContainer boards={filteredBoards} />
       </div>

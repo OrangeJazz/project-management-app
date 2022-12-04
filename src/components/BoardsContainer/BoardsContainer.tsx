@@ -24,8 +24,6 @@ const BoardsContainer: React.FC<BoardsContainerProps> = ({ boards }) => {
     dispatch(editUserBoard(board));
   };
 
-  if (boards.length === 0) return null;
-
   return (
     <div className={styles['boards-container']}>
       {currentBoards.map((el) => (

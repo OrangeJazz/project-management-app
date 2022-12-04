@@ -59,13 +59,15 @@ const ModalLayout: React.FC<ModalProps> = ({ addBoard, editBoard, board, type, u
       {type === 'new' && <NewBoardCard onClick={showModal} />}
       {type === 'edit' && <div className={styles['edit-btn']} onClick={showModal} />}
       <Modal
-        title="Add New Project"
+        title={type === 'new' ? t('boardPopap.createTitle') : t('boardPopap.editTitle')}
         open={open}
         onOk={form.submit}
         okButtonProps={{ htmlType: 'submit' }}
         confirmLoading={confirmLoading}
         onCancel={cancelHandler}
         centered={true}
+        okText={t('popapBtn.Ok')}
+        cancelText={t('popapBtn.Cancel')}
       >
         <Form
           form={form}
@@ -77,7 +79,7 @@ const ModalLayout: React.FC<ModalProps> = ({ addBoard, editBoard, board, type, u
           onFinish={() => okHandler(type)}
         >
           <Form.Item
-            label="Project Title"
+            label={t('boardPopap.projectTitle')}
             name="title"
             rules={[
               { required: true, message: t('errors.empty')! },
@@ -88,7 +90,7 @@ const ModalLayout: React.FC<ModalProps> = ({ addBoard, editBoard, board, type, u
             <Input />
           </Form.Item>
           <Form.Item
-            label="Project description"
+            label={t('boardPopap.projectDesc')}
             name="description"
             rules={[{ required: false }]}
             initialValue={board?.title.slice(board?.title.indexOf('|') + 1, -1)}

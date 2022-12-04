@@ -50,11 +50,61 @@ i18n.use(initReactI18next).init({
           maria: 'Mariya Vasileva',
           aleksei: 'Aleksei Pepeliaev',
         },
+        popapBtn: {
+          Ok: 'Ok',
+          Cancel: 'Cancel',
+        },
         errors: {
           pagebtn: 'To Main Page',
           empty: 'Should not be empty',
           login: 'Should contain at least 4 characters',
           pass: 'Should contain at least 6 characters',
+          taskTitEmpty: 'Please, input task title',
+          taskDescEmpty: 'Please, input task description',
+          longtext: 'Be more concise',
+        },
+        boardPage: {
+          title: 'Your Projects',
+        },
+        taskPage: {
+          title: 'Project',
+        },
+        tasks: {
+          description: 'Description',
+          autor: 'Autor',
+          responsibles: 'Responsible users',
+          complite: 'Complite',
+        },
+        boards: {
+          addbtn: ' Add New Project',
+        },
+        search: {
+          search: 'Search',
+          placeHolder: 'Enter Project Name...',
+        },
+        boardPopap: {
+          createTitle: 'Add New Project',
+          editTitle: 'Edit Project',
+          projectTitle: 'Project Title',
+          projectDesc: 'Project description',
+        },
+        columnPopap: {
+          createTitle: 'Create column',
+          editTitle: 'Edit column',
+          columnTitle: 'Column title',
+          columnTitlePlaceHolder: 'input column title',
+        },
+        taskPopap: {
+          createTitle: 'Create task',
+          editTitle: 'Edit task',
+          taskTitle: 'Task title',
+          taskDesc: 'Task description',
+          responsibles: 'Responsible users',
+          taskTitlePlaceHolder: 'input task title',
+          taskDescPlaceHolder: 'input task description',
+        },
+        confirmPopap: {
+          confirmMessage: 'A you sure?',
         },
       },
     },
@@ -99,11 +149,61 @@ i18n.use(initReactI18next).init({
           empty: 'Не должно быть пусто',
           login: 'Дожно быть как минимум 4 символа',
           pass: 'Дожно быть как минимум 6 символов',
+          taskTitEmpty: 'Введите назавание задачи',
+          taskDescEmpty: 'Введите описание задачи',
+          longtext: 'Будте лаконичнее',
         },
         footer: {
           alex: 'Александр Омельчук',
           maria: 'Мария Васильева',
           aleksei: 'Алексей Пепеляев',
+        },
+        popapBtn: {
+          Ok: 'Ок',
+          Cancel: 'Отмена',
+        },
+        boardPage: {
+          title: 'Ваши проекты',
+        },
+        taskPage: {
+          title: 'Проект',
+        },
+        tasks: {
+          description: 'Описание',
+          autor: 'Создатель',
+          responsibles: 'Ответственные лица',
+          complite: 'Завершить',
+        },
+        boards: {
+          addbtn: 'Добавить проект',
+        },
+        search: {
+          search: 'Поиск',
+          placeHolder: 'Введите название проекта...',
+        },
+        boardPopap: {
+          createTitle: 'Создать новый проект',
+          editTitle: 'Изменить проект',
+          projectTitle: 'Название',
+          projectDesc: 'Описание',
+        },
+        columnPopap: {
+          createTitle: 'Создать колонку',
+          editTitle: 'Изменить колонку',
+          columnTitle: 'Название',
+          columnTitlePlaceHolder: 'Введите название колонки',
+        },
+        taskPopap: {
+          createTitle: 'Создать задачу',
+          editTitle: 'Изменить задачу',
+          taskTitle: 'Название',
+          taskDesc: 'Описание',
+          responsibles: 'Ответственные лица',
+          taskTitlePlaceHolder: 'Введите название задачи',
+          taskDescPlaceHolder: 'Введите описание задачи',
+        },
+        confirmPopap: {
+          confirmMessage: 'Вы уверены?',
         },
       },
     },
