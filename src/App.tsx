@@ -16,6 +16,7 @@ import axios from 'axios';
 import { useAppDispatch } from 'hooks';
 import { handleFailedIntialLogIn, handleInitialRenderLogIn } from 'store/authSlice';
 import { ConfigProvider } from 'antd';
+import './styles/index.scss';
 
 function App() {
   const dispatch = useAppDispatch();
