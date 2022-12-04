@@ -5,7 +5,7 @@ import { ABOUT_CARDS } from '../../store/data';
 
 const AboutUs = () => {
   return (
-    <div className={styles.about}>
+    <section className={styles.about}>
       <div className={styles.about__container}>
         <h3 className={styles.about__heading}>Our Team</h3>
         <div className={styles.about__cards}>
@@ -32,7 +32,7 @@ const AboutUs = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

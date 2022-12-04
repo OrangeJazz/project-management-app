@@ -18,7 +18,7 @@ const SingInPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <main className={styles.container}>
       <Spin
         spinning={loading!}
         size="large"
@@ -71,7 +71,7 @@ const SingInPage = () => {
         </Form.Item>
       </Form>
       <NavLink to="/signup">{t('sign.noacc')}</NavLink>
-    </div>
+    </main>
   );
 };
 

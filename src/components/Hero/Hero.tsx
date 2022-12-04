@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 const Hero = () => {
   const { t } = useTranslation();
   return (
-    <div className={styles.hero}>
+    <section className={styles.hero}>
       <div className={styles.hero__container}>
         <div className={styles.hero__content}>
           <h2 className={styles.hero__heading}>{t('hero.title')}</h2>
@@ -21,7 +21,7 @@ const Hero = () => {
         </div>
         <div className={styles.hero__img}></div>
       </div>
-    </div>
+    </section>
   );
 };
 
