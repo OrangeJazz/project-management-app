@@ -22,6 +22,8 @@ interface Fields {
   users: string[];
 }
 
+const userId = localStorage.getItem('id') || '';
+
 const ModalTask: React.FC<IModalTaskProps> = ({
   type = 'create',
   title = <h4>Create task</h4>,
@@ -43,7 +45,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
 
   useEffect(() => {
     setCurrentFields(form.getFieldsValue());
-  }, []);
+  }, [form]);
 
   const onValueChangeHandler = (fields: Fields) => {
     setCurrentFields(fields);
@@ -57,7 +59,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
         order: (getMaxOrder(column!.tasks) ?? 0) + 1,
-        userId: user,
+        userId: userId,
         users: currentField.users || [user],
       };
       onOk<ICreateTask>(query);
@@ -68,9 +70,8 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         ...task,
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
-        userId: user,
+        userId: userId,
         users: currentField.users,
-        // users: form.getFieldValue('users'),
       } as ITask;
       onOk<ITask>(query);
       onCancel();
@@ -103,12 +104,18 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         autoComplete="off"
         onFinish={onOkHandler}
         onValuesChange={(value, values) => onValueChangeHandler(values)}
+        initialValues={{
+          title: type === 'edit' ? task?.title : '',
+          description: type === 'edit' ? task?.description : '',
+          users: task?.users,
+        }}
       >
         <Form.Item
           name="title"
           rules={[
             { required: true, message: 'Please, input column title!' },
             { min: 4, message: t('errors.login')! },
+            { max: 10, message: t('errors.login')! },
           ]}
           label={<h5>Task title:</h5>}
           initialValue={type === 'edit' ? task?.title : ''}
@@ -120,16 +127,21 @@ const ModalTask: React.FC<IModalTaskProps> = ({
           rules={[
             { required: true, message: 'Please, input column title!' },
             { min: 4, message: t('errors.login')! },
+            { max: 15, message: t('errors.login')! },
           ]}
           label={<h5>Task description:</h5>}
           initialValue={type === 'edit' ? task?.description : ''}
         >
           <Input placeholder="input task description" />
         </Form.Item>
-        <Form.Item label={<h5>Responsible user:</h5>} name="users" initialValue={task?.users}>
-          <Select mode="multiple" defaultValue={task?.users} onChange={onSelectChange}>
+        <Form.Item
+          label={<h5>Responsible user:</h5>}
+          name="users"
+          initialValue={form.setFieldValue('users', task?.users)}
+        >
+          <Select mode="multiple" onChange={onSelectChange} value={task?.users}>
             {users.map((user) => (
-              <Option key={user._id} value={user.name}>
+              <Option key={user._id} value={user._id}>
                 {user.name}
               </Option>
             ))}
