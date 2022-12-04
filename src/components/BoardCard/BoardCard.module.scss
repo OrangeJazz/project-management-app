@@ -1,20 +1,25 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utilities.scss';
 .board-card {
   &__container {
     display: flex;
-    width: 38rem;
+    width: 35rem;
     height: 14.3rem;
     background-color: $primary-light;
     box-shadow: 0 1.2rem 2rem rgba(105, 117, 135, 0.15);
     border-radius: 1.8rem;
-    padding: 1.2rem 1.8rem;
+    padding: 1rem 1rem 1rem 1.5rem;
     justify-content: space-between;
     align-items: center;
     cursor: grab;
+    @include respond(phone) {
+      width: 30rem;
+      padding: 0.5rem 0.5rem 0.5rem 1rem;
+    }
   }
 
   &__content {
-    width: 20.5rem;
+    width: 18.5rem;
   }
 
   &__heading {
@@ -26,6 +31,9 @@
     color: $task-header;
     font-family: 'Roboto';
     margin-bottom: 1rem;
+    @include respond(phone) {
+      font-size: 2.8rem;
+    }
   }
 
   &__info {
@@ -39,8 +47,13 @@
 
   &__img {
     background: url('../../assets/icons/task-img.svg');
-    width: 10rem;
-    height: 10rem;
+    background-size: cover;
+    width: 9.5rem;
+    height: 9.5rem;
+    @include respond(phone) {
+      width: 7rem;
+      height: 7rem;
+    }
   }
 
   &__text {

@@ -1,4 +1,5 @@
 @import '../../styles/colors.scss';
+@import '../../styles/utilities.scss';
 
 .new-card {
   &__container {
@@ -12,6 +13,9 @@
     padding: 3.2rem 1.8rem 2.5rem;
     justify-content: space-between;
     cursor: pointer;
+    @include respond(phone) {
+      width: 30rem;
+    }
   }
 
   &__heading {
@@ -22,6 +26,9 @@
     letter-spacing: 0.2rem;
     color: $primary-dark;
     font-family: 'Roboto';
+    @include respond(phone) {
+      font-size: 2.8rem;
+    }
   }
 
   &__add-btn {

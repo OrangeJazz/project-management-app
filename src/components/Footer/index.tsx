@@ -3,14 +3,12 @@ import styles from './Footer.module.scss';
 import rss from '../../assets/icons/rss.svg';
 import github from '../../assets/icons/github.svg';
 import { useTranslation } from 'react-i18next';
-import lines from '../../assets/icons/curve-lines.svg';
 
 const Footer = () => {
   const { t } = useTranslation();
   return (
     <footer>
       <div className={styles.wrapper}>
-        <img className={styles.lines} src={lines} alt="lines" />
         <div className={styles.footer}>
           <div>
             <a

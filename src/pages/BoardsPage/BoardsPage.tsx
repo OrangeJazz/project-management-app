@@ -27,13 +27,13 @@ const BoardsPage = () => {
   };
 
   return (
-    <div className={styles['boards__wrapper']}>
+    <main className={styles['boards__wrapper']}>
       <div className={styles['boards__content']}>
         <h2 className={styles['boards__heading']}>Your Projects:</h2>
         <SearchBar searchValue={searchValue} />
         <BoardsContainer boards={filteredBoards} />
       </div>
-    </div>
+    </main>
   );
 };
 

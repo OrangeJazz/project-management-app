@@ -4,11 +4,11 @@ import styles from './MainPage.module.scss';
 
 const MainPage = () => {
   return (
-    <div className={styles.maindsds}>
+    <main className={styles.maindsds}>
       <Hero />
       <Features />
       <AboutUs />
-    </div>
+    </main>
   );
 };
 

@@ -5,7 +5,7 @@ import { FEATURES_CARDS } from '../../store/data';
 
 const Features = () => {
   return (
-    <div className={styles.features}>
+    <section className={styles.features}>
       <div className={styles.features__container}>
         <h3 className={styles.features__heading}>Save your time with RS Task</h3>
         <div className={styles.features__cards}>
@@ -30,7 +30,7 @@ const Features = () => {
         </div>
         <StartBtn title="Start" link="/signin" type="primary" />
       </div>
-    </div>
+    </section>
   );
 };
 
