@@ -2,7 +2,7 @@ import { Form, Input, Modal, Select } from 'antd';
 import { useAppSelector } from 'hooks';
 import { t } from 'i18next';
 import { IColumnData, ITask } from 'interfaces/interface';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ICreateTask } from 'store/columnDataSlice';
 import getMaxOrder from 'utils/getMaxOrder';
 
@@ -14,12 +14,6 @@ interface IModalTaskProps {
   isVisible?: boolean;
   onOk?: <T extends ITask | ICreateTask>(query: T) => void;
   onCancel?: () => void;
-}
-
-interface Fields {
-  title: string;
-  description: string;
-  users: string[];
 }
 
 const userId = localStorage.getItem('id') || '';
@@ -34,22 +28,9 @@ const ModalTask: React.FC<IModalTaskProps> = ({
   onCancel = () => {},
 }) => {
   const users = useAppSelector((state) => state.users.users);
-  const user = useAppSelector((state) => state.auth.name);
+
   const [form] = Form.useForm();
   const { Option } = Select;
-  const [currentField, setCurrentFields] = useState<Fields>({
-    title: '',
-    description: '',
-    users: [],
-  });
-
-  useEffect(() => {
-    setCurrentFields(form.getFieldsValue());
-  }, [form]);
-
-  const onValueChangeHandler = (fields: Fields) => {
-    setCurrentFields(fields);
-  };
 
   const onOkHandler = () => {
     if (type === 'create') {
@@ -60,7 +41,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         description: form.getFieldValue('description'),
         order: (getMaxOrder(column!.tasks) ?? 0) + 1,
         userId: userId,
-        users: currentField.users || [user],
+        users: form.getFieldValue('users'),
       };
       onOk<ICreateTask>(query);
       onCancel();
@@ -71,7 +52,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
         userId: userId,
-        users: currentField.users,
+        users: form.getFieldValue('users'),
       } as ITask;
       onOk<ITask>(query);
       onCancel();
@@ -103,7 +84,6 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         form={form}
         autoComplete="off"
         onFinish={onOkHandler}
-        onValuesChange={(value, values) => onValueChangeHandler(values)}
         initialValues={{
           title: type === 'edit' ? task?.title : '',
           description: type === 'edit' ? task?.description : '',
@@ -118,10 +98,10 @@ const ModalTask: React.FC<IModalTaskProps> = ({
             { max: 10, message: t('errors.login')! },
           ]}
           label={<h5>Task title:</h5>}
-          initialValue={type === 'edit' ? task?.title : ''}
         >
           <Input placeholder="input task title" />
         </Form.Item>
+
         <Form.Item
           name="description"
           rules={[
@@ -130,16 +110,12 @@ const ModalTask: React.FC<IModalTaskProps> = ({
             { max: 15, message: t('errors.login')! },
           ]}
           label={<h5>Task description:</h5>}
-          initialValue={type === 'edit' ? task?.description : ''}
         >
           <Input placeholder="input task description" />
         </Form.Item>
-        <Form.Item
-          label={<h5>Responsible user:</h5>}
-          name="users"
-          initialValue={form.setFieldValue('users', task?.users)}
-        >
-          <Select mode="multiple" onChange={onSelectChange} value={task?.users}>
+
+        <Form.Item label={<h5>Responsible user:</h5>} name="users">
+          <Select mode="multiple" onChange={onSelectChange}>
             {users.map((user) => (
               <Option key={user._id} value={user._id}>
                 {user.name}

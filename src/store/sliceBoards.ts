@@ -39,10 +39,10 @@ export const getUserBoards = createAsyncThunk('getUserBoards', async () => {
 
 export const createUserBoard = createAsyncThunk('createUserBoards', async (board: IBoard) => {
   const token = localStorage.getItem('token');
-  await axios.post(`boards`, board, {
+  const { data } = await axios.post(`boards`, board, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  return board;
+  return data;
 });
 
 export const editUserBoard = createAsyncThunk('editUserBoards', async (board: IBoard) => {

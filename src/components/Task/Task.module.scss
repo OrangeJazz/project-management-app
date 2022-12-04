@@ -4,7 +4,7 @@
   &__false {
     display: relative;
     width: 100%;
-    min-height: 5rem;
+    min-height: 2rem;
     border-radius: 1.8rem;
     padding: 2rem 1.8rem;
     position: relative;
@@ -14,7 +14,7 @@
   &__true {
     display: relative;
     width: 100%;
-    min-height: 5rem;
+    min-height: 2rem;
     border-radius: 1.8rem;
     padding: 2rem 1.8rem;
     position: relative;
@@ -24,7 +24,7 @@
 
 .task-header-container {
   padding: 0 20px;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   display: flex;
   gap: 1rem;

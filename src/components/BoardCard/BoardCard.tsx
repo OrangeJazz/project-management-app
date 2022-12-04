@@ -26,11 +26,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, userID, onCloseClick, onEd
   return (
     <div className={styles['board-card__container']}>
       <div className={styles['board-card__content']}>
-        <NavLink
-          to={board._id || ''}
-          key={board._id || Date.now().toString()}
-          className={styles['board-card__heading']}
-        >
+        <NavLink to={board._id || ''} className={styles['board-card__heading']}>
           {getTitle(board.title)}
         </NavLink>
         <ModalBoard
@@ -41,7 +37,7 @@ const BoardCard: React.FC<BoardCardProps> = ({ board, userID, onCloseClick, onEd
           description={getDescription(board.title)}
           board={board}
         />
-        <p className={styles['board-card__text']}>{getDescription(board.title)}</p>
+        <p className={styles['board-card__text']}>{`${getDescription(board.title)}`}</p>
       </div>
       <div className={styles['board-card__img']}></div>
       <ModalConfirm element="board-card" confirmHandler={() => onCloseClick(board)} />

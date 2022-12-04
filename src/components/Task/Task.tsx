@@ -79,15 +79,6 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
             className={styles[`task-container__${isCompleted}`]}
           >
             <div className={styles['task-header-container']}>
-              <Switch
-                checkedChildren="1"
-                unCheckedChildren="0"
-                checked={isCompleted}
-                defaultChecked={isCompleted}
-                loading={points.loading}
-                size="small"
-                onChange={onSwitcherToggle}
-              />
               <h3 className={styles['task-header__title']}>{task.title}</h3>
               <div className={styles['task-btn-edit']} onClick={openEditModal} />
             </div>
@@ -103,7 +94,16 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
                 {getUserNameById(user)}
               </Tag>
             ))}
-
+            <Divider orientation="center">Complite</Divider>
+            <Switch
+              className={styles['task-done-switcher']}
+              checkedChildren="done"
+              unCheckedChildren="working"
+              checked={isCompleted}
+              defaultChecked={isCompleted}
+              loading={points.loading}
+              onChange={onSwitcherToggle}
+            />
             <ModalConfirm element="task" confirmHandler={onRemove} />
           </div>
         )}
