@@ -20,11 +20,13 @@ import { Spin } from 'antd';
 import patchColumn from 'utils/patchColumn';
 import { getUsersFetch } from 'store/usersSlice';
 import { getPointsFetch } from 'store/pointsSlice';
+import { getUserBoards } from 'store/sliceBoards';
 
 const TasksPage = () => {
   const { id } = useParams();
-  const userId = useAppSelector((state) => state.auth.id);
+  const userId = useAppSelector((state) => state.auth.id) || localStorage.getItem('id') || '';
   const boards = useAppSelector((state) => state.boards);
+  const points = useAppSelector((state) => state.points.points);
   const columns = useAppSelector((state) => state.columnData.columnsData);
   const columnloading = useAppSelector((state) => state.columnData.loading);
   const [currentColumn, setCurrentColumn] = useState<IColumnData | null>(null);
@@ -50,6 +52,10 @@ const TasksPage = () => {
       isRender.current = true;
     }
   }, [columns]);
+
+  useEffect(() => {
+    dispatch(getUserBoards());
+  }, [dispatch]);
 
   const dragEndHandler = (result: DropResult) => {
     const { destination, source, type } = result;
@@ -92,6 +98,13 @@ const TasksPage = () => {
     dispatch(setColumnData(tasksOrder));
   };
 
+  const getBoardTitleById = (id?: string) => {
+    if (!id) return 'unknow';
+    const currentBoard = boards.boards.filter((board) => board._id === id);
+    if (currentBoard.length === 1) return currentBoard[0].title.split('|')[0];
+    return '';
+  };
+
   const openCreteModal = (column: IColumnData) => {
     setIsCreateVisibleModal(true);
     setCurrentColumn(column);
@@ -121,6 +134,7 @@ const TasksPage = () => {
       columnID: task.columnId,
       taskID: task._id,
     };
+
     dispatch(deleteTask(query));
   };
 
@@ -134,7 +148,7 @@ const TasksPage = () => {
 
   return (
     <section className={styles['task-container']}>
-      <h2 className={styles.boardheader}>{boards.currentBoard?.title}</h2>
+      <h2 className={styles.boardheader}>{getBoardTitleById(id)}</h2>
       <DragDropContext onDragEnd={dragEndHandler}>
         <Droppable droppableId="colums" direction="horizontal" type="columns">
           {(provided) => (

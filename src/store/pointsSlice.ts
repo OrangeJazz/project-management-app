@@ -58,9 +58,9 @@ export const deletePointFetch = createAsyncThunk(
 export const patchPointFetch = createAsyncThunk(
   'pointsSlice/patchPointFetch',
   async (params: IPoint) => {
-    const { title, boardId, taskId, ...query } = params;
+    const { _id, boardId, taskId, ...query } = params;
     const token = localStorage.getItem('token');
-    const { data } = await axios.patch(`/points`, query, {
+    const { data } = await axios.patch(`/points/${_id}`, query, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return data;
