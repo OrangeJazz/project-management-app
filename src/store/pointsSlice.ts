@@ -35,7 +35,7 @@ export const getPointsFetch = createAsyncThunk(
 export const createPointsFetch = createAsyncThunk(
   'pointsSlice/createPointsFetch',
   async (params: IPoint) => {
-    const { _id, ...query } = params;
+    const { ...query } = params;
     const token = localStorage.getItem('token');
     const { data } = await axios.post(`/points`, query, {
       headers: { Authorization: `Bearer ${token}` },
@@ -58,7 +58,7 @@ export const deletePointFetch = createAsyncThunk(
 export const patchPointFetch = createAsyncThunk(
   'pointsSlice/patchPointFetch',
   async (params: IPoint) => {
-    const { _id, boardId, taskId, ...query } = params;
+    const { _id, ...query } = params;
     const token = localStorage.getItem('token');
     const { data } = await axios.patch(`/points/${_id}`, query, {
       headers: { Authorization: `Bearer ${token}` },
