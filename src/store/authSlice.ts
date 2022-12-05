@@ -4,6 +4,7 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IAuthState, IFormData } from 'interfaces/interface';
 import axios, { AxiosError } from 'axios';
 import { message } from 'antd';
+import i18n from 'i18n';
 
 export const initialState: IAuthState = {
   login: '',
@@ -134,12 +135,12 @@ const authSlice = createSlice({
         localStorage.setItem('id', action.payload._id);
         localStorage.setItem('token', action.payload.token);
         state.loading = false;
-        message.success('Account was created');
+        message.success(i18n.t('messages.success.name1'));
       })
       .addCase(handleSingUp.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('Account with this login already exist');
+        message.error(i18n.t('messages.error.name1'));
       })
 
       .addCase(handleSingIn.pending, (state) => {
@@ -153,12 +154,12 @@ const authSlice = createSlice({
         localStorage.setItem('id', action.payload._id);
         localStorage.setItem('token', action.payload.token);
         state.loading = false;
-        message.success('You are logged in');
+        message.success(i18n.t('messages.success.name2'));
       })
       .addCase(handleSingIn.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('Incorrect login and/or password');
+        message.error(i18n.t('messages.error.name2'));
       })
 
       .addCase(handleInitialRenderLogIn.pending, (state) => {
@@ -170,12 +171,12 @@ const authSlice = createSlice({
         state.name = action.payload.name;
         state.login = action.payload.login;
         state.loading = false;
-        message.success('intial login');
+        message.success(i18n.t('messages.success.name3'));
       })
       .addCase(handleInitialRenderLogIn.rejected, (state) => {
         state.isLoggedIn = false;
         state.loading = false;
-        message.error('Your token expired, please sign in again');
+        message.error(i18n.t('messages.error.name3'));
       })
 
       .addCase(handleDeleteAcc.pending, (state) => {
@@ -189,11 +190,11 @@ const authSlice = createSlice({
         state.isLoggedIn = false;
         localStorage.removeItem('id');
         localStorage.removeItem('token');
-        message.success('Account deleted!');
+        message.success(i18n.t('messages.success.name4'));
       })
       .addCase(handleDeleteAcc.rejected, (state) => {
         state.loading = false;
-        message.error('Oops something went wrong.. Try reload');
+        message.error(i18n.t('messages.error.name4'));
       })
 
       .addCase(handleUpdateAcc.pending, (state) => {
@@ -204,11 +205,11 @@ const authSlice = createSlice({
         state.login = action.payload.login;
         state.id = action.payload._id;
         state.name = action.payload.name;
-        message.success('Account changed!');
+        message.success(i18n.t('messages.success.name5'));
       })
       .addCase(handleUpdateAcc.rejected, (state) => {
         state.loading = false;
-        message.error('User with this login already exist');
+        message.error(i18n.t('messages.error.name5'));
       });
   },
 });

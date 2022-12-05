@@ -41,8 +41,13 @@ const ProfilePage = () => {
         <Button htmlType="button" type="primary" danger onClick={showModal}>
           {t('sign.delete')}
         </Button>
-        <Modal title="Warning!" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-          <p>Are you sure?</p>
+        <Modal
+          title={t('popapBtn.warning')}
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <p>{t('confirmPopap.confirmMessage')}</p>
         </Modal>
       </div>
       <Form

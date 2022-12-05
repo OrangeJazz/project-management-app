@@ -4,7 +4,7 @@ import styles from './MainCard.module.scss';
 interface MainCardProps {
   type: 'features' | 'about';
   title: string;
-  subtitle?: string;
+  subtitle?: string | null;
   text: string;
   img: string;
 }

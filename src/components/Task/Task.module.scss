@@ -26,7 +26,7 @@
 }
 
 .task-header-container {
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   display: flex;
   gap: 1rem;
@@ -39,18 +39,10 @@
 .task-description {
   width: 100%;
   word-wrap: break-word;
-  // margin: 1rem 0;
   font-weight: 400;
   font-size: 1.6rem;
   line-height: 18px;
 }
-
-// .task-autor {
-//   margin-left: 1rem;
-//   font-weight: 700;
-//   font-size: 20px;
-//   line-height: 18px;
-// }
 
 .task-btn-edit {
   background-image: url('../../assets/icons/edit.svg');

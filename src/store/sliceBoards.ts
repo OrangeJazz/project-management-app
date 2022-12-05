@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import axios from 'axios';
+import i18n from 'i18n';
 import { IBoard } from '../interfaces/interface';
 
 export type ApiState = {
@@ -15,7 +16,7 @@ export const initialState: ApiState = {
   token: '',
   user: '',
   boards: [],
-  loading: true,
+  loading: false,
   currentBoard: null,
 };
 
@@ -24,7 +25,6 @@ export const getAllBoards = createAsyncThunk('getAllBoards', async () => {
   const res = await axios.get(`boards`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  console.log(res.data);
   return res.data as IBoard[];
 });
 
@@ -102,7 +102,7 @@ export const slice = createSlice({
         state.loading = false;
       })
       .addCase(getAllBoards.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.boards = [];
         state.loading = false;
       })
@@ -114,7 +114,7 @@ export const slice = createSlice({
         state.loading = false;
       })
       .addCase(getUserBoards.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.boards = [];
         state.loading = false;
       })
@@ -127,9 +127,9 @@ export const slice = createSlice({
         message.success('Project added');
       })
       .addCase(createUserBoard.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
-        message.error('Server error! Please try again');
+        message.error(i18n.t('messages.error.name8'));
       })
       .addCase(deleteBoardFetch.pending, (state) => {
         state.loading = true;
@@ -137,12 +137,12 @@ export const slice = createSlice({
       .addCase(deleteBoardFetch.fulfilled, (state, action) => {
         state.loading = false;
         state.boards = state.boards.filter((el) => el._id !== action.payload._id);
-        message.success('Project delete');
+        message.success(i18n.t('messages.success.name12'));
       })
       .addCase(deleteBoardFetch.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
-        message.error('Server error! Please try again');
+        message.error(i18n.t('messages.error.name8'));
       })
       .addCase(editUserBoard.pending, (state) => {
         state.loading = true;
@@ -151,12 +151,12 @@ export const slice = createSlice({
         state.loading = false;
         const i = state.boards.findIndex((el) => el._id === action.payload._id);
         state.boards.splice(i, 1, action.payload);
-        message.success('Project edited');
+        message.success(i18n.t('messages.success.name13'));
       })
       .addCase(editUserBoard.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
-        message.error('Server error! Please try again');
+        message.error(i18n.t('messages.error.name8'));
       });
   },
 });

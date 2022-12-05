@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
 import styles from './ModalConfirm.module.scss';
+import { useTranslation } from 'react-i18next';
 
 interface ModalConfirmProps {
   confirmHandler?: () => void;
@@ -9,6 +10,7 @@ interface ModalConfirmProps {
 
 const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler = () => {}, element }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -26,8 +28,15 @@ const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler = () => {}, 
       <div className={styles[`close-btn__${element}`]} onClick={showModal}>
         &nbsp;
       </div>
-      <Modal title="Warning!" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
-        <p>A you sure?</p>
+      <Modal
+        title={t('popapBtn.warning')}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        okText={t('popapBtn.Ok')}
+        cancelText={t('popapBtn.Cancel')}
+      >
+        <p>{t('confirmPopap.confirmMessage')}</p>
       </Modal>
     </>
   );
