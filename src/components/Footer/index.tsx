@@ -10,16 +10,14 @@ const Footer = () => {
     <footer>
       <div className={styles.wrapper}>
         <div className={styles.footer}>
-          <div>
-            <a
-              className={styles['footer__rss-link']}
-              href="https://rs.school/js/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img src={rss} alt="rss logo" />
-            </a>
-          </div>
+          <a
+            className={styles['footer__rss-link']}
+            href="https://rs.school/js/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img src={rss} alt="rss logo" className={styles['rs-logo']} />
+          </a>
           <a
             className={styles['footer__github-link']}
             href="https://github.com/alexOm98"
