@@ -11,6 +11,33 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
+        messages: {
+          success: {
+            name1: 'Account was created',
+            name2: 'You are logged in',
+            name3: 'Initial login',
+            name4: 'Account deleted!',
+            name5: 'Account changed!',
+            name6: 'Column added',
+            name7: 'Column deteted',
+            name8: 'Task added',
+            name9: 'Task edited',
+            name10: 'Task deteted',
+            name11: 'Project added',
+            name12: 'Project delete',
+            name13: 'Project edited',
+          },
+          error: {
+            name1: 'Account with this login already exist',
+            name2: 'Incorrect login and/or password',
+            name3: 'Your token expired, please sign in again',
+            name4: 'Oops something went wrong.. Try reload',
+            name5: 'User with this login already exist',
+            name6: 'Loading is not success',
+            name7: 'Error occurred with deletion',
+            name8: 'Server error! Please try again',
+          },
+        },
         header: {
           signin: 'Sign In',
           signoup: 'Sign Up',
@@ -147,6 +174,33 @@ i18n.use(initReactI18next).init({
           boards: 'Проекты',
           create: '+ Создать проект',
           edit: 'Профиль',
+        },
+        messages: {
+          success: {
+            name1: 'Учетная запись создана',
+            name2: 'Вы вошли в систему',
+            name3: 'Первоначальный вход в систему',
+            name4: 'Аккаунт удален!',
+            name5: 'Аккаунт изменен!',
+            name6: 'Добавлен столбец',
+            name7: 'Столбец обнаружен',
+            name8: 'Задание добавлено',
+            name9: 'Задание отредактировано',
+            name10: 'Задача удалена',
+            name11: 'Проект добавлен',
+            name12: 'Удалить проект',
+            name13: 'Проект отредактирован',
+          },
+          error: {
+            name1: 'Учетная запись с таким логином уже существует',
+            name2: 'Неверный логин и/или пароль',
+            name3: 'Срок действия вашего токена истек, пожалуйста, войдите снова',
+            name4: 'К сожалению, что-то пошло не так... Попробуйте перезагрузить',
+            name5: 'Пользователь с таким логином уже существует',
+            name6: 'Загрузка не удалась',
+            name7: 'Произошла ошибка при удалении',
+            name8: 'Ошибка сервера! Пожалуйста, попробуйте еще раз',
+          },
         },
         hero: {
           title: 'Лучший помощник для организации вашей работы',

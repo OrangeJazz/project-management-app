@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import axios from 'axios';
+import i18n from 'i18n';
 import sortByOrder from 'utils/sortByOrder';
 import { IColumn, IColumnData, ITask } from '../interfaces/interface';
 
@@ -195,14 +196,14 @@ export const columnDataSilce = createSlice({
         state.loading = false;
       })
       .addCase(getColumn.rejected, (state) => {
-        message.error('loading is not success');
+        message.error(i18n.t('messages.error.name6'));
         state.loading = false;
       })
 
       .addCase(addColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         const columnData: IColumnData = { ...action.payload, tasks: [] };
         state.columnsData.push(columnData);
-        message.success('column added');
+        message.success(i18n.t('messages.success.name6'));
       })
 
       .addCase(deleteColumn.pending, (state) => {
@@ -211,12 +212,12 @@ export const columnDataSilce = createSlice({
       .addCase(deleteColumn.fulfilled, (state, action: PayloadAction<IColumn>) => {
         state.columnsData.splice(action.payload.order, 1);
         state.loading = false;
-        message.success('column deteted');
+        message.success(i18n.t('messages.success.name7'));
       })
 
       .addCase(deleteColumn.rejected, (state) => {
         state.loading = false;
-        message.error('delete false');
+        message.error(i18n.t('messages.error.name7'));
       })
 
       .addCase(editColumn.fulfilled, (state, actions: PayloadAction<IColumn>) => {
@@ -228,7 +229,7 @@ export const columnDataSilce = createSlice({
           (column) => column._id === action.payload.columnId
         );
         state.columnsData[index].tasks.push(action.payload);
-        message.success('task added');
+        message.success(i18n.t('messages.success.name8'));
       })
 
       .addCase(editTaskFetch.fulfilled, (state, actions: PayloadAction<ITask>) => {
@@ -239,7 +240,7 @@ export const columnDataSilce = createSlice({
           (task) => task._id === actions.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1, actions.payload);
-        message.success('task edited');
+        message.success(i18n.t('messages.success.name9'));
       })
 
       .addCase(deleteTask.fulfilled, (state, action: PayloadAction<ITask>) => {
@@ -250,7 +251,7 @@ export const columnDataSilce = createSlice({
           (task) => task._id === action.payload._id
         );
         state.columnsData[columnIndex].tasks.splice(taskIndex, 1);
-        message.success('task deteted');
+        message.success(i18n.t('messages.success.name10'));
       });
   },
 });
