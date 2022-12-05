@@ -1,8 +1,15 @@
+import { AboutUs, Features, Hero } from 'components';
 import React from 'react';
-// import style from './MainPage.module.scss';
+import styles from './MainPage.module.scss';
 
 const MainPage = () => {
-  return <div>MainPage</div>;
+  return (
+    <main className={styles.maindsds}>
+      <Hero />
+      <Features />
+      <AboutUs />
+    </main>
+  );
 };
 
 export default MainPage;
