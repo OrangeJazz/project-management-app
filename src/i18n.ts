@@ -163,6 +163,9 @@ i18n.use(initReactI18next).init({
         confirmPopap: {
           confirmMessage: 'A you sure?',
         },
+        message: {
+          boardcreate: 'Project added',
+        },
       },
     },
     ru: {
@@ -318,6 +321,9 @@ i18n.use(initReactI18next).init({
         },
         confirmPopap: {
           confirmMessage: 'Вы уверены?',
+        },
+        message: {
+          boardcreate: 'Проект создан',
         },
       },
     },
