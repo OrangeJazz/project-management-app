@@ -19,6 +19,37 @@ i18n.use(initReactI18next).init({
           create: '+ Create project',
           edit: 'Edit Profile',
         },
+        toggle: {
+          working: 'working',
+          done: 'done',
+        },
+        features: {
+          maintitle: 'Save your time with RS Task',
+          title1: 'Automating Tasks from Your Phone',
+          text1:
+            'Our application is available on any device - manage your projects from a computer, tablet or phone.',
+          title2: 'No Any Limits for Every User',
+          text2:
+            'Unlimited number of projects, task stages and tasks themselves for every user. You have personal, fully editable list of projects with  possibility to add, edit or delete tasks, stages or full project.',
+          title3: 'Manage Your Projects Easily',
+          text3:
+            'Simple and intuitive application interface. A convenient search among the list of all your projects will help you find any project at any time.',
+        },
+        about: {
+          main: 'Our Team',
+          title1: 'Alexey Pepelyaev',
+          subtitle1: 'Team Lead',
+          text1:
+            'Responsible for: organizing teamwork, drag and drop and interaction with columns and tasks.',
+          title2: 'Mariya Vasileva',
+          subtitle2: 'Developer',
+          text2:
+            'Designed the layout of the application, created the main page, the page with boards, search for boards.',
+          title3: 'Alexander Omelchuk',
+          subtitle3: 'Developer',
+          text3:
+            'Created login, sign up and edit profile page, building private and public routes,  set up app localization, the sticky header with user menu and footer.',
+        },
         hero: {
           title: 'Best helper for organize your work',
           desc1:
@@ -26,9 +57,6 @@ i18n.use(initReactI18next).init({
           desc2: 'Organize your work in different wonderful projects with RS Task!',
           btn1: 'Start',
           btn2: 'Learn more >',
-        },
-        features: {
-          title: 'Save your time with RS Task',
         },
         team: {
           title: 'Our team',
@@ -51,6 +79,7 @@ i18n.use(initReactI18next).init({
           aleksei: 'Aleksei Pepeliaev',
         },
         popapBtn: {
+          warning: 'Warning!',
           Ok: 'Ok',
           Cancel: 'Cancel',
         },
@@ -127,8 +156,36 @@ i18n.use(initReactI18next).init({
           btn1: 'Старт',
           btn2: 'Узнай больше >',
         },
+        toggle: {
+          working: 'в процессе',
+          done: 'сделано',
+        },
         features: {
-          title: 'Экономьте свое время с RS Task',
+          maintitle: 'Экономьте свое время с RS Task',
+          title1: 'Автоматизация Задач с Вашего Телефона',
+          text1:
+            'Наше приложение доступно на любом устройстве - управляйте своими проектами с компьютера, планшета или телефона.',
+          title2: 'Никаких ограничений для каждого пользователя',
+          text2:
+            'Неограниченное количество проектов, этапов задач и самих задач для каждого пользователя. У вас есть личный, полностью редактируемый список проектов с возможностью добавления, редактирования или удаления задач, этапов или всего проекта.',
+          title3: 'Управляйте Вашими Проектами Легко',
+          text3:
+            'Простой и интуитивно понятный интерфейс приложения. Удобный поиск среди списка всех ваших проектов поможет найти любой проект в любое время.',
+        },
+        about: {
+          main: 'Наша команда',
+          title1: 'Алексей Пепеляев',
+          subtitle1: 'Тимлид',
+          text1:
+            'Отвечал за организацию командной работы, drag and drop and взаимодействие со столбцами и задачами.',
+          title2: 'Мария Васильева',
+          subtitle2: 'Разработчик',
+          text2:
+            'Разработала макет приложения, создал главную страницу, страницу с досками, поиск досок.',
+          title3: 'Александр Омельчук',
+          subtitle3: 'Разработчик',
+          text3:
+            'Создан страницы входа, регистрация и редактирование профиля, приватные и публичные роуты, настройка локализации приложения, стинки хэдер и футер',
         },
         sign: {
           title1: 'Войти',
@@ -161,6 +218,7 @@ i18n.use(initReactI18next).init({
           aleksei: 'Алексей Пепеляев',
         },
         popapBtn: {
+          warning: 'Внимание!',
           Ok: 'Ок',
           Cancel: 'Отмена',
         },

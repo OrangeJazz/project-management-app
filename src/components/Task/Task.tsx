@@ -94,8 +94,8 @@ const Task: React.FC<TaskProps> = ({ task, taskOrder = 0, onRemove }) => {
             </div>
             <Switch
               className={styles['task-done-switcher']}
-              checkedChildren="done"
-              unCheckedChildren="working"
+              checkedChildren={t('toggle.done')}
+              unCheckedChildren={t('toggle.working')}
               checked={isCompleted}
               defaultChecked={isCompleted}
               loading={points.loading}
