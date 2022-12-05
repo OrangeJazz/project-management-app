@@ -97,7 +97,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
           rules={[
             { required: true, message: t('errors.taskTitEmpty')! },
             { min: 4, message: t('errors.login')! },
-            { max: 10, message: t('errors.longtext')! },
+            { max: 16, message: t('errors.longtext')! },
           ]}
           label={<h5>{t('taskPopap.taskTitle')}</h5>}
         >
@@ -109,7 +109,7 @@ const ModalTask: React.FC<IModalTaskProps> = ({
           rules={[
             { required: true, message: t('errors.taskDescEmpty')! },
             { min: 4, message: t('errors.login')! },
-            { max: 15, message: t('errors.longtext')! },
+            { max: 32, message: t('errors.longtext')! },
           ]}
           label={<h5>{t('taskPopap.taskDesc')}</h5>}
         >

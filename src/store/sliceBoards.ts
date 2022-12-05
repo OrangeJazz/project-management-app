@@ -16,7 +16,7 @@ export const initialState: ApiState = {
   token: '',
   user: '',
   boards: [],
-  loading: true,
+  loading: false,
   currentBoard: null,
 };
 
