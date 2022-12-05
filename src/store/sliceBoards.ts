@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import axios from 'axios';
-import { t } from 'i18next';
+import i18n from 'i18n';
 import { IBoard } from '../interfaces/interface';
 
 export type ApiState = {

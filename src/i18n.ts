@@ -83,7 +83,7 @@ i18n.use(initReactI18next).init({
             'RS Task is a simple application gives teams everything they need to stay in sync, hit deadlines, and reach their goals. It is adaptable, flexible tool for planning and tracking work.',
           desc2: 'Organize your work in different wonderful projects with RS Task!',
           btn1: 'Start',
-          btn2: 'Learn more >',
+          btn2: 'Learn more',
         },
         team: {
           title: 'Our team',
@@ -211,7 +211,7 @@ i18n.use(initReactI18next).init({
             'RS Task это простое приложение, которое дает командам все необходимое для синхронизации, соблюдения сроков и достижения целей. Это адаптируемый, гибкий инструмент для планирования и отслеживания работы.',
           desc2: 'Организуйте свою работу в разных замечательных проектах с RS Task!',
           btn1: 'Старт',
-          btn2: 'Узнай больше >',
+          btn2: 'Узнай больше',
         },
         toggle: {
           working: 'в процессе',
