@@ -4,7 +4,6 @@ import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { IAuthState, IFormData } from 'interfaces/interface';
 import axios, { AxiosError } from 'axios';
 import { message } from 'antd';
-import { useTranslation } from 'react-i18next';
 import i18n from 'i18n';
 
 export const initialState: IAuthState = {
@@ -129,7 +128,6 @@ const authSlice = createSlice({
         state.loading = true;
       })
       .addCase(handleSingUp.fulfilled, (state, action: PayloadAction<ISignResp>) => {
-        const { t } = useTranslation();
         state.isLoggedIn = true;
         state.login = action.payload.login;
         state.id = action.payload._id;
