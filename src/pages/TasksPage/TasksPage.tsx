@@ -188,7 +188,7 @@ const TasksPage = () => {
       <ModalTask
         type="create"
         column={currentColumn}
-        title={<h5>Create Task </h5>}
+        title={<h5>{t('taskPopap.createTitle')}</h5>}
         isVisible={isVisibleCreateModal}
         onCancel={onCancelCreateModal}
         onOk={createNewTask as () => void}

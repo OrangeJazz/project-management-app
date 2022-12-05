@@ -29,7 +29,7 @@ const ModalConfirm: React.FC<ModalConfirmProps> = ({ confirmHandler = () => {}, 
         &nbsp;
       </div>
       <Modal
-        title="Warning!"
+        title={t('popapBtn.warning')}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

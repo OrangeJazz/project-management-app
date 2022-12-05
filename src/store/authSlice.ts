@@ -170,7 +170,7 @@ const authSlice = createSlice({
         state.name = action.payload.name;
         state.login = action.payload.login;
         state.loading = false;
-        message.success('intial login');
+        message.success('Intial login');
       })
       .addCase(handleInitialRenderLogIn.rejected, (state) => {
         state.isLoggedIn = false;
