@@ -25,7 +25,6 @@ const Header = () => {
   const handleOk = async (data?: IBoard) => {
     if (!data) return;
     await dispatch(createUserBoard(data));
-    // ('/boards');
   };
 
   const handleCancel = () => {

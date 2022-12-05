@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { message } from 'antd';
 import axios from 'axios';
+import { t } from 'i18next';
 import { IBoard } from '../interfaces/interface';
 
 export type ApiState = {
@@ -24,7 +25,6 @@ export const getAllBoards = createAsyncThunk('getAllBoards', async () => {
   const res = await axios.get(`boards`, {
     headers: { Authorization: `Bearer ${token}` },
   });
-  console.log(res.data);
   return res.data as IBoard[];
 });
 
@@ -102,7 +102,7 @@ export const slice = createSlice({
         state.loading = false;
       })
       .addCase(getAllBoards.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.boards = [];
         state.loading = false;
       })
@@ -114,7 +114,7 @@ export const slice = createSlice({
         state.loading = false;
       })
       .addCase(getUserBoards.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.boards = [];
         state.loading = false;
       })
@@ -124,10 +124,10 @@ export const slice = createSlice({
       .addCase(createUserBoard.fulfilled, (state, action) => {
         state.loading = false;
         state.boards.push(action.payload);
-        message.success('Project added');
+        message.success(t('message.boardcreate'));
       })
       .addCase(createUserBoard.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
         message.error('Server error! Please try again');
       })
@@ -140,7 +140,7 @@ export const slice = createSlice({
         message.success('Project delete');
       })
       .addCase(deleteBoardFetch.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
         message.error('Server error! Please try again');
       })
@@ -154,7 +154,7 @@ export const slice = createSlice({
         message.success('Project edited');
       })
       .addCase(editUserBoard.rejected, (state, action) => {
-        console.log(action.error);
+        console.error(action.error);
         state.loading = false;
         message.error('Server error! Please try again');
       });
