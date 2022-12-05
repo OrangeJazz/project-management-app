@@ -24,7 +24,7 @@ const patchColumn = async (query: IColumnData[]) => {
       axios.patch<ITask[]>('/tasksSet', patchTasks);
     }
   } catch (error) {
-    console.log((error as AxiosError).message);
+    console.error((error as AxiosError).message);
   }
 };
 

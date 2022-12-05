@@ -6,7 +6,7 @@ import ModalConfirm from 'components/ModalConfirm/ModalConfirm';
 import ModalTask from 'components/ModalTask/ModalTask';
 import { editTaskFetch } from 'store/columnDataSlice';
 import { useAppDispatch, useAppSelector } from 'hooks';
-import { Divider, Switch, Tag } from 'antd';
+import { Switch, Tag } from 'antd';
 import getRandomColor from 'utils/geRandomColor';
 import { createPointsFetch, patchPointFetch } from 'store/pointsSlice';
 import { useTranslation } from 'react-i18next';

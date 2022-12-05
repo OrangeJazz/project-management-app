@@ -5,7 +5,6 @@ import {
   MainPage,
   NotFoundPage,
   ProfilePage,
-  SearchPage,
   SingInPage,
   SingUpPage,
   TasksPage,
@@ -21,7 +20,6 @@ import './styles/index.scss';
 function App() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  // axios.defaults.baseURL = 'https://react-final-task.up.railway.app';
   axios.defaults.baseURL = 'https://react-final-task-production.up.railway.app';
   useEffect(() => {
     const token = localStorage.getItem('token') as string;
@@ -54,7 +52,6 @@ function App() {
           </Route>
           <Route element={<SignInUserRoutes />}>
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/search" element={<SearchPage />} />
             <Route path="/boards" element={<BoardsPage />} />
             <Route path="/boards/:id" element={<TasksPage />} />
           </Route>
