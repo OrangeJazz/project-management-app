@@ -16,7 +16,7 @@ interface IModalTaskProps {
   onCancel?: () => void;
 }
 
-const userId = localStorage.getItem('id') || '';
+const userId = localStorage.getItem('id');
 
 const ModalTask: React.FC<IModalTaskProps> = ({
   type = 'create',
@@ -27,12 +27,14 @@ const ModalTask: React.FC<IModalTaskProps> = ({
   onOk = () => {},
   onCancel = () => {},
 }) => {
+  const userState = useAppSelector((state) => state.auth.id);
   const users = useAppSelector((state) => state.users.users);
 
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const onOkHandler = () => {
+    const currentUser = userId || userState || '';
     if (type === 'create') {
       const query: ICreateTask = {
         boardID: column!.boardId,
@@ -40,8 +42,8 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
         order: (getMaxOrder(column!.tasks) ?? 0) + 1,
-        userId: userId,
-        users: form.getFieldValue('users') || [userId],
+        userId: currentUser,
+        users: form.getFieldValue('users') || [currentUser],
       };
       onOk<ICreateTask>(query);
       onCancel();
@@ -51,8 +53,8 @@ const ModalTask: React.FC<IModalTaskProps> = ({
         ...task,
         title: form.getFieldValue('title'),
         description: form.getFieldValue('description'),
-        userId: userId,
-        users: form.getFieldValue('users') || [userId],
+        userId: currentUser,
+        users: form.getFieldValue('users') || [currentUser],
       } as ITask;
       onOk<ITask>(query);
       onCancel();
