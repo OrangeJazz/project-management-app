@@ -16,7 +16,7 @@ const Hero = () => {
           </div>
           <div className={styles.hero__buttons}>
             <StartBtn title={t('hero.btn1')} link="/signin" type="primary" />
-            <StartBtn title={t('hero.btn2')} link="#features" type="secondary" />
+            <StartBtn title={t('hero.btn2')} anchor={true} link="/#features" type="secondary" />
           </div>
         </div>
         <div className={styles.hero__img}></div>
